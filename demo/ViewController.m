@@ -29,8 +29,17 @@
 
     [self setActivityIndicatorView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
     [[self activityIndicatorView] setHidden:YES];
-    [[self activityIndicatorView]  setCenter:CGPointMake( self.view.frame.size.width /2-5, self.view.frame.size.height /2-5)];
+    [[self activityIndicatorView]  setCenter:CGPointMake( self.view.frame.size.width/2 + 10, self.view.frame.size.height /2 + 10)];
     [[self activityIndicatorView]  setContentMode:UIViewContentModeCenter];
+    
+    [[[self webView] scrollView] setContentInset:UIEdgeInsetsMake(22, 0, 0, 0)];
+    [[[self webView] scrollView] setBackgroundColor:[UIColor whiteColor]];
+    [[self webView] setBackgroundColor:[UIColor whiteColor]];
+    
+    UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 22)];
+    [statusBar setBackgroundColor:[UIColor whiteColor]];
+    [[self view] addSubview:statusBar];
+    
     
     [self goToUrl];
 }
@@ -59,6 +68,13 @@
     [[self activityIndicatorView]  stopAnimating];
     [[self activityIndicatorView] removeFromSuperview];
     
+    //[[self webView] stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0.0, 110.0)"];
+    
+}
+
+- (void)webView:(UIWebView *)webView didCreateJavaScriptContext:(JSContext *)ctx
+{
+    NSLog(@"%@", ctx);
 }
 
 - (void)didReceiveMemoryWarning {
