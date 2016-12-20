@@ -46,7 +46,7 @@
 		5D7C2E151E0732C300BCEA41 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E141E0732C300BCEA41 /* ImageIO.framework */; };
 		5D7C2E171E0732C800BCEA41 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E161E0732C800BCEA41 /* StoreKit.framework */; };
 		5D7C2E191E0732CE00BCEA41 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */; };
-		5D7C2E1F1E08114E00BCEA41 /* UIWebView+TS_JavaScriptContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E1E1E08114E00BCEA41 /* UIWebView+TS_JavaScriptContext.m */; };
+		5D7C2E221E087FAD00BCEA41 /* OnBoardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -179,8 +179,8 @@
 		5D7C2E141E0732C300BCEA41 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		5D7C2E161E0732C800BCEA41 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		5D7C2E1D1E08114E00BCEA41 /* UIWebView+TS_JavaScriptContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+TS_JavaScriptContext.h"; sourceTree = "<group>"; };
-		5D7C2E1E1E08114E00BCEA41 /* UIWebView+TS_JavaScriptContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+TS_JavaScriptContext.m"; sourceTree = "<group>"; };
+		5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnBoardingViewController.h; sourceTree = "<group>"; };
+		5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnBoardingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,10 +238,10 @@
 				5D7C2D5C1E06ECA400BCEA41 /* Libs */,
 				5D7C2D481E06EC0400BCEA41 /* AppDelegate.h */,
 				5D7C2D491E06EC0400BCEA41 /* AppDelegate.m */,
+				5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */,
+				5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */,
 				5D7C2D4B1E06EC0400BCEA41 /* ViewController.h */,
 				5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */,
-				5D7C2E1D1E08114E00BCEA41 /* UIWebView+TS_JavaScriptContext.h */,
-				5D7C2E1E1E08114E00BCEA41 /* UIWebView+TS_JavaScriptContext.m */,
 				5D7C2D4E1E06EC0400BCEA41 /* Main.storyboard */,
 				5D7C2D511E06EC0400BCEA41 /* Assets.xcassets */,
 				5D7C2D531E06EC0400BCEA41 /* LaunchScreen.storyboard */,
@@ -778,9 +778,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */,
-				5D7C2E1F1E08114E00BCEA41 /* UIWebView+TS_JavaScriptContext.m in Sources */,
 				5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */,
 				5D7C2DE21E06ED8000BCEA41 /* Configuration.m in Sources */,
+				5D7C2E221E087FAD00BCEA41 /* OnBoardingViewController.m in Sources */,
 				5D7C2D471E06EC0400BCEA41 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

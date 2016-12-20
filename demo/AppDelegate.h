@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+-(void)handleDeepLinks:(NSURL *)url;
 
 @end
 

@@ -26,20 +26,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[self navigationController] setNavigationBarHidden:YES];
 
     [self setActivityIndicatorView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
     [[self activityIndicatorView] setHidden:YES];
     [[self activityIndicatorView]  setCenter:CGPointMake( self.view.frame.size.width/2 + 10, self.view.frame.size.height /2 + 10)];
     [[self activityIndicatorView]  setContentMode:UIViewContentModeCenter];
     
-    [[[self webView] scrollView] setContentInset:UIEdgeInsetsMake(22, 0, 0, 0)];
-    [[[self webView] scrollView] setBackgroundColor:[UIColor whiteColor]];
-    [[self webView] setBackgroundColor:[UIColor whiteColor]];
-    
     UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 22)];
     [statusBar setBackgroundColor:[UIColor whiteColor]];
     [[self view] addSubview:statusBar];
+
+    //Is it first time?
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
+    if(![settings boolForKey:@"OnBoardingFinished"]){
+        
+        [self performSegueWithIdentifier:@"OnBoarding" sender:self];
+    
+    }
     
     [self goToUrl];
 }
@@ -60,7 +66,11 @@
     
     [[self view] addSubview:[self activityIndicatorView]];
     [[self activityIndicatorView]  startAnimating];
-    
+
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    NSLog(@"didFailLoadWithError %@", error);
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
@@ -68,13 +78,25 @@
     [[self activityIndicatorView]  stopAnimating];
     [[self activityIndicatorView] removeFromSuperview];
     
-    //[[self webView] stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0.0, 110.0)"];
+    [webView stringByEvaluatingJavaScriptFromString:@"$('.menuMobileContent > .menu').first().append('<a href=\"codept://code.pt/inbox\">INBOX</a>');"];
     
 }
 
-- (void)webView:(UIWebView *)webView didCreateJavaScriptContext:(JSContext *)ctx
-{
-    NSLog(@"%@", ctx);
+
+/**
+ * Listen to clicks or events with known URL schemes
+ */
+-(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    
+    if ([[[Configuration shared] getArray:@"nativeViews"] containsObject:[request URL]]) {
+        
+        [[self appDelegate] handleDeepLinks:[request URL]];
+        
+        return NO;
+    }
+    
+    return YES;
+    
 }
 
 - (void)didReceiveMemoryWarning {

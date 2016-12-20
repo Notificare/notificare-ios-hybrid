@@ -62,16 +62,18 @@
 #pragma Deep Links
 -(void)handleDeepLinks:(NSURL *)url{
     
-    
+    NSLog(@"%@", url);
     
 }
 
 
 - (void)notificarePushLib:(NotificarePushLib *)library onReady:(NSDictionary *)info{
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"onReady" object:nil];
+    
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    if([settings boolForKey:@"onboardingFinished"]){
+    if([settings boolForKey:@"OnBoardingFinished"]){
         
         [[NotificarePushLib shared] registerForNotifications];
     }
