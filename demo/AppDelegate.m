@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -20,6 +21,23 @@
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
     [[NotificarePushLib shared] handleOptions:launchOptions];
+    
+    [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
+    [[self hostReachability] startNotifier];
+    [self updateInterfaceWithReachability:[self hostReachability]];
+    
+    [self setInternetReachability:[NotificareNetworkReachability reachabilityForInternetConnection]];
+    [[self internetReachability] startNotifier];
+    [self updateInterfaceWithReachability:[self internetReachability]];
+    
+    [self setWifiReachability:[NotificareNetworkReachability reachabilityForLocalWiFi]];
+    [[self wifiReachability] startNotifier];
+    [self updateInterfaceWithReachability:[self wifiReachability]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kNotificareReachabilityChangedNotification
+                                               object:nil];
     
     if ([UIApplicationShortcutItem class]){
         UIApplicationShortcutItem *shortcutItem = [launchOptions objectForKey:UIApplicationLaunchOptionsShortcutItemKey];
@@ -167,6 +185,125 @@
 }
 
 
+/*!
+ * Called by Reachability whenever status changes.
+ */
+- (void) reachabilityChanged:(NSNotification *)note
+{
+    if([[note object] isKindOfClass:[NotificareNetworkReachability class]]){
+        NotificareNetworkReachability* curReach = [note object];
+        [self updateInterfaceWithReachability:curReach];
+    }
+    
+}
+
+- (void)updateInterfaceWithReachability:(NotificareNetworkReachability *)reachability
+{
+    
+    if (reachability == [self internetReachability]){
+        [self checkReachability:reachability];
+    }
+    
+    if (reachability == [self wifiReachability]){
+        [self checkReachability:reachability];
+    }
+    
+}
+
+-(void)checkReachability:(NotificareNetworkReachability *)reachability{
+    
+    NotificareNetworkStatus netStatus = [reachability currentReachabilityStatus];
+    
+    switch (netStatus)
+    {
+        case NotificareNotReachable:        {
+            [self setHasInternet:NO];
+            [self performSelector:@selector(showNoInternetView) withObject:nil afterDelay:.5];
+            break;
+        }
+            
+        case NotificareReachableViaWWAN:        {
+            [self setHasInternet:YES];
+            [self performSelector:@selector(hideNoInternetView) withObject:nil afterDelay:1.0];
+            break;
+        }
+        case NotificareReachableViaWiFi:        {
+            [self setHasInternet:YES];
+            [self performSelector:@selector(hideNoInternetView) withObject:nil afterDelay:1.0];
+            break;
+        }
+    }
+    
+}
+
+-(void)showNoInternetView{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNoInternetView) object:nil];
+    
+    if(![self NoInternetViewIsOpen]){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        NoInternetViewController *lvc = [storyboard instantiateViewControllerWithIdentifier:@"NoInternet"];
+        
+        [self.window.rootViewController presentViewController:lvc animated:YES completion:^{
+            //
+            [self setNoInternetViewIsOpen:YES];
+        }];
+    }
+    
+    
+}
+
+-(void)hideNoInternetView{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideNoInternetView) object:nil];
+    
+    if([self NoInternetViewIsOpen]){
+        [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+            //
+        }];
+    }
+    
+}
+
+
+-(void)openMailClient{
+    
+    [self setMailComposer:[[MFMailComposeViewController alloc] init]];
+    NSArray* recipients = [[[Configuration shared] getProperty:@"email"] componentsSeparatedByString: @","];
+    [[self mailComposer] setMailComposeDelegate:self];
+    [[self mailComposer] setToRecipients:recipients];
+    [[self mailComposer] setSubject:LS(@"your_subject")];
+    [[self mailComposer] setMessageBody:LS(@"your_message") isHTML:NO];
+    
+    [self.window.rootViewController presentViewController:[self mailComposer] animated:YES completion:^{
+        
+    }];
+    
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    switch (result){
+        case MFMailComposeResultCancelled:
+            
+            break;
+        case MFMailComposeResultSaved:
+            
+            break;
+        case MFMailComposeResultSent:
+            
+            break;
+        case MFMailComposeResultFailed:
+            
+            break;
+        default:
+            
+            break;
+    }
+    
+    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

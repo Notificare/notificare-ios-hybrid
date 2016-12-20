@@ -15,5 +15,6 @@
 +(Configuration*)shared;
 -(NSString*)getProperty:(NSString *)key;
 -(NSArray*)getArray:(NSString *)key;
+-(NSDictionary*)getDictionary:(NSString *)key;
 
 @end

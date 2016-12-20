@@ -54,6 +54,7 @@
 		5D7C2E311E097C4800BCEA41 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */; };
 		5D7C2E331E097FD100BCEA41 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E321E097FD100BCEA41 /* Localizable.strings */; };
 		5D7C2E351E09819A00BCEA41 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */; };
+		5D7C2E381E09D31100BCEA41 /* NoInternetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +200,8 @@
 		5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		5D7C2E321E097FD100BCEA41 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		5D7C2E361E09D31100BCEA41 /* NoInternetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoInternetViewController.h; sourceTree = "<group>"; };
+		5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoInternetViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +259,8 @@
 				5D7C2D5C1E06ECA400BCEA41 /* Libs */,
 				5D7C2D481E06EC0400BCEA41 /* AppDelegate.h */,
 				5D7C2D491E06EC0400BCEA41 /* AppDelegate.m */,
+				5D7C2E361E09D31100BCEA41 /* NoInternetViewController.h */,
+				5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */,
 				5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */,
 				5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */,
 				5D7C2E251E09597500BCEA41 /* InboxViewController.h */,
@@ -819,6 +824,7 @@
 			files = (
 				5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */,
 				5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */,
+				5D7C2E381E09D31100BCEA41 /* NoInternetViewController.m in Sources */,
 				5D7C2DE21E06ED8000BCEA41 /* Configuration.m in Sources */,
 				5D7C2E311E097C4800BCEA41 /* SettingsViewController.m in Sources */,
 				5D7C2E2E1E095B0200BCEA41 /* NSDate+TimeAgo.m in Sources */,

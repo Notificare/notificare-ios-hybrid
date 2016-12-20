@@ -15,6 +15,8 @@
 	<string>codept</string>
 	<key>host</key>
 	<string>code.pt</string>
+	<key>email</key>
+	<string>info@code.pt</string>
 	<key>api</key>
 	<string>https://push.notifica.re/status</string>
 	<key>nativeViews</key>

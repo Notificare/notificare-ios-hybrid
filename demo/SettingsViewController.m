@@ -9,7 +9,9 @@
 #import "SettingsViewController.h"
 #import "NotificarePushLib.h"
 #import "Definitions.h"
-
+#import "Configuration.h"
+#import <MessageUI/MessageUI.h>
+#import "AppDelegate.h"
 
 @interface SettingsViewController ()
 
@@ -22,6 +24,7 @@
 @property (nonatomic, strong) UIDatePicker * endPicker;
 
 
+
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:(v) options:NSNumericSearch] != NSOrderedAscending)
 
 
@@ -29,6 +32,9 @@
 
 @implementation SettingsViewController
 
+- (AppDelegate *)appDelegate {
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -75,6 +81,12 @@
     NSMutableArray * section1 = [NSMutableArray array];
     [section1 addObject:@{@"label":LS(@"settings_notifications_title"), @"segue":@"", @"description":LS(@"settings_notifications_description")}];
     
+    if ([[[Configuration shared] getDictionary:@"config"] objectForKey:@"useLocationServices"]) {
+        
+        [section1 addObject:@{@"label":LS(@"settings_notifications_location_services"), @"segue":@"", @"description":LS(@"settings_notifications_location_services_description")}];
+        
+    }
+    
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10")) {
         
@@ -105,6 +117,7 @@
                     } else {
                         [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
                     }
+                    
                     
                     
                     [[self navSections] addObject:section1];
@@ -275,6 +288,34 @@
             
             UISwitch * notificationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
             [cell setAccessoryView:notificationSwitch];
+            [notificationSwitch addTarget:self action:@selector(toggleLocationServices:) forControlEvents:UIControlEventValueChanged];
+            
+            
+            if ([[NotificarePushLib shared] checkLocationUpdates]) {
+                [notificationSwitch setOn:YES];
+            } else {
+                [notificationSwitch setOn:NO];
+            }
+            
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return cell;
+            
+        } else if([indexPath row] == 2){
+            
+            UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NotificationCell"];
+            
+            NSDictionary * item = (NSDictionary *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+            
+            
+            cell.textLabel.text = [item objectForKey:@"label"];
+            cell.textLabel.font = LATO_FONT(16);
+            
+            cell.detailTextLabel.text = [item objectForKey:@"description"];
+            cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+            cell.detailTextLabel.numberOfLines = 2;
+            
+            UISwitch * notificationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [cell setAccessoryView:notificationSwitch];
             [notificationSwitch addTarget:self action:@selector(toggleQuietTimes:) forControlEvents:UIControlEventValueChanged];
             
             if ([[item objectForKey:@"value"] isEqualToString:@"false"]) {
@@ -367,7 +408,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return ([indexPath section] == 0) ? ([indexPath row] == 2 || [indexPath row] == 3) ? DEFAULT_CELLHEIGHT : NOTIFICATION_CELLHEIGHT : DEFAULT_CELLHEIGHT;
+    return ([indexPath section] == 0) ? ([indexPath row] == 3 || [indexPath row] == 4) ? DEFAULT_CELLHEIGHT : NOTIFICATION_CELLHEIGHT : DEFAULT_CELLHEIGHT;
     
 }
 
@@ -410,7 +451,19 @@
     }
     
     if ([[item objectForKey:@"label"] isEqualToString:LS(@"settings_title_feedback")]) {
-        [self performSegueWithIdentifier:@"Feedback" sender:self];
+        
+        if([MFMailComposeViewController canSendMail]){
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+                [[self appDelegate] openMailClient];
+                
+            }];
+            
+            
+            
+        }
+        
     }
 }
 
@@ -422,6 +475,17 @@
     }];
 }
 
+-(void)toggleLocationServices:(id)sender{
+    
+    if ([[NotificarePushLib shared] checkLocationUpdates]) {
+        
+        [[NotificarePushLib shared] stopLocationUpdates];
+        
+    } else {
+        
+        [[NotificarePushLib shared] startLocationUpdates];
+    }
+}
 
 -(void)toggleQuietTimes:(id)sender{
     
@@ -468,5 +532,6 @@
     }];
     
 }
+
 
 @end
