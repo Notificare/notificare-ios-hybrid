@@ -63,19 +63,11 @@
 	<array>
 		<dict>
 			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutIconTypeCloud</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>shortcut_title_assets</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>assets</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
 			<string>UIApplicationShortcutIconTypeLocation</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>shortcut_title_location</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>locations</string>
+			<string>https://code.pt/pt/lojas</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconType</key>
@@ -83,7 +75,7 @@
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>shortcut_title_profile</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>profile</string>
+			<string>codept://code.pt/settings</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconType</key>
@@ -91,7 +83,7 @@
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>shortcut_title_inbox</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>inbox</string>
+			<string>codept://code.pt/inbox</string>
 		</dict>
 	</array>
 	<key>UIBackgroundModes</key>

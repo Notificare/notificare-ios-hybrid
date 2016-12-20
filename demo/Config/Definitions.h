@@ -22,14 +22,13 @@
 #define MONTSERRAT_FONT(s)     [UIFont fontWithName:@"Montserrat-Regular" size:s]
 #define MONTSERRAT_BOLD_FONT(s)     [UIFont fontWithName:@"Montserrat-Bold" size:s]
 
-#define DEFAULT_CELLHEIGHT  80
-#define MENU_HEADER_HEIGHT 64
-#define MENU_CELLHEIGHT 60
-#define INBOX_CELLHEIGHT 90
-#define ASSET_CELLHEIGHT 282
-#define BEACON_HEADER_HEIGHT 64
-#define BEACON_CELLHEIGHT 100
-#define EMPTY_BEACONS_CELLHEIGHT 480
+#define DEFAULT_CELLHEIGHT  60
+#define INBOX_CELLHEIGHT  120
+#define TOPIC_CELLHEIGHT  100
+#define NOTIFICATION_CELLHEIGHT  100
+#define HEADER_CELLHEIGHT  50
+#define FOOTER_CELLHEIGHT 80
+#define FOOTER_FINISH_CELLHEIGHT 100
 
 #define USER_HEADER_HEIGHT 60
 #define USER_CELLHEIGHT 80
@@ -95,7 +94,7 @@
 /**
  * LOC STRINGS
  */
-#define LSSTRING(str) NSLocalizedString(str, str)
+#define LS(str) NSLocalizedString(str, str)
 
 
 

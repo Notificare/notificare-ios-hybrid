@@ -11,7 +11,11 @@
 	</dict>
 	<key>url</key>
 	<string>https://code.pt</string>
+	<key>urlScheme</key>
+	<string>codept</string>
 	<key>host</key>
+	<string>code.pt</string>
+	<key>api</key>
 	<string>https://push.notifica.re/status</string>
 	<key>nativeViews</key>
 	<array>

@@ -1,0 +1,25 @@
+/* 
+  InfoPlist.strings
+  demo
+
+  Created by Joel Oliveira on 20/12/2016.
+  Copyright © 2016 Notificare. All rights reserved.
+*/
+
+/* Localized versions of Info.plist keys */
+NSLocationUsageDescription = "We would like to use your location to easily provide you maps, directions, updates and relevant alerts.";
+
+NSLocationAlwaysUsageDescription = "We will need to make use of your location to present relevant information about offers around you.";
+NSLocationWhenInUseUsageDescription = "We would like to use your location to easily provide your location in  maps or  give you directions.";
+
+
+NSCameraUsageDescription = "We would like to use the device's camera to reply to notifications.";
+NSPhotoLibraryUsageDescription = "We would like to use your photo library to reply to notifications.";
+
+"shortcut_title_inbox" = "Inbox";
+"shortcut_title_location" = "Locations";
+"shortcut_title_assets" = "Assets";
+"shortcut_title_products" = "Products";
+"shortcut_title_app_settings" = "App Settings";
+"shortcut_title_profile" = "My Profile";
+"shortcut_title_settings" = "Settings";

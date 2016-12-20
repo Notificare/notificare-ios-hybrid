@@ -41,7 +41,7 @@
         return handled;
     } else {
         
-        NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"demo://notifica.re/%@", [shortcutItem type]]];
+        NSURL * url = [NSURL URLWithString:[shortcutItem type]];
         
         [self handleDeepLinks:url];
         
@@ -62,7 +62,23 @@
 #pragma Deep Links
 -(void)handleDeepLinks:(NSURL *)url{
     
-    NSLog(@"%@", url);
+    NSLog(@"%@", [url path] );
+    if ([[url path] isEqualToString:@"/inbox"]) {
+
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"openInbox" object:nil];
+    } else if ([[url path] isEqualToString:@"/settings"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openSettings" object:nil];
+    } else {
+    
+        
+        if ([[[Configuration shared] getProperty:@"urlScheme"] isEqualToString:[url scheme]]) {
+            url  = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[Configuration shared] getProperty:@"url"], [url path]]];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadURL" object:self userInfo:@{@"url":url}];
+        
+    }
     
 }
 
@@ -145,6 +161,9 @@
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateBadge:(int)badge{
 
+    NSLog(@"didUpdateBadge: %i", badge);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotification" object:nil];
+    
 }
 
 

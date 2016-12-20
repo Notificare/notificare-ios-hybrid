@@ -47,6 +47,13 @@
 		5D7C2E171E0732C800BCEA41 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E161E0732C800BCEA41 /* StoreKit.framework */; };
 		5D7C2E191E0732CE00BCEA41 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */; };
 		5D7C2E221E087FAD00BCEA41 /* OnBoardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */; };
+		5D7C2E241E0952B400BCEA41 /* customScripts.js in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E231E0952B400BCEA41 /* customScripts.js */; };
+		5D7C2E271E09597500BCEA41 /* InboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E261E09597500BCEA41 /* InboxViewController.m */; };
+		5D7C2E2D1E095B0200BCEA41 /* GravatarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E2A1E095B0200BCEA41 /* GravatarHelper.m */; };
+		5D7C2E2E1E095B0200BCEA41 /* NSDate+TimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E2C1E095B0200BCEA41 /* NSDate+TimeAgo.m */; };
+		5D7C2E311E097C4800BCEA41 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */; };
+		5D7C2E331E097FD100BCEA41 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E321E097FD100BCEA41 /* Localizable.strings */; };
+		5D7C2E351E09819A00BCEA41 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -181,6 +188,17 @@
 		5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnBoardingViewController.h; sourceTree = "<group>"; };
 		5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnBoardingViewController.m; sourceTree = "<group>"; };
+		5D7C2E231E0952B400BCEA41 /* customScripts.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = customScripts.js; sourceTree = "<group>"; };
+		5D7C2E251E09597500BCEA41 /* InboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxViewController.h; sourceTree = "<group>"; };
+		5D7C2E261E09597500BCEA41 /* InboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxViewController.m; sourceTree = "<group>"; };
+		5D7C2E291E095B0200BCEA41 /* GravatarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GravatarHelper.h; sourceTree = "<group>"; };
+		5D7C2E2A1E095B0200BCEA41 /* GravatarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GravatarHelper.m; sourceTree = "<group>"; };
+		5D7C2E2B1E095B0200BCEA41 /* NSDate+TimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TimeAgo.h"; sourceTree = "<group>"; };
+		5D7C2E2C1E095B0200BCEA41 /* NSDate+TimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TimeAgo.m"; sourceTree = "<group>"; };
+		5D7C2E2F1E097C4800BCEA41 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		5D7C2E321E097FD100BCEA41 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,7 +250,7 @@
 		5D7C2D441E06EC0400BCEA41 /* demo */ = {
 			isa = PBXGroup;
 			children = (
-				5D7C2DF61E07307300BCEA41 /* demo.entitlements */,
+				5D7C2E281E095B0200BCEA41 /* Categories */,
 				5D7C2DE41E06EE1E00BCEA41 /* Resources */,
 				5D7C2DDD1E06ED8000BCEA41 /* Config */,
 				5D7C2D5C1E06ECA400BCEA41 /* Libs */,
@@ -240,6 +258,10 @@
 				5D7C2D491E06EC0400BCEA41 /* AppDelegate.m */,
 				5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */,
 				5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */,
+				5D7C2E251E09597500BCEA41 /* InboxViewController.h */,
+				5D7C2E261E09597500BCEA41 /* InboxViewController.m */,
+				5D7C2E2F1E097C4800BCEA41 /* SettingsViewController.h */,
+				5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */,
 				5D7C2D4B1E06EC0400BCEA41 /* ViewController.h */,
 				5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */,
 				5D7C2D4E1E06EC0400BCEA41 /* Main.storyboard */,
@@ -254,7 +276,11 @@
 		5D7C2D451E06EC0400BCEA41 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5D7C2DF61E07307300BCEA41 /* demo.entitlements */,
+				5D7C2E231E0952B400BCEA41 /* customScripts.js */,
 				5D7C2D461E06EC0400BCEA41 /* main.m */,
+				5D7C2E321E097FD100BCEA41 /* Localizable.strings */,
+				5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -677,6 +703,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5D7C2E281E095B0200BCEA41 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				5D7C2E291E095B0200BCEA41 /* GravatarHelper.h */,
+				5D7C2E2A1E095B0200BCEA41 /* GravatarHelper.m */,
+				5D7C2E2B1E095B0200BCEA41 /* NSDate+TimeAgo.h */,
+				5D7C2E2C1E095B0200BCEA41 /* NSDate+TimeAgo.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -759,12 +796,15 @@
 				5D7C2DDB1E06ECA400BCEA41 /* NotificareManagedModels.bundle in Resources */,
 				5D7C2DF21E06EE1E00BCEA41 /* Montserrat-Bold.ttf in Resources */,
 				5D7C2DD81E06ECA400BCEA41 /* DefaultTheme.bundle in Resources */,
+				5D7C2E351E09819A00BCEA41 /* InfoPlist.strings in Resources */,
 				5D7C2DF41E06EE1E00BCEA41 /* Museo.otf in Resources */,
 				5D7C2D521E06EC0400BCEA41 /* Assets.xcassets in Resources */,
 				5D7C2DEE1E06EE1E00BCEA41 /* Arvo.ttf in Resources */,
 				5D7C2DE31E06ED8000BCEA41 /* Configuration.plist in Resources */,
 				5D7C2DF11E06EE1E00BCEA41 /* Lato-Regular.ttf in Resources */,
+				5D7C2E241E0952B400BCEA41 /* customScripts.js in Resources */,
 				5D7C2DDA1E06ECA400BCEA41 /* Notificare.plist in Resources */,
+				5D7C2E331E097FD100BCEA41 /* Localizable.strings in Resources */,
 				5D7C2D501E06EC0400BCEA41 /* Main.storyboard in Resources */,
 				5D7C2DF51E06EE1E00BCEA41 /* OleoScript.ttf in Resources */,
 			);
@@ -780,8 +820,12 @@
 				5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */,
 				5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */,
 				5D7C2DE21E06ED8000BCEA41 /* Configuration.m in Sources */,
+				5D7C2E311E097C4800BCEA41 /* SettingsViewController.m in Sources */,
+				5D7C2E2E1E095B0200BCEA41 /* NSDate+TimeAgo.m in Sources */,
 				5D7C2E221E087FAD00BCEA41 /* OnBoardingViewController.m in Sources */,
+				5D7C2E2D1E095B0200BCEA41 /* GravatarHelper.m in Sources */,
 				5D7C2D471E06EC0400BCEA41 /* main.m in Sources */,
+				5D7C2E271E09597500BCEA41 /* InboxViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

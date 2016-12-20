@@ -52,8 +52,6 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadOnBoarding) name:@"onReady" object:nil];
 }
 
@@ -174,22 +172,24 @@
     UIImageView * imageview = [[[self images] objectAtIndex:page] objectForKey:@"assetView"];
     [imageview setBackgroundColor:[UIColor whiteColor]];
     
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width, 100)];
-    [label setFont:LATO_LIGHT_FONT(24)];
-    [label setTextColor:[UIColor whiteColor]];
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width - 40, 120)];
+    [label setFont:LATO_LIGHT_FONT(20)];
+    [label setTextColor:[UIColor blackColor]];
     [label setNumberOfLines:0];
     [label setTextAlignment:NSTextAlignmentCenter];
-    [label setText:[[[[self images] objectAtIndex:page] objectForKey:@"assetDescription"] stripXMLTags]];
+    [label setText:[[[self images] objectAtIndex:page] objectForKey:@"assetTitle"]];
 
     NSDictionary * buttonObj = [[[self images] objectAtIndex:page] objectForKey:@"assetButton"];
-    UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width - 20, 48)];
+    UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width - 40, 48)];
     [button.titleLabel setFont:LATO_FONT(20)];
     [button.titleLabel setTextColor:[UIColor whiteColor]];
     [button setBackgroundColor:[UIColor redColor]];
     [button.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [button setTitle:[buttonObj objectForKey:@"label"] forState:UIControlStateNormal];
     
-    [button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
+    SEL mySelector = NSSelectorFromString([buttonObj objectForKey:@"action"]);
+    
+    [button addTarget:self action:mySelector forControlEvents:UIControlEventTouchUpInside];
     
     if ((NSNull *)imageview == [NSNull null]) {
         [[self images] replaceObjectAtIndex:page withObject:imageview];
@@ -201,10 +201,16 @@
         frame.origin.x = frame.size.width * page;
         frame.origin.y = 0;
         imageview.frame = frame;
-        label.frame = frame;
+        //label.frame = frame;
+        
+        
+        CGRect labelFrame = label.frame;
+        labelFrame.origin.x = self.scrollView.frame.size.width * page + 20;
+        labelFrame.origin.y = self.scrollView.frame.size.height - 220;
+        label.frame = labelFrame;
         
         CGRect buttonFrame = button.frame;
-        buttonFrame.origin.x = self.scrollView.frame.size.width * page + 10;
+        buttonFrame.origin.x = self.scrollView.frame.size.width * page + 20;
         buttonFrame.origin.y = self.scrollView.frame.size.height - 100;
         button.frame = buttonFrame;
         
@@ -217,8 +223,36 @@
     
 }
 
--(void)buttonTapped{
-    NSLog(@"button tapped");
+-(void)goToNotifications{
+
+    [[self pageControl] setCurrentPage:1];
+    [self loadScrollViewWithPage:1];
+    [self loadScrollViewWithPage:2];
+    [[self scrollView] setContentOffset:CGPointMake(self.scrollView.frame.size.width * 1, 0) animated:YES];
+    
+}
+
+-(void)goToLocationServices{
+
+    [[self pageControl] setCurrentPage:2];
+    [self loadScrollViewWithPage:2];
+    [self loadScrollViewWithPage:3];
+    [[self scrollView] setContentOffset:CGPointMake(self.scrollView.frame.size.width * 2, 0) animated:YES];
+    
+    [[NotificarePushLib shared] registerForNotifications];
+}
+
+-(void)goToApp{
+
+    [[NotificarePushLib shared] startLocationUpdates];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+        [settings setBool:YES forKey:@"OnBoardingFinished"];
+        [settings synchronize];
+        
+    }];
 }
 
 @end
