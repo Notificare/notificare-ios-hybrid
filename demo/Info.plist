@@ -22,10 +22,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>re.notifica.demo</string>
+			<string>re.notifica.hybrid</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>codept</string>
+				<string>re.notifica</string>
 			</array>
 		</dict>
 	</array>
@@ -33,7 +33,7 @@
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>codept</string>
+		<string>re.notifica</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

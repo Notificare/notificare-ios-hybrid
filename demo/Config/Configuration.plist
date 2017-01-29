@@ -10,19 +10,19 @@
 		<false/>
 	</dict>
 	<key>url</key>
-	<string>https://code.pt</string>
+	<string>https://notifica.re</string>
 	<key>urlScheme</key>
-	<string>codept</string>
+	<string>re.notifica</string>
 	<key>host</key>
-	<string>code.pt</string>
+	<string>notifica.re</string>
 	<key>email</key>
-	<string>info@code.pt</string>
+	<string>info@notifica.re</string>
 	<key>api</key>
 	<string>https://push.notifica.re/status</string>
 	<key>nativeViews</key>
 	<array>
-		<string>codept://code.pt/inbox</string>
-		<string>codept://code.pt/settings</string>
+		<string>re.notifica://notifica.re/inbox</string>
+		<string>re.notifica://notifica.re/settings</string>
 	</array>
 	<key>social</key>
 	<dict>

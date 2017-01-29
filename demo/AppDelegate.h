@@ -24,6 +24,9 @@
 @property (strong, nonatomic) NotificareNetworkReachability *internetReachability;
 @property (strong, nonatomic) NotificareNetworkReachability *wifiReachability;
 @property (strong, nonatomic) MFMailComposeViewController *mailComposer;
+@property (strong, nonatomic) NotificareAsset *configAsset;
+@property (strong, nonatomic) NotificareAsset *customJSAsset;
+@property (assign, nonatomic) BOOL isInitialLoadingDone;
 
 -(void)handleDeepLinks:(NSURL *)url;
 -(void)openMailClient;

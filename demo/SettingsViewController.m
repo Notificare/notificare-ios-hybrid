@@ -39,13 +39,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:LS(@"title_settings")];
+
     
     [self setNavSections:[NSMutableArray array]];
     [self setSectionTitles:[NSMutableArray array]];
     
-    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(closeSettings)];
+    
+    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     [leftButton setTintColor:MAIN_COLOR];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBecameActive) name:UIApplicationWillEnterForegroundNotification object:nil];
     
@@ -60,6 +63,8 @@
 
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    [[self navigationController] setNavigationBarHidden:NO];
     
     [self refreshView];
 }
@@ -525,11 +530,9 @@
 }
 
 
--(void)closeSettings{
+-(void)back{
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [[self navigationController] popToRootViewControllerAnimated:YES];
     
 }
 

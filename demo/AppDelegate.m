@@ -80,13 +80,14 @@
 #pragma Deep Links
 -(void)handleDeepLinks:(NSURL *)url{
     
-    NSLog(@"%@", [url path] );
     if ([[url path] isEqualToString:@"/inbox"]) {
 
        [[NSNotificationCenter defaultCenter] postNotificationName:@"openInbox" object:nil];
+        
     } else if ([[url path] isEqualToString:@"/settings"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openSettings" object:nil];
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"openSettings" object:nil];
+        
     } else {
     
         
@@ -102,6 +103,8 @@
 
 
 - (void)notificarePushLib:(NotificarePushLib *)library onReady:(NSDictionary *)info{
+    
+    [self initalConfig];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"onReady" object:nil];
     
@@ -302,6 +305,42 @@
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
         
     }];
+    
+}
+
+
+-(void)initalConfig{
+
+    [[NotificarePushLib shared] fetchAssets:@"CONFIG" completionHandler:^(NSArray * _Nonnull info) {
+
+        if (info && [info count] > 0 && [info firstObject]) {
+        
+            [self setConfigAsset:[info firstObject]];
+            
+        }
+        
+        [[NotificarePushLib shared] fetchAssets:@"CUSTOMJS" completionHandler:^(NSArray * _Nonnull info) {
+            
+            if (info && [info count] > 0 && [info firstObject]) {
+                
+                [self setCustomJSAsset:[info firstObject]];
+                
+            }
+            
+        } errorHandler:^(NSError * _Nonnull error) {
+            
+            [self initalConfig];
+            
+        }];
+        
+    } errorHandler:^(NSError * _Nonnull error) {
+        //
+        
+        [self initalConfig];
+        
+    }];
+    
+    
     
 }
 

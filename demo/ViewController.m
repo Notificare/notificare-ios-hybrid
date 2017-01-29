@@ -29,6 +29,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    [[self navigationController] setNavigationBarHidden:YES];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openInbox) name:@"openInbox" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSettings) name:@"openSettings" object:nil];
@@ -57,8 +59,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    [[self navigationController] setNavigationBarHidden:YES];
 
     [self setActivityIndicatorView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
     [[self activityIndicatorView] setHidden:YES];
@@ -74,7 +74,7 @@
     
     if(![settings boolForKey:@"OnBoardingFinished"]){
         
-        [self performSegueWithIdentifier:@"OnBoarding" sender:self];
+        [[self navigationController] performSegueWithIdentifier:@"OnBoarding" sender:self];
     
     }
     

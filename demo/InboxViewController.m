@@ -34,7 +34,7 @@
     [[self sectionTitles] addObject:LS(@"section_item_about")];
     
     
-    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(closeInbox)];
+    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     [leftButton setTintColor:MAIN_COLOR];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
 
@@ -49,7 +49,7 @@
        [[self navSections] count] > 0 &&
        [[[self navSections] objectAtIndex:0] count] > 0){
         
-        UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(closeInbox)];
+        UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         [leftButton setTintColor:MAIN_COLOR];
         [[self navigationItem] setLeftBarButtonItem:leftButton];
         
@@ -57,7 +57,7 @@
         
     } else {
         
-        UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(closeInbox)];
+        UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         [leftButton setTintColor:MAIN_COLOR];
         [[self navigationItem] setLeftBarButtonItem:leftButton];
         
@@ -119,6 +119,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    [[self navigationController] setNavigationBarHidden:NO];
     
     [self showEmptyView];
     
@@ -280,11 +282,9 @@
 }
 
 
--(void)closeInbox{
+-(void)back{
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [[self navigationController] popToRootViewControllerAnimated:YES];
     
 }
 
