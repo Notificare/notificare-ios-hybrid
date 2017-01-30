@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NotificareAsset.h"
 
 
 @interface AppDelegate ()
@@ -194,7 +195,6 @@
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateBadge:(int)badge{
 
-    NSLog(@"didUpdateBadge: %i", badge);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotification" object:nil];
     
 }
@@ -282,28 +282,85 @@
 
 -(void)initalConfig{
 
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
     [[NotificarePushLib shared] fetchAssets:@"CONFIG" completionHandler:^(NSArray * _Nonnull info) {
 
         if (info && [info count] > 0 && [info firstObject]) {
         
-            [self setConfigAsset:[info firstObject]];
+            NotificareAsset * configAsset = (NotificareAsset*)[info firstObject];
             
+            NSURL *url = [NSURL URLWithString:[configAsset assetUrl]];
+            
+            NSURLSession *session = [NSURLSession sharedSession];
+            
+            [[session dataTaskWithURL:url
+                    completionHandler:^(NSData *data,
+                                        NSURLResponse *response,
+                                        NSError *fileError) {
+                        
+                        if (!fileError) {
+                            
+                            NSError *errorJson=nil;
+                            NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&errorJson];
+                            
+                            [settings setObject:responseDict forKey:@"configFile"];
+                            [settings synchronize];
+                            
+                            [[NotificarePushLib shared] fetchAssets:@"CUSTOMJS" completionHandler:^(NSArray * _Nonnull info) {
+                                
+                                if (info && [info count] > 0 && [info firstObject]) {
+                                    
+                                    NotificareAsset * customJSAsset = (NotificareAsset*)[info firstObject];
+                                    
+                                    NSURL *url = [NSURL URLWithString:[customJSAsset assetUrl]];
+                                    
+                                    NSURLSession *session = [NSURLSession sharedSession];
+                                    
+                                    [[session dataTaskWithURL:url
+                                            completionHandler:^(NSData *jsData,
+                                                                NSURLResponse *response,
+                                                                NSError *fileError) {
+                                                
+                                                if (!fileError) {
+                                                    
+                                                    NSString* jsString = [[NSString alloc] initWithData:jsData encoding:NSUTF8StringEncoding];
+                                                    
+                                                    [settings setObject:jsString forKey:@"customJSFile"];
+                                                    [settings synchronize];
+
+                                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
+                                                    
+                                                } else {
+                                                    
+                                                    [self initalConfig];
+                                                    
+                                                }
+                                                
+                                    }] resume];
+                                    
+                                    
+                                } else {
+                                
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
+                                }
+                                
+                            } errorHandler:^(NSError * _Nonnull error) {
+                                
+                                [self initalConfig];
+                                
+                            }];
+                            
+                        } else {
+                            
+                            [self initalConfig];
+                            
+                        }
+                        
+                        
+            }] resume];
+
         }
-        
-        [[NotificarePushLib shared] fetchAssets:@"CUSTOMJS" completionHandler:^(NSArray * _Nonnull info) {
-            
-            if (info && [info count] > 0 && [info firstObject]) {
-                
-                [self setCustomJSAsset:[info firstObject]];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
-            }
-            
-        } errorHandler:^(NSError * _Nonnull error) {
-            
-            [self initalConfig];
-            
-        }];
         
     } errorHandler:^(NSError * _Nonnull error) {
         //
@@ -312,6 +369,42 @@
         
     }];
     
+    
+    
+}
+
+
+
+#pragma Notificare OAuth2 delegates
+
+- (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountNotification:(NSDictionary *)info{
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changedAccount" object:nil];
+
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didFailToRequestAccessNotification:(NSError *)error{
+
+    
+}
+
+
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveActivationToken:(NSString *)token{
+    
+    [[NotificarePushLib shared] validateAccount:token completionHandler:^(NSDictionary *info) {
+        
+        //APP_ALERT_DIALOG(LSSTRING(@"success_validate"));
+        
+    } errorHandler:^(NSError *error) {
+        
+        //APP_ALERT_DIALOG(LSSTRING(@"error_validate"));
+        
+    }];
+    
+
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveResetPasswordToken:(NSString *)token{
     
     
 }

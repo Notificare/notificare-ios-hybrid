@@ -36,6 +36,8 @@
 		5D58D54C1E3EBB1F000334E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E161E0732C800BCEA41 /* StoreKit.framework */; };
 		5D58D54D1E3EBB26000334E3 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */; };
 		5D58D54E1E3EBB3C000334E3 /* libNotificarePushLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D58D4041E3CFF45000334E3 /* libNotificarePushLib.a */; };
+		5D58D5511E3F5A96000334E3 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D5501E3F5A96000334E3 /* SignInViewController.m */; };
+		5D58D5541E3F5CEB000334E3 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D5531E3F5CEB000334E3 /* ProfileViewController.m */; };
 		5D7C2D471E06EC0400BCEA41 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D461E06EC0400BCEA41 /* main.m */; };
 		5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D491E06EC0400BCEA41 /* AppDelegate.m */; };
 		5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */; };
@@ -43,7 +45,6 @@
 		5D7C2D521E06EC0400BCEA41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2D511E06EC0400BCEA41 /* Assets.xcassets */; };
 		5D7C2D551E06EC0400BCEA41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2D531E06EC0400BCEA41 /* LaunchScreen.storyboard */; };
 		5D7C2DE21E06ED8000BCEA41 /* Configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2DDF1E06ED8000BCEA41 /* Configuration.m */; };
-		5D7C2DE31E06ED8000BCEA41 /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2DE01E06ED8000BCEA41 /* Configuration.plist */; };
 		5D7C2DEE1E06EE1E00BCEA41 /* Arvo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2DE61E06EE1E00BCEA41 /* Arvo.ttf */; };
 		5D7C2DEF1E06EE1E00BCEA41 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2DE71E06EE1E00BCEA41 /* Lato-Hairline.ttf */; };
 		5D7C2DF01E06EE1E00BCEA41 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2DE81E06EE1E00BCEA41 /* Lato-Light.ttf */; };
@@ -70,7 +71,6 @@
 		5D7C2E171E0732C800BCEA41 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E161E0732C800BCEA41 /* StoreKit.framework */; };
 		5D7C2E191E0732CE00BCEA41 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */; };
 		5D7C2E221E087FAD00BCEA41 /* OnBoardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */; };
-		5D7C2E241E0952B400BCEA41 /* customScripts.js in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E231E0952B400BCEA41 /* customScripts.js */; };
 		5D7C2E271E09597500BCEA41 /* InboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E261E09597500BCEA41 /* InboxViewController.m */; };
 		5D7C2E2D1E095B0200BCEA41 /* GravatarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E2A1E095B0200BCEA41 /* GravatarHelper.m */; };
 		5D7C2E2E1E095B0200BCEA41 /* NSDate+TimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E2C1E095B0200BCEA41 /* NSDate+TimeAgo.m */; };
@@ -205,6 +205,10 @@
 		5D58D5321E3EBA75000334E3 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
 		5D58D5331E3EBA75000334E3 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
 		5D58D5351E3EBA75000334E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D58D54F1E3F5A96000334E3 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		5D58D5501E3F5A96000334E3 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		5D58D5521E3F5CEA000334E3 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		5D58D5531E3F5CEB000334E3 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		5D7C2D421E06EC0400BCEA41 /* hybrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hybrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D7C2D461E06EC0400BCEA41 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D7C2D481E06EC0400BCEA41 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -217,7 +221,6 @@
 		5D7C2D561E06EC0400BCEA41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7C2DDE1E06ED8000BCEA41 /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configuration.h; sourceTree = "<group>"; };
 		5D7C2DDF1E06ED8000BCEA41 /* Configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Configuration.m; sourceTree = "<group>"; };
-		5D7C2DE01E06ED8000BCEA41 /* Configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
 		5D7C2DE11E06ED8000BCEA41 /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		5D7C2DE61E06EE1E00BCEA41 /* Arvo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Arvo.ttf; sourceTree = "<group>"; };
 		5D7C2DE71E06EE1E00BCEA41 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
@@ -247,7 +250,6 @@
 		5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnBoardingViewController.h; sourceTree = "<group>"; };
 		5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnBoardingViewController.m; sourceTree = "<group>"; };
-		5D7C2E231E0952B400BCEA41 /* customScripts.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = customScripts.js; sourceTree = "<group>"; };
 		5D7C2E251E09597500BCEA41 /* InboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxViewController.h; sourceTree = "<group>"; };
 		5D7C2E261E09597500BCEA41 /* InboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxViewController.m; sourceTree = "<group>"; };
 		5D7C2E291E095B0200BCEA41 /* GravatarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GravatarHelper.h; sourceTree = "<group>"; };
@@ -721,6 +723,10 @@
 				5D58D4931E3E2240000334E3 /* ResetPasswordViewController.m */,
 				5D58D4951E3E228A000334E3 /* SignUpViewController.h */,
 				5D58D4961E3E228A000334E3 /* SignUpViewController.m */,
+				5D58D54F1E3F5A96000334E3 /* SignInViewController.h */,
+				5D58D5501E3F5A96000334E3 /* SignInViewController.m */,
+				5D58D5521E3F5CEA000334E3 /* ProfileViewController.h */,
+				5D58D5531E3F5CEB000334E3 /* ProfileViewController.m */,
 				5D7C2D4B1E06EC0400BCEA41 /* ViewController.h */,
 				5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */,
 				5D7C2D4E1E06EC0400BCEA41 /* Main.storyboard */,
@@ -737,7 +743,6 @@
 			isa = PBXGroup;
 			children = (
 				5D7C2DF61E07307300BCEA41 /* hybrid.entitlements */,
-				5D7C2E231E0952B400BCEA41 /* customScripts.js */,
 				5D7C2D461E06EC0400BCEA41 /* main.m */,
 				5D7C2E321E097FD100BCEA41 /* Localizable.strings */,
 				5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */,
@@ -758,7 +763,6 @@
 			children = (
 				5D7C2DDE1E06ED8000BCEA41 /* Configuration.h */,
 				5D7C2DDF1E06ED8000BCEA41 /* Configuration.m */,
-				5D7C2DE01E06ED8000BCEA41 /* Configuration.plist */,
 				5D7C2DE11E06ED8000BCEA41 /* Definitions.h */,
 			);
 			path = Config;
@@ -939,9 +943,7 @@
 				5D7C2DEE1E06EE1E00BCEA41 /* Arvo.ttf in Resources */,
 				5D58D4811E3CFF45000334E3 /* NotificareManagedModels.bundle in Resources */,
 				5D58D4801E3CFF45000334E3 /* Notificare.plist in Resources */,
-				5D7C2DE31E06ED8000BCEA41 /* Configuration.plist in Resources */,
 				5D7C2DF11E06EE1E00BCEA41 /* Lato-Regular.ttf in Resources */,
-				5D7C2E241E0952B400BCEA41 /* customScripts.js in Resources */,
 				5D7C2E331E097FD100BCEA41 /* Localizable.strings in Resources */,
 				5D7C2D501E06EC0400BCEA41 /* Main.storyboard in Resources */,
 				5D58D47E1E3CFF45000334E3 /* DefaultTheme.bundle in Resources */,
@@ -966,6 +968,7 @@
 			files = (
 				5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */,
 				5D58D4941E3E2240000334E3 /* ResetPasswordViewController.m in Sources */,
+				5D58D5541E3F5CEB000334E3 /* ProfileViewController.m in Sources */,
 				5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */,
 				5D7C2E381E09D31100BCEA41 /* NoInternetViewController.m in Sources */,
 				5D7C2DE21E06ED8000BCEA41 /* Configuration.m in Sources */,
@@ -974,6 +977,7 @@
 				5D7C2E221E087FAD00BCEA41 /* OnBoardingViewController.m in Sources */,
 				5D7C2E2D1E095B0200BCEA41 /* GravatarHelper.m in Sources */,
 				5D58D4911E3E21B1000334E3 /* RegionsViewController.m in Sources */,
+				5D58D5511E3F5A96000334E3 /* SignInViewController.m in Sources */,
 				5D7C2D471E06EC0400BCEA41 /* main.m in Sources */,
 				5D58D4971E3E228A000334E3 /* SignUpViewController.m in Sources */,
 				5D7C2E271E09597500BCEA41 /* InboxViewController.m in Sources */,

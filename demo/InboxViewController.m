@@ -223,13 +223,9 @@
     
     NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-        [[NotificarePushLib shared] openInboxItem:item];
-        
-    }];
+    [[NotificarePushLib shared] openInboxItem:item];
     
-}
+}   
 
 
 -(void)clearInbox{

@@ -30,26 +30,26 @@
 
 -(NSString*)getProperty:(NSString *)key{
     
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Configuration" ofType:@"plist"];
-    NSDictionary *pfile = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-    
-    return [pfile objectForKey:key];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    NSDictionary * configFile = [settings objectForKey:@"configFile"];
+
+    return [configFile objectForKey:key];
 }
 
 -(NSArray*)getArray:(NSString *)key{
     
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Configuration" ofType:@"plist"];
-    NSDictionary *pfile = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    NSDictionary * configFile = [settings objectForKey:@"configFile"];
     
-    return [pfile objectForKey:key];
+    return [configFile objectForKey:key];
 }
 
 -(NSDictionary*)getDictionary:(NSString *)key{
     
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Configuration" ofType:@"plist"];
-    NSDictionary *pfile = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    NSDictionary * configFile = [settings objectForKey:@"configFile"];
     
-    return [pfile objectForKey:key];
+    return [configFile objectForKey:key];
 }
 
 @end

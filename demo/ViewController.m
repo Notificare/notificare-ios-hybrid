@@ -165,10 +165,9 @@
                                              selector:@selector(evaluateJS)
                                                object:nil];
     
-    NSString * file = [[NSBundle mainBundle] pathForResource:@"customScripts" ofType:@"js"];
-    NSString * jsString = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    [[self webView] stringByEvaluatingJavaScriptFromString:jsString];
+    [[self webView] stringByEvaluatingJavaScriptFromString:[settings objectForKey:@"customJSFile"]];
 }
 
 

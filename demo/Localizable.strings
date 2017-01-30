@@ -17,7 +17,7 @@
 "settings_notifications_title" = "Notifications";
 "settings_notifications_description" = "Receive messages with our news, events or any other campaign we might find relevant for you";
 
-"settings_notifications_location_services" = "Notifications";
+"settings_notifications_location_services" = "Location Services";
 "settings_notifications_location_services_description" = "Allow us to collect your location data in order to send notifications whenever you are around";
 
 "settings_notifications_quiet_times" = "Do Not Disturb";
