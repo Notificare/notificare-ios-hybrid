@@ -129,10 +129,10 @@
                     [[self navSections] addObject:section1];
                     
                     
-                    [[self sectionTitles] addObject:LS(@"section_item_settings_other")];
+                    [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
                     NSMutableArray * section2 = [NSMutableArray array];
-                    [section2 addObject:@{@"label":LS(@"settings_title_feedback"), @"segue":@"Feedback"}];
-                    [section2 addObject:@{@"label":LS(@"app_version"), @"segue":@""}];
+                    [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
+                    [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
                     [[self navSections] addObject:section2];
                     
                     [[self tableView] reloadData];
@@ -149,10 +149,10 @@
                 
                 [[self navSections] addObject:section1];
                 
-                [[self sectionTitles] addObject:LS(@"section_item_settings_other")];
+                [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
                 NSMutableArray * section2 = [NSMutableArray array];
-                [section2 addObject:@{@"label":LS(@"settings_title_feedback"), @"segue":@"Feedback"}];
-                [section2 addObject:@{@"label":LS(@"app_version"), @"segue":@""}];
+                [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
+                [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
                 [[self navSections] addObject:section2];
                 
                 [[self tableView] reloadData];
@@ -171,10 +171,10 @@
             
             [[self navSections] addObject:section1];
             
-            [[self sectionTitles] addObject:LS(@"section_item_settings_other")];
+            [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
             NSMutableArray * section2 = [NSMutableArray array];
-            [section2 addObject:@{@"label":LS(@"settings_title_feedback"), @"segue":@"Feedback"}];
-            [section2 addObject:@{@"label":LS(@"app_version"), @"segue":@""}];
+            [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
+            [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
             [[self navSections] addObject:section2];
             
             [[self tableView] reloadData];
@@ -207,10 +207,10 @@
                 [[self navSections] addObject:section1];
                 
                 
-                [[self sectionTitles] addObject:LS(@"section_item_settings_other")];
+                [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
                 NSMutableArray * section2 = [NSMutableArray array];
-                [section2 addObject:@{@"label":LS(@"settings_title_feedback"), @"segue":@"Feedback"}];
-                [section2 addObject:@{@"label":LS(@"app_version"), @"segue":@""}];
+                [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
+                [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
                 [[self navSections] addObject:section2];
                 
                 [[self tableView] reloadData];

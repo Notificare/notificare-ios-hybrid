@@ -6,5 +6,31 @@
   Copyright © 2016 Notificare. All rights reserved.
 */
 "title_inbox" = "Inbox";
-"title_settngs" = "Settings";
+"title_settings" = "Settings";
 "title_regions" = "Stores & Venues";
+
+"empty_inbox_text" = "You've got no messages!";
+
+"section_item_settings_notifications" = "Notification Settings";
+"section_item_settings_about" = "About this app";
+
+"settings_notifications_title" = "Notifications";
+"settings_notifications_description" = "Receive messages with our news, events or any other campaign we might find relevant for you";
+
+"settings_notifications_location_services" = "Notifications";
+"settings_notifications_location_services_description" = "Allow us to collect your location data in order to send notifications whenever you are around";
+
+"settings_notifications_quiet_times" = "Do Not Disturb";
+"settings_notifications_quiet_times_description" = "Configure a period of time where notifications will not generate alerts in the notification center";
+
+"settings_notifications_quiet_times_start" = "From";
+"settings_notifications_quiet_times_start_description" = "";
+
+"settings_notifications_quiet_times_end" = "To";
+"settings_notifications_quiet_times_end_description" = "";
+
+"settings_feedback" = "Leave your feedback";
+"settings_app_version" = "App Version";
+
+"your_subject" = "Write a subject";
+"your_message" = "Write a message";
