@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>url</key>
-	<string>https://notifica.re</string>
+	<string>https://notifica.re/hybrid-app</string>
 	<key>urlScheme</key>
 	<string>re.notifica</string>
 	<key>host</key>
@@ -23,6 +23,9 @@
 	<array>
 		<string>re.notifica://notifica.re/inbox</string>
 		<string>re.notifica://notifica.re/settings</string>
+		<string>re.notifica://notifica.re/regions</string>
+		<string>re.notifica://notifica.re/profile</string>
+		<string>re.notifica://notifica.re/membercard</string>
 	</array>
 	<key>social</key>
 	<dict>

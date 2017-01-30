@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSMutableArray * sectionTitles;
 @property (nonatomic, strong) UIDatePicker * startPicker;
 @property (nonatomic, strong) UIDatePicker * endPicker;
+@property (strong, nonatomic) MFMailComposeViewController *mailComposer;
 
 
 
@@ -459,13 +460,7 @@
         
         if([MFMailComposeViewController canSendMail]){
             
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-                [[self appDelegate] openMailClient];
-                
-            }];
-            
-            
+            [self openMailClient];
             
         }
         
@@ -533,6 +528,47 @@
 -(void)back{
     
     [[self navigationController] popToRootViewControllerAnimated:YES];
+    
+}
+
+-(void)openMailClient{
+    
+    [self setMailComposer:[[MFMailComposeViewController alloc] init]];
+    NSArray* recipients = [[[Configuration shared] getProperty:@"email"] componentsSeparatedByString: @","];
+    [[self mailComposer] setMailComposeDelegate:self];
+    [[self mailComposer] setToRecipients:recipients];
+    [[self mailComposer] setSubject:LS(@"your_subject")];
+    [[self mailComposer] setMessageBody:LS(@"your_message") isHTML:NO];
+    
+    [self presentViewController:[self mailComposer] animated:YES completion:^{
+        
+    }];
+    
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    switch (result){
+        case MFMailComposeResultCancelled:
+            
+            break;
+        case MFMailComposeResultSaved:
+            
+            break;
+        case MFMailComposeResultSent:
+            
+            break;
+        case MFMailComposeResultFailed:
+            
+            break;
+        default:
+            
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
     
 }
 

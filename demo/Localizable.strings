@@ -5,4 +5,6 @@
   Created by Joel Oliveira on 20/12/2016.
   Copyright © 2016 Notificare. All rights reserved.
 */
-"title_inbox" = "Caixa de Correio";
+"title_inbox" = "Inbox";
+"title_settngs" = "Settings";
+"title_regions" = "Stores & Venues";

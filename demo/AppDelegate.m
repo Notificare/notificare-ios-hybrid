@@ -88,6 +88,18 @@
         
        [[NSNotificationCenter defaultCenter] postNotificationName:@"openSettings" object:nil];
         
+    } else if ([[url path] isEqualToString:@"/regions"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openRegions" object:nil];
+        
+    } else if ([[url path] isEqualToString:@"/profile"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openProfile" object:nil];
+        
+    } else if ([[url path] isEqualToString:@"/membercard"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openMemberCard" object:nil];
+        
     } else {
     
         
@@ -267,47 +279,6 @@
 }
 
 
--(void)openMailClient{
-    
-    [self setMailComposer:[[MFMailComposeViewController alloc] init]];
-    NSArray* recipients = [[[Configuration shared] getProperty:@"email"] componentsSeparatedByString: @","];
-    [[self mailComposer] setMailComposeDelegate:self];
-    [[self mailComposer] setToRecipients:recipients];
-    [[self mailComposer] setSubject:LS(@"your_subject")];
-    [[self mailComposer] setMessageBody:LS(@"your_message") isHTML:NO];
-    
-    [self.window.rootViewController presentViewController:[self mailComposer] animated:YES completion:^{
-        
-    }];
-    
-}
-
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
-    
-    switch (result){
-        case MFMailComposeResultCancelled:
-            
-            break;
-        case MFMailComposeResultSaved:
-            
-            break;
-        case MFMailComposeResultSent:
-            
-            break;
-        case MFMailComposeResultFailed:
-            
-            break;
-        default:
-            
-            break;
-    }
-    
-    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-    
-}
-
 
 -(void)initalConfig{
 
@@ -325,6 +296,7 @@
                 
                 [self setCustomJSAsset:[info firstObject]];
                 
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
             }
             
         } errorHandler:^(NSError * _Nonnull error) {

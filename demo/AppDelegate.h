@@ -10,12 +10,10 @@
 #import "NotificarePushLib.h"
 #import "Configuration.h"
 #import "NotificareNetworkReachability.h"
-#import <MessageUI/MessageUI.h>
 #import "NoInternetViewController.h"
 #import "Definitions.h"
-#import "Configuration.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, NotificarePushLibDelegate,MFMailComposeViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NotificarePushLibDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL hasInternet;
@@ -23,13 +21,11 @@
 @property (strong, nonatomic) NotificareNetworkReachability *hostReachability;
 @property (strong, nonatomic) NotificareNetworkReachability *internetReachability;
 @property (strong, nonatomic) NotificareNetworkReachability *wifiReachability;
-@property (strong, nonatomic) MFMailComposeViewController *mailComposer;
 @property (strong, nonatomic) NotificareAsset *configAsset;
 @property (strong, nonatomic) NotificareAsset *customJSAsset;
 @property (assign, nonatomic) BOOL isInitialLoadingDone;
 
 -(void)handleDeepLinks:(NSURL *)url;
--(void)openMailClient;
 
 @end
 

@@ -35,7 +35,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSettings) name:@"openSettings" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openRegions) name:@"openRegions" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onInitialConfig) name:@"initialConfig" object:nil];
 }
 
 
@@ -51,9 +55,16 @@
                                                   object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openRegions"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"reloadURL"
                                                   object:nil];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"initialConfig"
+                                                  object:nil];
 }
 
 - (void)viewDidLoad {
@@ -69,13 +80,18 @@
     [statusBar setBackgroundColor:[UIColor whiteColor]];
     [[self view] addSubview:statusBar];
 
+    [[self view]  setBackgroundColor:[UIColor whiteColor]];
+
+}
+
+-(void)onInitialConfig{
     //Is it first time?
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
     if(![settings boolForKey:@"OnBoardingFinished"]){
         
         [[self navigationController] performSegueWithIdentifier:@"OnBoarding" sender:self];
-    
+        
     }
     
     [self goToUrl];
@@ -162,6 +178,10 @@
 
 -(void)openSettings{
     [self performSegueWithIdentifier:@"Settings" sender:self];
+}
+
+-(void)openRegions{
+    [self performSegueWithIdentifier:@"Regions" sender:self];
 }
 
 -(void)reloadURL:(NSNotification*)notification{

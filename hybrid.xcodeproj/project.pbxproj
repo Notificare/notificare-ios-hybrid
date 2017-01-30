@@ -12,6 +12,30 @@
 		5D58D4801E3CFF45000334E3 /* Notificare.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D58D4781E3CFF45000334E3 /* Notificare.plist */; };
 		5D58D4811E3CFF45000334E3 /* NotificareManagedModels.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5D58D4791E3CFF45000334E3 /* NotificareManagedModels.bundle */; };
 		5D58D4821E3CFF45000334E3 /* NotificareTags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D58D47A1E3CFF45000334E3 /* NotificareTags.plist */; };
+		5D58D4911E3E21B1000334E3 /* RegionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D4901E3E21B1000334E3 /* RegionsViewController.m */; };
+		5D58D4941E3E2240000334E3 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D4931E3E2240000334E3 /* ResetPasswordViewController.m */; };
+		5D58D4971E3E228A000334E3 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D4961E3E228A000334E3 /* SignUpViewController.m */; };
+		5D58D49A1E3E3DA8000334E3 /* RegionsMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D4991E3E3DA8000334E3 /* RegionsMarker.m */; };
+		5D58D5341E3EBA75000334E3 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D5331E3EBA75000334E3 /* NotificationService.m */; };
+		5D58D5381E3EBA75000334E3 /* notification.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5D58D5301E3EBA75000334E3 /* notification.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5D58D53D1E3EBAC7000334E3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2DFA1E07326E00BCEA41 /* CoreLocation.framework */; };
+		5D58D53E1E3EBACD000334E3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2DFC1E07327400BCEA41 /* CoreData.framework */; };
+		5D58D53F1E3EBAD3000334E3 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2DFE1E07327B00BCEA41 /* UserNotifications.framework */; };
+		5D58D5401E3EBAD9000334E3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E001E07328100BCEA41 /* MobileCoreServices.framework */; };
+		5D58D5411E3EBADE000334E3 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E021E07328800BCEA41 /* MessageUI.framework */; };
+		5D58D5421E3EBAE4000334E3 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E041E07329100BCEA41 /* libicucore.tbd */; };
+		5D58D5431E3EBAEB000334E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E061E07329800BCEA41 /* UIKit.framework */; };
+		5D58D5441E3EBAF1000334E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E081E07329E00BCEA41 /* Foundation.framework */; };
+		5D58D5451E3EBAF6000334E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E0A1E0732A400BCEA41 /* CoreGraphics.framework */; };
+		5D58D5461E3EBAFB000334E3 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2DF81E07307600BCEA41 /* PassKit.framework */; };
+		5D58D5471E3EBB01000334E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E0C1E0732AA00BCEA41 /* MapKit.framework */; };
+		5D58D5481E3EBB07000334E3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E0E1E0732B100BCEA41 /* SystemConfiguration.framework */; };
+		5D58D5491E3EBB0C000334E3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E101E0732B700BCEA41 /* Security.framework */; };
+		5D58D54A1E3EBB12000334E3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E121E0732BD00BCEA41 /* CFNetwork.framework */; };
+		5D58D54B1E3EBB1A000334E3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E141E0732C300BCEA41 /* ImageIO.framework */; };
+		5D58D54C1E3EBB1F000334E3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E161E0732C800BCEA41 /* StoreKit.framework */; };
+		5D58D54D1E3EBB26000334E3 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C2E181E0732CE00BCEA41 /* SafariServices.framework */; };
+		5D58D54E1E3EBB3C000334E3 /* libNotificarePushLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D58D4041E3CFF45000334E3 /* libNotificarePushLib.a */; };
 		5D7C2D471E06EC0400BCEA41 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D461E06EC0400BCEA41 /* main.m */; };
 		5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D491E06EC0400BCEA41 /* AppDelegate.m */; };
 		5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */; };
@@ -55,6 +79,30 @@
 		5D7C2E351E09819A00BCEA41 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */; };
 		5D7C2E381E09D31100BCEA41 /* NoInternetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5D58D5361E3EBA75000334E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D7C2D3A1E06EC0400BCEA41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D58D52F1E3EBA75000334E3;
+			remoteInfo = notification;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5D58D53C1E3EBA75000334E3 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5D58D5381E3EBA75000334E3 /* notification.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5D58D4031E3CFF45000334E3 /* DefaultTheme.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DefaultTheme.bundle; sourceTree = "<group>"; };
@@ -145,6 +193,18 @@
 		5D58D4781E3CFF45000334E3 /* Notificare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Notificare.plist; sourceTree = "<group>"; };
 		5D58D4791E3CFF45000334E3 /* NotificareManagedModels.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NotificareManagedModels.bundle; sourceTree = "<group>"; };
 		5D58D47A1E3CFF45000334E3 /* NotificareTags.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NotificareTags.plist; sourceTree = "<group>"; };
+		5D58D48F1E3E21B1000334E3 /* RegionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionsViewController.h; sourceTree = "<group>"; };
+		5D58D4901E3E21B1000334E3 /* RegionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionsViewController.m; sourceTree = "<group>"; };
+		5D58D4921E3E2240000334E3 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
+		5D58D4931E3E2240000334E3 /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
+		5D58D4951E3E228A000334E3 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		5D58D4961E3E228A000334E3 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		5D58D4981E3E3DA8000334E3 /* RegionsMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionsMarker.h; sourceTree = "<group>"; };
+		5D58D4991E3E3DA8000334E3 /* RegionsMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionsMarker.m; sourceTree = "<group>"; };
+		5D58D5301E3EBA75000334E3 /* notification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D58D5321E3EBA75000334E3 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
+		5D58D5331E3EBA75000334E3 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
+		5D58D5351E3EBA75000334E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7C2D421E06EC0400BCEA41 /* hybrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hybrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D7C2D461E06EC0400BCEA41 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D7C2D481E06EC0400BCEA41 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -203,6 +263,31 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5D58D52D1E3EBA75000334E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D58D54E1E3EBB3C000334E3 /* libNotificarePushLib.a in Frameworks */,
+				5D58D54D1E3EBB26000334E3 /* SafariServices.framework in Frameworks */,
+				5D58D54C1E3EBB1F000334E3 /* StoreKit.framework in Frameworks */,
+				5D58D54B1E3EBB1A000334E3 /* ImageIO.framework in Frameworks */,
+				5D58D54A1E3EBB12000334E3 /* CFNetwork.framework in Frameworks */,
+				5D58D5491E3EBB0C000334E3 /* Security.framework in Frameworks */,
+				5D58D5481E3EBB07000334E3 /* SystemConfiguration.framework in Frameworks */,
+				5D58D5471E3EBB01000334E3 /* MapKit.framework in Frameworks */,
+				5D58D5461E3EBAFB000334E3 /* PassKit.framework in Frameworks */,
+				5D58D5451E3EBAF6000334E3 /* CoreGraphics.framework in Frameworks */,
+				5D58D5441E3EBAF1000334E3 /* Foundation.framework in Frameworks */,
+				5D58D5431E3EBAEB000334E3 /* UIKit.framework in Frameworks */,
+				5D58D5421E3EBAE4000334E3 /* libicucore.tbd in Frameworks */,
+				5D58D5411E3EBADE000334E3 /* MessageUI.framework in Frameworks */,
+				5D58D5401E3EBAD9000334E3 /* MobileCoreServices.framework in Frameworks */,
+				5D58D53F1E3EBAD3000334E3 /* UserNotifications.framework in Frameworks */,
+				5D58D53E1E3EBACD000334E3 /* CoreData.framework in Frameworks */,
+				5D58D53D1E3EBAC7000334E3 /* CoreLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D7C2D3F1E06EC0400BCEA41 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -582,10 +667,21 @@
 			path = WebView;
 			sourceTree = "<group>";
 		};
+		5D58D5311E3EBA75000334E3 /* notification */ = {
+			isa = PBXGroup;
+			children = (
+				5D58D5321E3EBA75000334E3 /* NotificationService.h */,
+				5D58D5331E3EBA75000334E3 /* NotificationService.m */,
+				5D58D5351E3EBA75000334E3 /* Info.plist */,
+			);
+			path = notification;
+			sourceTree = "<group>";
+		};
 		5D7C2D391E06EC0400BCEA41 = {
 			isa = PBXGroup;
 			children = (
 				5D7C2D441E06EC0400BCEA41 /* hybrid */,
+				5D58D5311E3EBA75000334E3 /* notification */,
 				5D7C2D431E06EC0400BCEA41 /* Products */,
 				5D7C2DF71E07307600BCEA41 /* Frameworks */,
 			);
@@ -595,6 +691,7 @@
 			isa = PBXGroup;
 			children = (
 				5D7C2D421E06EC0400BCEA41 /* hybrid.app */,
+				5D58D5301E3EBA75000334E3 /* notification.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -616,6 +713,14 @@
 				5D7C2E261E09597500BCEA41 /* InboxViewController.m */,
 				5D7C2E2F1E097C4800BCEA41 /* SettingsViewController.h */,
 				5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */,
+				5D58D48F1E3E21B1000334E3 /* RegionsViewController.h */,
+				5D58D4901E3E21B1000334E3 /* RegionsViewController.m */,
+				5D58D4981E3E3DA8000334E3 /* RegionsMarker.h */,
+				5D58D4991E3E3DA8000334E3 /* RegionsMarker.m */,
+				5D58D4921E3E2240000334E3 /* ResetPasswordViewController.h */,
+				5D58D4931E3E2240000334E3 /* ResetPasswordViewController.m */,
+				5D58D4951E3E228A000334E3 /* SignUpViewController.h */,
+				5D58D4961E3E228A000334E3 /* SignUpViewController.m */,
 				5D7C2D4B1E06EC0400BCEA41 /* ViewController.h */,
 				5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */,
 				5D7C2D4E1E06EC0400BCEA41 /* Main.storyboard */,
@@ -720,6 +825,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5D58D52F1E3EBA75000334E3 /* notification */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D58D5391E3EBA75000334E3 /* Build configuration list for PBXNativeTarget "notification" */;
+			buildPhases = (
+				5D58D52C1E3EBA75000334E3 /* Sources */,
+				5D58D52D1E3EBA75000334E3 /* Frameworks */,
+				5D58D52E1E3EBA75000334E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = notification;
+			productName = notification;
+			productReference = 5D58D5301E3EBA75000334E3 /* notification.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		5D7C2D411E06EC0400BCEA41 /* hybrid */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D7C2D591E06EC0400BCEA41 /* Build configuration list for PBXNativeTarget "hybrid" */;
@@ -727,10 +849,12 @@
 				5D7C2D3E1E06EC0400BCEA41 /* Sources */,
 				5D7C2D3F1E06EC0400BCEA41 /* Frameworks */,
 				5D7C2D401E06EC0400BCEA41 /* Resources */,
+				5D58D53C1E3EBA75000334E3 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5D58D5371E3EBA75000334E3 /* PBXTargetDependency */,
 			);
 			name = hybrid;
 			productName = demo;
@@ -746,6 +870,11 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Notificare;
 				TargetAttributes = {
+					5D58D52F1E3EBA75000334E3 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = Y47BY73NFN;
+						ProvisioningStyle = Automatic;
+					};
 					5D7C2D411E06EC0400BCEA41 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = Y47BY73NFN;
@@ -781,11 +910,19 @@
 			projectRoot = "";
 			targets = (
 				5D7C2D411E06EC0400BCEA41 /* hybrid */,
+				5D58D52F1E3EBA75000334E3 /* notification */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5D58D52E1E3EBA75000334E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D7C2D401E06EC0400BCEA41 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -815,11 +952,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5D58D52C1E3EBA75000334E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D58D5341E3EBA75000334E3 /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D7C2D3E1E06EC0400BCEA41 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */,
+				5D58D4941E3E2240000334E3 /* ResetPasswordViewController.m in Sources */,
 				5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */,
 				5D7C2E381E09D31100BCEA41 /* NoInternetViewController.m in Sources */,
 				5D7C2DE21E06ED8000BCEA41 /* Configuration.m in Sources */,
@@ -827,12 +973,23 @@
 				5D7C2E2E1E095B0200BCEA41 /* NSDate+TimeAgo.m in Sources */,
 				5D7C2E221E087FAD00BCEA41 /* OnBoardingViewController.m in Sources */,
 				5D7C2E2D1E095B0200BCEA41 /* GravatarHelper.m in Sources */,
+				5D58D4911E3E21B1000334E3 /* RegionsViewController.m in Sources */,
 				5D7C2D471E06EC0400BCEA41 /* main.m in Sources */,
+				5D58D4971E3E228A000334E3 /* SignUpViewController.m in Sources */,
 				5D7C2E271E09597500BCEA41 /* InboxViewController.m in Sources */,
+				5D58D49A1E3E3DA8000334E3 /* RegionsMarker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5D58D5371E3EBA75000334E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D58D52F1E3EBA75000334E3 /* notification */;
+			targetProxy = 5D58D5361E3EBA75000334E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5D7C2D4E1E06EC0400BCEA41 /* Main.storyboard */ = {
@@ -854,6 +1011,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5D58D53A1E3EBA75000334E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = Y47BY73NFN;
+				INFOPLIST_FILE = notification/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/demo/Libs/notificare-push-lib-1.9.5",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.hybrid.notification;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		5D58D53B1E3EBA75000334E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = Y47BY73NFN;
+				INFOPLIST_FILE = notification/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/demo/Libs/notificare-push-lib-1.9.5",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.hybrid.notification;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		5D7C2D571E06EC0400BCEA41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -987,6 +1176,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5D58D5391E3EBA75000334E3 /* Build configuration list for PBXNativeTarget "notification" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D58D53A1E3EBA75000334E3 /* Debug */,
+				5D58D53B1E3EBA75000334E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		5D7C2D3D1E06EC0400BCEA41 /* Build configuration list for PBXProject "hybrid" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
