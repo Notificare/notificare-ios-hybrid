@@ -10,4 +10,6 @@
 
 @interface ResetPasswordViewController : UIViewController <UITextFieldDelegate>
 
+@property (nonatomic, strong) NSString * token;
+
 @end

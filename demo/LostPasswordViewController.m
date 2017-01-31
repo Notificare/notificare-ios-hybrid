@@ -99,7 +99,6 @@
     
     [self setEmailField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
     [[self emailField] setDelegate:self];
-    [[self emailField] setText:@""];
     [[self emailField] setTextAlignment:NSTextAlignmentRight];
     [[self emailField] setFont:LATO_LIGHT_FONT(14)];
     [[self emailField] setPlaceholder:[item objectForKey:@"placeholder"]];
@@ -194,7 +193,7 @@
     
     [[self formButton] setEnabled:NO];
     
-    if (![[self emailField] text]) {
+    if ([[[self emailField] text] length] == 0) {
 
         [self presentAlertViewForForm:LS(@"error_forgotpass_invalid_email")];
         [[self formButton] setEnabled:YES];

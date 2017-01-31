@@ -104,7 +104,6 @@
     if ([[item objectForKey:@"label"] isEqual:LS(@"password_label")]) {
         [self setPasswordField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self passwordField] setDelegate:self];
-        [[self passwordField] setText:@""];
         [[self passwordField] setTextAlignment:NSTextAlignmentRight];
         [[self passwordField] setFont:LATO_LIGHT_FONT(14)];
         [[self passwordField] setPlaceholder:[item objectForKey:@"placeholder"]];
@@ -116,14 +115,13 @@
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40)];
         [label setText:LS(@"lost_password_button_text")];
         [label setTextAlignment:NSTextAlignmentRight];
-        [label setFont:LATO_LIGHT_FONT(12)];
+        [label setFont:LATO_FONT(14)];
         [label setTextColor:FACEBOOK_COLOR];
         [cell setAccessoryView:label];
         
     } else {
         [self setEmailField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self emailField] setDelegate:self];
-        [[self emailField] setText:@""];
         [[self emailField] setTextAlignment:NSTextAlignmentRight];
         [[self emailField] setFont:LATO_LIGHT_FONT(14)];
         [[self emailField] setPlaceholder:[item objectForKey:@"placeholder"]];
@@ -239,7 +237,7 @@
     
     [[self formButton] setEnabled:NO];
     
-    if (![[self emailField] text]) {
+    if ([[[self emailField] text] length] == 0) {
         
         [self presentAlertViewForForm:LS(@"error_signin_invalid_email")];
         [[self formButton] setEnabled:YES];

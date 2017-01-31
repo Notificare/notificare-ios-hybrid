@@ -106,7 +106,6 @@
     if ([[item objectForKey:@"label"] isEqual:LS(@"password_label")]) {
         [self setPasswordField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self passwordField] setDelegate:self];
-        [[self passwordField] setText:@""];
         [[self passwordField] setTextAlignment:NSTextAlignmentRight];
         [[self passwordField] setFont:LATO_LIGHT_FONT(14)];
         [[self passwordField] setPlaceholder:[item objectForKey:@"placeholder"]];
@@ -116,7 +115,6 @@
     } else if ([[item objectForKey:@"label"] isEqual:LS(@"confirm_password_label")]) {
         [self setConfirmPasswordField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self confirmPasswordField] setDelegate:self];
-        [[self confirmPasswordField] setText:@""];
         [[self confirmPasswordField] setTextAlignment:NSTextAlignmentRight];
         [[self confirmPasswordField] setFont:LATO_LIGHT_FONT(14)];
         [[self confirmPasswordField] setPlaceholder:[item objectForKey:@"placeholder"]];
@@ -126,7 +124,6 @@
     } else if ([[item objectForKey:@"label"] isEqual:LS(@"name_label")]) {
         [self setNameField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self nameField] setDelegate:self];
-        [[self nameField] setText:@""];
         [[self nameField] setTextAlignment:NSTextAlignmentRight];
         [[self nameField] setFont:LATO_LIGHT_FONT(14)];
         [[self nameField] setPlaceholder:[item objectForKey:@"placeholder"]];
@@ -136,7 +133,6 @@
     }  else {
         [self setEmailField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self emailField] setDelegate:self];
-        [[self emailField] setText:@""];
         [[self emailField] setTextAlignment:NSTextAlignmentRight];
         [[self emailField] setFont:LATO_LIGHT_FONT(14)];
         [[self emailField] setPlaceholder:[item objectForKey:@"placeholder"]];
@@ -232,13 +228,19 @@
     
     [[self formButton] setEnabled:NO];
     
-    if (![[self emailField] text]) {
+    if ([[[self nameField] text] length] == 0) {
+        
+        [self presentAlertViewForForm:LS(@"error_create_account_name")];
+        [[self formButton] setEnabled:YES];
+        
+        
+    } else if ([[[self emailField] text] length] == 0) {
         
         [self presentAlertViewForForm:LS(@"error_create_account_invalid_email")];
         [[self formButton] setEnabled:YES];
         
         
-    }else if (![[[self passwordField] text] isEqualToString:[[self confirmPasswordField] text]]) {
+    } else if (![[[self passwordField] text] isEqualToString:[[self confirmPasswordField] text]]) {
         
         [self presentAlertViewForForm:LS(@"error_create_account_passwords_match")];
         [[self formButton] setEnabled:YES];

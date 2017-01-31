@@ -394,12 +394,13 @@
 
 - (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountNotification:(NSDictionary *)info{
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changedAccount" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeAccountNotification" object:nil];
 
 }
 
 - (void)notificarePushLib:(NotificarePushLib *)library didFailToRequestAccessNotification:(NSError *)error{
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didFailToRequestAccessNotification" object:nil];
     
 }
 
@@ -408,11 +409,11 @@
     
     [[NotificarePushLib shared] validateAccount:token completionHandler:^(NSDictionary *info) {
         
-        //APP_ALERT_DIALOG(LSSTRING(@"success_validate"));
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAlertWithMessage" object:nil userInfo:@{@"message": LS(@"success_validate")}];
         
     } errorHandler:^(NSError *error) {
         
-        //APP_ALERT_DIALOG(LSSTRING(@"error_validate"));
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAlertWithMessage" object:nil userInfo:@{@"message": LS(@"error_validate")}];
         
     }];
     
@@ -421,7 +422,7 @@
 
 - (void)notificarePushLib:(NotificarePushLib *)library didReceiveResetPasswordToken:(NSString *)token{
     
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"openResetPassword" object:nil userInfo:@{@"token":token}];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

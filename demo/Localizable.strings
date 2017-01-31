@@ -9,18 +9,22 @@
 "title_settings" = "Settings";
 "title_regions" = "Stores & Venues";
 "title_signin" = "Sign In";
-"title_signuo" = "Create Account";
+"title_signup" = "Create Account";
 "title_lost_password" = "Lost Password";
 
+"name_label" = "Name";
+"name_placeholder" = "Type your name";
 "email_label" = "Email";
 "email_placeholder" = "Type your email";
 "password_label" = "Password";
 "password_placeholder" = "Type your password";
+"confirm_password_label" = "Confirm Password";
+"confirm_password_placeholder" = "Type your password again";
 
 "signin_button_text" = "Sign In";
 "signup_button_text" = "Create Account";
 "recover_button_text" = "Recover Password";
-"lost_password_button_text" = "Lost Password?";
+"lost_password_button_text" = "Have you lost your password?";
 
 "empty_inbox_text" = "You've got no messages!";
 
@@ -47,3 +51,40 @@
 
 "your_subject" = "Write a subject";
 "your_message" = "Write a message";
+
+
+"success_create_account" = "Account created successfully. Please check your mail box for more information.";
+"error_create_account" = "An error occured while creating an account. Please try again.";
+"error_create_account_invalid_email" = "Please fill in a valid email.";
+"error_create_account_passwords_match" = "Passwords don't match.";
+"error_create_account_small_password" = "Password should contain more than 4 chars.";
+"error_create_account_name" = "Please insert your name.";
+
+"success_forgotpass" = "Account found. Please check your mail box for more information.";
+"error_forgotpass" = "We could not find any account matching this criteria. Please try again.";
+"error_forgotpass_invalid_email" = "Please fill in a valid email.";
+
+"success_signin" = "Authenticated";
+"error_signin_invalid_email" = "Please insert a valid email.";
+"error_signin_invalid_password" = "Please insert a valid password";
+"error_signin" = "Invalid email and password";
+"error_signin" = "Invalid email and password";
+"error_fetching_account" = "Your session was terminated. Please sign in again.";
+
+
+"success_resetpass" = "Your account password is now update. You can now sign in.";
+"error_resetpass" = "We could not find any account matching this criteria. Please try again.";
+"error_resetpass_invalid_oldpass" = "Please provide your current password.";
+"error_resetpass_passwords_match" = "Passwords don't match.";
+"error_resetpass_small_password" = "Password should contain more than 4 chars.";
+
+
+"success_message_generate_token" = "A new email token was generated successfully.";
+"error_message_generate_token" = "An error occured while generating a new email token. Please try again.";
+
+"success_message_changepass"= "Your password was changed successfully.";
+"error_password_changepass"= "Please type the a new password twice to change your current password.";
+"error_message_changepass"= "An error occured while trying to change your password. Please try again.";
+
+"success_validate" = "Your account is now activated please sign in.";
+"error_validate" = "We could not validate your account at this moment.";

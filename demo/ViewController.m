@@ -9,12 +9,14 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "Configuration.h"
+#import "ResetPasswordViewController.h"
 
 @interface ViewController ()
 
 @property (nonatomic, strong) IBOutlet UIWebView * webView;
 @property (nonatomic, strong) UIActivityIndicatorView * activityIndicatorView;
 @property (nonatomic, strong) NSURL * targetUrl;
+@property (nonatomic, strong) NSString * token;
 @property (nonatomic, assign) BOOL isLoading;
 
 @end
@@ -45,11 +47,15 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openProfile) name:@"openProfile" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openResetPassword:) name:@"openResetPassword" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onInitialConfig) name:@"initialConfig" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewNotification) name:@"newNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlertWithMessage:) name:@"showAlertWithMessage" object:nil];
 
 }
 
@@ -80,6 +86,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openProfile"
                                                   object:nil];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openResetPassword"
+                                                  object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"reloadURL"
@@ -91,6 +101,10 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"newNotification"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"showAlertWithMessage"
                                                   object:nil];
 }
 
@@ -234,6 +248,44 @@
 -(void)reloadURL:(NSNotification*)notification{
     [self setTargetUrl:[[notification userInfo] objectForKey:@"url"]];
     [self goToUrl];
+}
+
+-(void)openResetPassword:(NSNotification *) notification
+{
+    [self setToken:[[notification userInfo] valueForKey:@"token"]];
+    [self performSegueWithIdentifier:@"ResetPassword" sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ResetPassword"])
+    {
+        ResetPasswordViewController *vc = [segue destinationViewController];
+        [vc setToken:[self token]];
+    }
+}
+
+
+-(void)showAlertWithMessage:(NSNotification *)notification
+{
+    [self presentAlertViewForForm:[[notification userInfo] valueForKey:@"message"]];
+}
+
+-(void)presentAlertViewForForm:(NSString *)message{
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle: APP_NAME
+                                  message:message
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:LS(@"ok")
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action){}];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -46,6 +46,8 @@
                         <segue destination="1hb-eH-Bv5" kind="show" identifier="Regions" id="BgJ-B1-JCn"/>
                         <segue destination="3N0-Hl-ul5" kind="show" identifier="SignIn" id="21S-6d-hQ4"/>
                         <segue destination="aGQ-JM-OAr" kind="show" identifier="Profile" id="OI5-UD-v1M"/>
+                        <segue destination="ygC-YO-F7I" kind="show" identifier="ResetPassword" id="noK-tX-hkn"/>
+                        <segue destination="Oc3-ZJ-yMD" kind="show" identifier="Profile" id="Bdt-Kf-Bmi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -157,6 +159,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQ5-1r-1RE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2052" y="-56.221889055472268"/>
+        </scene>
+        <!--Reset Password View Controller-->
+        <scene sceneID="5L0-EN-eaT">
+            <objects>
+                <viewController id="ygC-YO-F7I" customClass="ResetPasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7PA-U0-bgl"/>
+                        <viewControllerLayoutGuide type="bottom" id="xWJ-j4-oY1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HAf-au-PhU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="9OS-je-dGw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="ygC-YO-F7I" id="dlH-Wk-wiZ"/>
+                                    <outlet property="delegate" destination="ygC-YO-F7I" id="I1x-MA-Spg"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9OS-je-dGw" firstAttribute="leading" secondItem="HAf-au-PhU" secondAttribute="leading" id="1rq-tV-sDx"/>
+                            <constraint firstAttribute="trailing" secondItem="9OS-je-dGw" secondAttribute="trailing" id="7rp-LW-RvI"/>
+                            <constraint firstItem="9OS-je-dGw" firstAttribute="bottom" secondItem="xWJ-j4-oY1" secondAttribute="top" id="McV-0Q-nvK"/>
+                            <constraint firstItem="9OS-je-dGw" firstAttribute="top" secondItem="HAf-au-PhU" secondAttribute="top" id="sEE-HB-DQ8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="9OS-je-dGw" id="AGh-jc-hYS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XYW-J5-DVQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2053.5999999999999" y="618.44077961019491"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="QVa-XF-nKa">
+            <objects>
+                <viewController id="Oc3-ZJ-yMD" customClass="ProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QbV-tN-kdx"/>
+                        <viewControllerLayoutGuide type="bottom" id="dPS-1k-EVu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="r52-X5-dI1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="OZB-4B-MBv">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Oc3-ZJ-yMD" id="F9n-Zh-8Ft"/>
+                                    <outlet property="delegate" destination="Oc3-ZJ-yMD" id="5Ut-OS-qd9"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OZB-4B-MBv" firstAttribute="leading" secondItem="r52-X5-dI1" secondAttribute="leading" id="A2w-o5-A1H"/>
+                            <constraint firstAttribute="trailing" secondItem="OZB-4B-MBv" secondAttribute="trailing" id="QJl-cb-0g4"/>
+                            <constraint firstItem="OZB-4B-MBv" firstAttribute="bottom" secondItem="dPS-1k-EVu" secondAttribute="top" id="WDf-du-OQy"/>
+                            <constraint firstItem="OZB-4B-MBv" firstAttribute="top" secondItem="r52-X5-dI1" secondAttribute="top" id="kcf-4y-CN7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="OZB-4B-MBv" id="P7i-1q-aTf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bBE-XL-evy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2053.5999999999999" y="1286.8065967016494"/>
         </scene>
         <!--Lost Password View Controller-->
         <scene sceneID="aKZ-4F-TFM">
@@ -312,7 +388,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tb8-Uw-NmG" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EgI-0F-DNZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EgI-0F-DNZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -358,7 +434,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wcZ-6P-bCn" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gjV-Dm-ZhA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="gjV-Dm-ZhA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
