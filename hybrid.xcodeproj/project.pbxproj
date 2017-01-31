@@ -694,6 +694,85 @@
 			path = SubClasses;
 			sourceTree = "<group>";
 		};
+		5D5CCB081E410858000D9B0B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5D5CCB0E1E41093D000D9B0B /* NoInternet */,
+				5D5CCB0D1E410926000D9B0B /* OnBoarding */,
+				5D5CCB0C1E410913000D9B0B /* Notifications */,
+				5D5CCB0B1E4108F6000D9B0B /* Settings */,
+				5D5CCB0A1E4108DE000D9B0B /* Location */,
+				5D5CCB091E4108B7000D9B0B /* Account */,
+				5D7C2D4B1E06EC0400BCEA41 /* ViewController.h */,
+				5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		5D5CCB091E4108B7000D9B0B /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				5D58D4921E3E2240000334E3 /* ResetPasswordViewController.h */,
+				5D58D4931E3E2240000334E3 /* ResetPasswordViewController.m */,
+				5D5CCB051E40E7F6000D9B0B /* LostPasswordViewController.h */,
+				5D5CCB061E40E7F6000D9B0B /* LostPasswordViewController.m */,
+				5D58D4951E3E228A000334E3 /* SignUpViewController.h */,
+				5D58D4961E3E228A000334E3 /* SignUpViewController.m */,
+				5D58D54F1E3F5A96000334E3 /* SignInViewController.h */,
+				5D58D5501E3F5A96000334E3 /* SignInViewController.m */,
+				5D58D5521E3F5CEA000334E3 /* ProfileViewController.h */,
+				5D58D5531E3F5CEB000334E3 /* ProfileViewController.m */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		5D5CCB0A1E4108DE000D9B0B /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				5D58D48F1E3E21B1000334E3 /* RegionsViewController.h */,
+				5D58D4901E3E21B1000334E3 /* RegionsViewController.m */,
+				5D58D4981E3E3DA8000334E3 /* RegionsMarker.h */,
+				5D58D4991E3E3DA8000334E3 /* RegionsMarker.m */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
+		5D5CCB0B1E4108F6000D9B0B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5D7C2E2F1E097C4800BCEA41 /* SettingsViewController.h */,
+				5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		5D5CCB0C1E410913000D9B0B /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				5D7C2E251E09597500BCEA41 /* InboxViewController.h */,
+				5D7C2E261E09597500BCEA41 /* InboxViewController.m */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
+		5D5CCB0D1E410926000D9B0B /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */,
+				5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */,
+			);
+			name = OnBoarding;
+			sourceTree = "<group>";
+		};
+		5D5CCB0E1E41093D000D9B0B /* NoInternet */ = {
+			isa = PBXGroup;
+			children = (
+				5D7C2E361E09D31100BCEA41 /* NoInternetViewController.h */,
+				5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */,
+			);
+			name = NoInternet;
+			sourceTree = "<group>";
+		};
 		5D7C2D391E06EC0400BCEA41 = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +795,7 @@
 		5D7C2D441E06EC0400BCEA41 /* hybrid */ = {
 			isa = PBXGroup;
 			children = (
+				5D5CCB081E410858000D9B0B /* App */,
 				5D5CCB011E40D70F000D9B0B /* SubClasses */,
 				5D7C2E281E095B0200BCEA41 /* Categories */,
 				5D7C2DE41E06EE1E00BCEA41 /* Resources */,
@@ -723,30 +803,6 @@
 				5D7C2D5C1E06ECA400BCEA41 /* Libs */,
 				5D7C2D481E06EC0400BCEA41 /* AppDelegate.h */,
 				5D7C2D491E06EC0400BCEA41 /* AppDelegate.m */,
-				5D7C2E361E09D31100BCEA41 /* NoInternetViewController.h */,
-				5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */,
-				5D7C2E201E087FAD00BCEA41 /* OnBoardingViewController.h */,
-				5D7C2E211E087FAD00BCEA41 /* OnBoardingViewController.m */,
-				5D7C2E251E09597500BCEA41 /* InboxViewController.h */,
-				5D7C2E261E09597500BCEA41 /* InboxViewController.m */,
-				5D7C2E2F1E097C4800BCEA41 /* SettingsViewController.h */,
-				5D7C2E301E097C4800BCEA41 /* SettingsViewController.m */,
-				5D58D48F1E3E21B1000334E3 /* RegionsViewController.h */,
-				5D58D4901E3E21B1000334E3 /* RegionsViewController.m */,
-				5D58D4981E3E3DA8000334E3 /* RegionsMarker.h */,
-				5D58D4991E3E3DA8000334E3 /* RegionsMarker.m */,
-				5D58D4921E3E2240000334E3 /* ResetPasswordViewController.h */,
-				5D58D4931E3E2240000334E3 /* ResetPasswordViewController.m */,
-				5D5CCB051E40E7F6000D9B0B /* LostPasswordViewController.h */,
-				5D5CCB061E40E7F6000D9B0B /* LostPasswordViewController.m */,
-				5D58D4951E3E228A000334E3 /* SignUpViewController.h */,
-				5D58D4961E3E228A000334E3 /* SignUpViewController.m */,
-				5D58D54F1E3F5A96000334E3 /* SignInViewController.h */,
-				5D58D5501E3F5A96000334E3 /* SignInViewController.m */,
-				5D58D5521E3F5CEA000334E3 /* ProfileViewController.h */,
-				5D58D5531E3F5CEB000334E3 /* ProfileViewController.m */,
-				5D7C2D4B1E06EC0400BCEA41 /* ViewController.h */,
-				5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */,
 				5D7C2D4E1E06EC0400BCEA41 /* Main.storyboard */,
 				5D7C2D511E06EC0400BCEA41 /* Assets.xcassets */,
 				5D7C2D531E06EC0400BCEA41 /* LaunchScreen.storyboard */,
