@@ -24,11 +24,17 @@
 
 #define DEFAULT_CELLHEIGHT  60
 #define INBOX_CELLHEIGHT  120
-#define TOPIC_CELLHEIGHT  100
-#define NOTIFICATION_CELLHEIGHT  100
+#define FORMS_CELLHEIGHT  70
+#define SETTINGS_CELLHEIGHT  100
+
 #define HEADER_CELLHEIGHT  50
 #define FOOTER_CELLHEIGHT 80
-#define FOOTER_FINISH_CELLHEIGHT 100
+
+#define SIGNIN_HEADER_HEIGHT 220
+#define SIGNIN_FOOTER_HEIGHT 150
+
+#define LOST_PASSWORD_HEADER_HEIGHT 220
+#define LOST_PASSWORD_FOOTER_HEIGHT 80
 
 #define USER_HEADER_HEIGHT 60
 #define USER_CELLHEIGHT 80
@@ -46,7 +52,7 @@
 #define LOG_CELLHEIGHT 80
 #define EMPTY_LOG_CELLHEIGHT 480
 
-#define MAIN_COLOR [UIColor colorWithRed:61.0/255.0 green:59.0/255 blue:55.0/255.0 alpha:1.0]
+#define MAIN_COLOR [UIColor colorWithRed:35.0/255.0 green:44.0/255 blue:42.0/255.0 alpha:1.0]
 #define ALTO_COLOR [UIColor colorWithRed:218.0/255.0 green:218.0/255 blue:218.0/255.0 alpha:1.0]
 #define FACEBOOK_COLOR [UIColor colorWithRed:59.0/255.0 green:89.0/255 blue:152.0/255.0 alpha:1.0]
 #define WILD_SAND_COLOR [UIColor colorWithRed:246.0/255.0 green:246.0/255 blue:246.0/255.0 alpha:1.0]
@@ -63,8 +69,8 @@
 
 #define BUTTON_TEXT [UIFont fontWithName:@"Lato-Light" size:20]
 #define BUTTON_TEXT_COLOR [UIColor whiteColor]
-#define BUTTON_BACKGROUND_COLOR MANTIS_COLOR
-#define BUTTON_BORDER_COLOR MANTIS_COLOR
+#define BUTTON_BACKGROUND_COLOR MAIN_COLOR
+#define BUTTON_BORDER_COLOR MAIN_COLOR
 #define BUTTON_BORDER_WIDTH 0.0f
 #define BUTTON_CORNER_RADIUS 0.0f
 
@@ -96,6 +102,8 @@
  */
 #define LS(str) NSLocalizedString(str, str)
 
+
+#define APP_NAME [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]
 
 
 /**

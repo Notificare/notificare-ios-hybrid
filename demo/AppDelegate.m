@@ -95,11 +95,26 @@
         
     } else if ([[url path] isEqualToString:@"/profile"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openProfile" object:nil];
+        if([[NotificarePushLib shared] isLoggedIn]){
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"openProfile" object:nil];
+            
+        } else {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignIn" object:nil];
+        }
         
     } else if ([[url path] isEqualToString:@"/membercard"]) {
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"openMemberCard" object:nil];
+        
+    } else if ([[url path] isEqualToString:@"/signin"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignIn" object:nil];
+        
+    } else if ([[url path] isEqualToString:@"/signup"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignUp" object:nil];
         
     } else {
     

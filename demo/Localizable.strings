@@ -8,6 +8,17 @@
 "title_inbox" = "Inbox";
 "title_settings" = "Settings";
 "title_regions" = "Stores & Venues";
+"title_signin" = "Sign In";
+"title_lost_password" = "Lost Password";
+
+"email_label" = "Email";
+"email_placeholder" = "Type your email";
+"password_label" = "Password";
+"password_placeholder" = "Type your password";
+
+"signin_button_text" = "Sign In";
+"recover_button_text" = "Recover Password";
+"lost_password_button_text" = "Lost Password?";
 
 "empty_inbox_text" = "You've got no messages!";
 

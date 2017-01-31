@@ -10,6 +10,12 @@
 
 @interface SignUpViewController ()
 
+@property (nonatomic, strong) IBOutlet UITableView * tableView;
+@property (nonatomic, strong) IBOutlet UITableViewController * tableViewController;
+@property (nonatomic, strong) IBOutlet UIView * loadingScreen;
+@property (nonatomic, strong) NSMutableArray * navSections;
+@property (nonatomic, strong) NSMutableArray * sectionTitles;
+
 @end
 
 @implementation SignUpViewController

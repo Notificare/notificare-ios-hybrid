@@ -44,11 +44,118 @@
                         <segue destination="s4x-OZ-oGd" kind="show" identifier="Settings" id="8oe-IE-l93"/>
                         <segue destination="gOS-Xr-lKR" kind="show" identifier="Inbox" id="wwg-hY-WEw"/>
                         <segue destination="1hb-eH-Bv5" kind="show" identifier="Regions" id="BgJ-B1-JCn"/>
+                        <segue destination="3N0-Hl-ul5" kind="show" identifier="SignIn" id="21S-6d-hQ4"/>
+                        <segue destination="aGQ-JM-OAr" kind="show" identifier="Profile" id="OI5-UD-v1M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1279" y="82"/>
+        </scene>
+        <!--Sign In View Controller-->
+        <scene sceneID="23N-Uu-5H3">
+            <objects>
+                <viewController id="3N0-Hl-ul5" customClass="SignInViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XmZ-Sa-PYh"/>
+                        <viewControllerLayoutGuide type="bottom" id="dSw-JO-uix"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iPe-oa-BbH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="PF1-6I-bdU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="3N0-Hl-ul5" id="GJl-gf-ryy"/>
+                                    <outlet property="delegate" destination="3N0-Hl-ul5" id="EUu-0z-ip5"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PF1-6I-bdU" firstAttribute="top" secondItem="iPe-oa-BbH" secondAttribute="top" id="4j3-i9-CW7"/>
+                            <constraint firstItem="PF1-6I-bdU" firstAttribute="leading" secondItem="iPe-oa-BbH" secondAttribute="leading" id="OGY-St-A0P"/>
+                            <constraint firstAttribute="trailing" secondItem="PF1-6I-bdU" secondAttribute="trailing" id="Sg2-PW-7Mw"/>
+                            <constraint firstItem="PF1-6I-bdU" firstAttribute="bottom" secondItem="dSw-JO-uix" secondAttribute="top" id="tVF-Oq-lN3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="PF1-6I-bdU" id="ucd-nj-oKB"/>
+                        <segue destination="kH8-hz-fUH" kind="show" identifier="LostPassword" id="DXl-qI-uA9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qwU-Re-ON3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2052" y="-742.5787106446777"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="rgS-g1-5ir">
+            <objects>
+                <viewController id="aGQ-JM-OAr" customClass="ProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3gg-lD-urp"/>
+                        <viewControllerLayoutGuide type="bottom" id="6eB-eb-dNA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lSf-5b-JcR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tA2-vg-pix">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tA2-vg-pix" secondAttribute="trailing" id="3D2-y8-Hyl"/>
+                            <constraint firstItem="tA2-vg-pix" firstAttribute="top" secondItem="lSf-5b-JcR" secondAttribute="top" id="WM6-nn-DHs"/>
+                            <constraint firstItem="tA2-vg-pix" firstAttribute="bottom" secondItem="6eB-eb-dNA" secondAttribute="top" id="WbD-V2-agW"/>
+                            <constraint firstItem="tA2-vg-pix" firstAttribute="leading" secondItem="lSf-5b-JcR" secondAttribute="leading" id="vKm-cf-Kcr"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OQ5-1r-1RE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2052" y="-56.221889055472268"/>
+        </scene>
+        <!--Lost Password View Controller-->
+        <scene sceneID="aKZ-4F-TFM">
+            <objects>
+                <viewController id="kH8-hz-fUH" customClass="LostPasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xup-VY-E85"/>
+                        <viewControllerLayoutGuide type="bottom" id="KSi-E8-iRn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WNs-Gr-Af0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eKV-0O-muW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="kH8-hz-fUH" id="0nr-vW-Hix"/>
+                                    <outlet property="delegate" destination="kH8-hz-fUH" id="mfu-Gp-1Sk"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eKV-0O-muW" firstAttribute="leading" secondItem="WNs-Gr-Af0" secondAttribute="leading" id="BkD-Bx-RJH"/>
+                            <constraint firstAttribute="trailing" secondItem="eKV-0O-muW" secondAttribute="trailing" id="Bnf-Kp-chP"/>
+                            <constraint firstItem="eKV-0O-muW" firstAttribute="bottom" secondItem="KSi-E8-iRn" secondAttribute="top" id="cb2-TG-nBA"/>
+                            <constraint firstItem="eKV-0O-muW" firstAttribute="top" secondItem="WNs-Gr-Af0" secondAttribute="top" id="pyr-N0-eGM"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="eKV-0O-muW" id="zNx-mk-8X5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ge-7R-Sns" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2872.8000000000002" y="-742.5787106446777"/>
         </scene>
         <!--Inbox View Controller-->
         <scene sceneID="t71-DD-b8R">
@@ -86,7 +193,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OfT-Xx-gx8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2052" y="-1316"/>
+            <point key="canvasLocation" x="2052" y="-2105"/>
         </scene>
         <!--On Boarding View Controller-->
         <scene sceneID="KCB-sO-Yhg">
@@ -160,7 +267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pw5-Bl-EAu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2048.8000000000002" y="-653.52323838080963"/>
+            <point key="canvasLocation" x="2052" y="-1424"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ufx-kc-YFq">
@@ -310,7 +417,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="joy-mq-pjX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2052" y="-2159"/>
+            <point key="canvasLocation" x="2052" y="-2806"/>
         </scene>
     </scenes>
 </document>

@@ -414,7 +414,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return ([indexPath section] == 0) ? ([indexPath row] == 3 || [indexPath row] == 4) ? DEFAULT_CELLHEIGHT : NOTIFICATION_CELLHEIGHT : DEFAULT_CELLHEIGHT;
+    return ([indexPath section] == 0) ? ([indexPath row] == 3 || [indexPath row] == 4) ? DEFAULT_CELLHEIGHT : SETTINGS_CELLHEIGHT : DEFAULT_CELLHEIGHT;
     
 }
 

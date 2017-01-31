@@ -29,7 +29,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self evaluateJS];
+    [self evaluateJS];  
     
     [[self navigationController] setNavigationBarHidden:YES];
     
@@ -38,6 +38,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSettings) name:@"openSettings" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openRegions) name:@"openRegions" object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSignIn) name:@"openSignIn" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSignUp) name:@"openSignUp" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openProfile) name:@"openProfile" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
     
@@ -61,6 +67,18 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openRegions"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openSignIn"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openSignUp"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openProfile"
                                                   object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -199,6 +217,18 @@
 
 -(void)openRegions{
     [self performSegueWithIdentifier:@"Regions" sender:self];
+}
+
+-(void)openSignIn{
+    [self performSegueWithIdentifier:@"SignIn" sender:self];
+}
+
+-(void)openSignUp{
+    [self performSegueWithIdentifier:@"SignUp" sender:self];
+}
+
+-(void)openProfile{
+    [self performSegueWithIdentifier:@"Profile" sender:self];
 }
 
 -(void)reloadURL:(NSNotification*)notification{
