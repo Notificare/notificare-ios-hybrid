@@ -29,6 +29,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    [self evaluateJS];
+    
     [[self navigationController] setNavigationBarHidden:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openInbox) name:@"openInbox" object:nil];
@@ -40,6 +42,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onInitialConfig) name:@"initialConfig" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewNotification) name:@"newNotification" object:nil];
+
 }
 
 
@@ -64,6 +69,10 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"initialConfig"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"newNotification"
                                                   object:nil];
 }
 
@@ -167,9 +176,18 @@
     
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    [[self webView] stringByEvaluatingJavaScriptFromString:[settings objectForKey:@"customJSFile"]];
+    NSString * badge = @"";
+    
+    if ( [[NotificarePushLib shared] myBadge] ) {
+       badge = [NSString stringWithFormat:@"%i", [[NotificarePushLib shared] myBadge]];
+    }
+    
+    [[self webView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge]];
 }
 
+-(void)onNewNotification {
+    [self evaluateJS];
+}
 
 -(void)openInbox{
     [self performSegueWithIdentifier:@"Inbox" sender:self];
