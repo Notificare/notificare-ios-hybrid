@@ -11,6 +11,7 @@
 "title_signin" = "Sign In";
 "title_signup" = "Create Account";
 "title_lost_password" = "Lost Password";
+"title_profile" = "My Profile";
 
 "name_label" = "Name";
 "name_placeholder" = "Type your name";
@@ -20,6 +21,11 @@
 "password_placeholder" = "Type your password";
 "confirm_password_label" = "Confirm Password";
 "confirm_password_placeholder" = "Type your password again";
+"access_token_label" = "Push Email";
+
+"button_resetpass" = "Change Password";
+"button_generate_token" = "Generate Email Token";
+"button_logout" = "Sign Out";
 
 "signin_button_text" = "Sign In";
 "signup_button_text" = "Create Account";
@@ -88,3 +94,16 @@
 
 "success_validate" = "Your account is now activated please sign in.";
 "error_validate" = "We could not validate your account at this moment.";
+
+"confirm_generate_token_text" = "Are you sure you want to generate another email token?";
+"confirm_logout_text" = "Are you sure you want to sign out?";
+
+"success_message_update_user_data" = "Your profile was updated successfully.";
+"error_message_update_user_data" = "We could not update your profile at this time, please try again later.";
+"type_something" = "type a value";
+
+
+"mail_subject_text" = "iOS Demo App";
+"mail_body_text" = "Type a message";
+"mail_success_text" = "Message sent successfully. We will contact you as soon as possible. Thank you.";
+"mail_error_text" = "Message could not be sent at this moment. Please try again later.";

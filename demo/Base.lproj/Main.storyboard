@@ -45,7 +45,6 @@
                         <segue destination="gOS-Xr-lKR" kind="show" identifier="Inbox" id="wwg-hY-WEw"/>
                         <segue destination="1hb-eH-Bv5" kind="show" identifier="Regions" id="BgJ-B1-JCn"/>
                         <segue destination="3N0-Hl-ul5" kind="show" identifier="SignIn" id="21S-6d-hQ4"/>
-                        <segue destination="aGQ-JM-OAr" kind="show" identifier="Profile" id="OI5-UD-v1M"/>
                         <segue destination="ygC-YO-F7I" kind="show" identifier="ResetPassword" id="noK-tX-hkn"/>
                         <segue destination="Oc3-ZJ-yMD" kind="show" identifier="Profile" id="Bdt-Kf-Bmi"/>
                     </connections>
@@ -130,36 +129,6 @@
             </objects>
             <point key="canvasLocation" x="2896.8000000000002" y="-572.56371814092961"/>
         </scene>
-        <!--Profile View Controller-->
-        <scene sceneID="rgS-g1-5ir">
-            <objects>
-                <viewController id="aGQ-JM-OAr" customClass="ProfileViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3gg-lD-urp"/>
-                        <viewControllerLayoutGuide type="bottom" id="6eB-eb-dNA"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lSf-5b-JcR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="tA2-vg-pix">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="tA2-vg-pix" secondAttribute="trailing" id="3D2-y8-Hyl"/>
-                            <constraint firstItem="tA2-vg-pix" firstAttribute="top" secondItem="lSf-5b-JcR" secondAttribute="top" id="WM6-nn-DHs"/>
-                            <constraint firstItem="tA2-vg-pix" firstAttribute="bottom" secondItem="6eB-eb-dNA" secondAttribute="top" id="WbD-V2-agW"/>
-                            <constraint firstItem="tA2-vg-pix" firstAttribute="leading" secondItem="lSf-5b-JcR" secondAttribute="leading" id="vKm-cf-Kcr"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OQ5-1r-1RE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2052" y="-56.221889055472268"/>
-        </scene>
         <!--Reset Password View Controller-->
         <scene sceneID="5L0-EN-eaT">
             <objects>
@@ -213,8 +182,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="Oc3-ZJ-yMD" id="F9n-Zh-8Ft"/>
-                                    <outlet property="delegate" destination="Oc3-ZJ-yMD" id="5Ut-OS-qd9"/>
+                                    <outlet property="dataSource" destination="Oc3-ZJ-yMD" id="7T5-P8-hgf"/>
+                                    <outlet property="delegate" destination="Oc3-ZJ-yMD" id="dTm-wF-unv"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -227,12 +196,50 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="OZB-4B-MBv" id="P7i-1q-aTf"/>
+                        <outlet property="tableView" destination="OZB-4B-MBv" id="HaV-Yj-olD"/>
+                        <segue destination="3GM-h8-vYp" kind="show" identifier="Preferences" id="8r3-0e-wIt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bBE-XL-evy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2053.5999999999999" y="1286.8065967016494"/>
+            <point key="canvasLocation" x="2054" y="1560"/>
+        </scene>
+        <!--Preferences View Controller-->
+        <scene sceneID="MZp-Ef-ICd">
+            <objects>
+                <viewController id="3GM-h8-vYp" customClass="PreferencesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fE0-c1-b6v"/>
+                        <viewControllerLayoutGuide type="bottom" id="5kh-OX-tZE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8EO-aR-4HZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="rud-8y-StQ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="3GM-h8-vYp" id="lwO-Q6-tv5"/>
+                                    <outlet property="delegate" destination="3GM-h8-vYp" id="Ky5-SU-yvb"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="rud-8y-StQ" secondAttribute="trailing" id="CJk-MZ-Ki3"/>
+                            <constraint firstItem="rud-8y-StQ" firstAttribute="bottom" secondItem="5kh-OX-tZE" secondAttribute="top" id="LbO-FH-xVm"/>
+                            <constraint firstItem="rud-8y-StQ" firstAttribute="leading" secondItem="8EO-aR-4HZ" secondAttribute="leading" id="hsK-jg-gAP"/>
+                            <constraint firstItem="rud-8y-StQ" firstAttribute="top" secondItem="8EO-aR-4HZ" secondAttribute="top" id="sBu-ec-Y2J"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="rud-8y-StQ" id="DGV-aa-3gh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="epK-hh-ypV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2896.8000000000002" y="1559.3703148425789"/>
         </scene>
         <!--Lost Password View Controller-->
         <scene sceneID="aKZ-4F-TFM">
@@ -388,7 +395,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tb8-Uw-NmG" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EgI-0F-DNZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EgI-0F-DNZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -434,7 +441,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wcZ-6P-bCn" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="gjV-Dm-ZhA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gjV-Dm-ZhA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

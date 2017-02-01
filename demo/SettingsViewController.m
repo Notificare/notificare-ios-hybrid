@@ -137,7 +137,6 @@
                     
                     [[self tableView] reloadData];
                     
-                    
                 } errorHandler:^(NSError *error) {
                     //
                 }];

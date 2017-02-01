@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InboxViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface InboxViewController : UIViewController 
 
 @end
