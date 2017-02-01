@@ -49,6 +49,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openResetPassword:) name:@"openResetPassword" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCustomEvents) name:@"openCustomEvents" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openAssets) name:@"openAssets" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onInitialConfig) name:@"initialConfig" object:nil];
@@ -89,6 +93,14 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openResetPassword"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openCustomEvents"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openAssets"
                                                   object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -243,6 +255,54 @@
 
 -(void)openProfile{
     [self performSegueWithIdentifier:@"Profile" sender:self];
+}
+
+-(void)openCustomEvents{
+    
+    
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle: APP_NAME
+                                  message:LS(@"register_custom_event")
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = LS(@"type_event_name");
+    }];
+
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:LS(@"send")
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action){
+                             
+                             if([[[alert textFields][0] text] length] == 0 ){
+                                 [self presentAlertViewForForm:LS(@"error_custom_event_name")];
+                             } else {
+                                 [[NotificarePushLib shared] logCustomEvent:[[alert textFields][0] text] withData:nil completionHandler:^(NSDictionary * _Nonnull info) {
+                                     [self presentAlertViewForForm:LS(@"success_custom_event")];
+                                 } errorHandler:^(NSError * _Nonnull error) {
+                                     [self presentAlertViewForForm:LS(@"error_custom_event")];
+                                 }];
+                             }
+                             
+                         }];
+    [alert addAction:ok];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:LS(@"cancel")
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action){}];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:^{
+
+        
+    }];
+
+    
+}
+
+-(void)openAssets{
+    [self performSegueWithIdentifier:@"Assets" sender:self];
 }
 
 -(void)reloadURL:(NSNotification*)notification{

@@ -116,6 +116,14 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignUp" object:nil];
         
+    } else if ([[url path] isEqualToString:@"/analytics"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openCustomEvents" object:nil];
+        
+    } else if ([[url path] isEqualToString:@"/storage"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openAssets" object:nil];
+        
     } else {
     
         

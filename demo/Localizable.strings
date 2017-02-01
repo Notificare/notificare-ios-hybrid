@@ -102,6 +102,10 @@
 "error_message_update_user_data" = "We could not update your profile at this time, please try again later.";
 "type_something" = "type a value";
 
+"register_custom_event" = "Register Custom Event";
+"error_custom_event_name" = "Please insert a valid event name";
+"error_custom_event" = "We could not register the event at this time, please try again later.";
+"success_custom_event" = "Custom event registered successfully. Please check your dashboard to see the results for this event name.";
 
 "mail_subject_text" = "iOS Demo App";
 "mail_body_text" = "Type a message";
