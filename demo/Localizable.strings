@@ -12,6 +12,7 @@
 "title_signup" = "Create Account";
 "title_lost_password" = "Lost Password";
 "title_profile" = "My Profile";
+"title_storage" = "Storage";
 
 "name_label" = "Name";
 "name_placeholder" = "Type your name";
@@ -33,6 +34,8 @@
 "lost_password_button_text" = "Have you lost your password?";
 
 "empty_inbox_text" = "You've got no messages!";
+
+"storage_intro_text" = "Use the search option above to search for asset groups created in the dashboard.";
 
 "section_item_settings_notifications" = "Notification Settings";
 "section_item_settings_about" = "About this app";

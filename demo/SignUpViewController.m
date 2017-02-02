@@ -15,7 +15,6 @@
 
 @property (nonatomic, strong) IBOutlet UITableView * tableView;
 @property (nonatomic, strong) IBOutlet UITableViewController * tableViewController;
-@property (nonatomic, strong) IBOutlet UIView * loadingScreen;
 @property (nonatomic, strong) NSMutableArray * navSections;
 @property (nonatomic, strong) NSMutableArray * sectionTitles;
 @property (nonatomic, strong) UITextField * nameField;

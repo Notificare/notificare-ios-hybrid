@@ -41,6 +41,7 @@
 		5D5CCB041E40D70F000D9B0B /* FormButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5CCB031E40D70F000D9B0B /* FormButton.m */; };
 		5D5CCB071E40E7F6000D9B0B /* LostPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5CCB061E40E7F6000D9B0B /* LostPasswordViewController.m */; };
 		5D5CCB111E415A9A000D9B0B /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5CCB101E415A9A000D9B0B /* PreferencesViewController.m */; };
+		5D5CCB5F1E427959000D9B0B /* AssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5CCB5E1E427959000D9B0B /* AssetsViewController.m */; };
 		5D7C2D471E06EC0400BCEA41 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D461E06EC0400BCEA41 /* main.m */; };
 		5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D491E06EC0400BCEA41 /* AppDelegate.m */; };
 		5D7C2D4D1E06EC0400BCEA41 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2D4C1E06EC0400BCEA41 /* ViewController.m */; };
@@ -218,6 +219,8 @@
 		5D5CCB061E40E7F6000D9B0B /* LostPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LostPasswordViewController.m; sourceTree = "<group>"; };
 		5D5CCB0F1E415A9A000D9B0B /* PreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
 		5D5CCB101E415A9A000D9B0B /* PreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
+		5D5CCB5D1E427959000D9B0B /* AssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsViewController.h; sourceTree = "<group>"; };
+		5D5CCB5E1E427959000D9B0B /* AssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetsViewController.m; sourceTree = "<group>"; };
 		5D7C2D421E06EC0400BCEA41 /* hybrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hybrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D7C2D461E06EC0400BCEA41 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D7C2D481E06EC0400BCEA41 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -700,6 +703,8 @@
 		5D5CCB081E410858000D9B0B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				5D5CCB5C1E427926000D9B0B /* MemberCard */,
+				5D5CCB5B1E42791D000D9B0B /* Assets */,
 				5D5CCB0E1E41093D000D9B0B /* NoInternet */,
 				5D5CCB0D1E410926000D9B0B /* OnBoarding */,
 				5D5CCB0C1E410913000D9B0B /* Notifications */,
@@ -776,6 +781,22 @@
 				5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */,
 			);
 			name = NoInternet;
+			sourceTree = "<group>";
+		};
+		5D5CCB5B1E42791D000D9B0B /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				5D5CCB5D1E427959000D9B0B /* AssetsViewController.h */,
+				5D5CCB5E1E427959000D9B0B /* AssetsViewController.m */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		5D5CCB5C1E427926000D9B0B /* MemberCard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MemberCard;
 			sourceTree = "<group>";
 		};
 		5D7C2D391E06EC0400BCEA41 = {
@@ -1060,6 +1081,7 @@
 				5D58D4911E3E21B1000334E3 /* RegionsViewController.m in Sources */,
 				5D58D5511E3F5A96000334E3 /* SignInViewController.m in Sources */,
 				5D7C2D471E06EC0400BCEA41 /* main.m in Sources */,
+				5D5CCB5F1E427959000D9B0B /* AssetsViewController.m in Sources */,
 				5D58D4971E3E228A000334E3 /* SignUpViewController.m in Sources */,
 				5D5CCB071E40E7F6000D9B0B /* LostPasswordViewController.m in Sources */,
 				5D7C2E271E09597500BCEA41 /* InboxViewController.m in Sources */,
