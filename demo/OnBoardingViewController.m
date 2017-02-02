@@ -52,7 +52,8 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadOnBoarding) name:@"onReady" object:nil];
+    [self loadOnBoarding];
+    
 }
 
 - (void)didReceiveMemoryWarning {

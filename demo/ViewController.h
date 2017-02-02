@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <PassKit/PassKit.h>
 
-@interface ViewController : UIViewController <UIWebViewDelegate>
+@interface ViewController : UIViewController <UIWebViewDelegate, PKAddPassesViewControllerDelegate>
 
 
 

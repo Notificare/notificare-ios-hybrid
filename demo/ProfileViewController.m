@@ -181,6 +181,8 @@
 
 -(void)setupTable{
     
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
     [[self activityIndicatorView] setHidden:YES];
     [[self loadingView] removeFromSuperview];
     
@@ -223,6 +225,14 @@
                 
             }
             
+        }
+        
+        if([settings objectForKey:@"memberCardSerial"]){
+
+            [userCell addObject:@{@"type": @"static",
+                                  @"key": @"",
+                                  @"value": [NSNull new],
+                                  @"label":LS(@"button_open_pass")}];
         }
         
         
@@ -500,6 +510,10 @@
                 
             }];
             
+        } else if([[item objectForKey:@"label"] isEqualToString:LS(@"button_open_pass")]){
+            
+            [self openMemberCard];
+            
         } else if([[item objectForKey:@"label"] isEqualToString:LS(@"button_logout")]){
             
             [self logout];
@@ -737,7 +751,11 @@
                          handler:^(UIAlertAction * action){}];
     [alert addAction:cancel];
     
+    [self showLoadingView];
     [self presentViewController:alert animated:YES completion:^{
+        
+        [[self activityIndicatorView] setHidden:YES];
+        [[self loadingView] removeFromSuperview];
         
     }];
 
@@ -765,6 +783,41 @@
         }];
     }
     
+}
+
+-(void)openMemberCard{
+    
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
+    if([settings objectForKey:@"memberCardSerial"]){
+        
+        NSString * url = [NSString stringWithFormat:@"https://push.notifica.re/pass/pkpass/%@", [settings objectForKey:@"memberCardSerial"]];
+        NSURL *passbookUrl = [NSURL URLWithString:url];
+        NSData *data = [[NSData alloc] initWithContentsOfURL:passbookUrl];
+        NSError *error;
+        
+        //init a pass object with the data
+        PKPass * pass = [[PKPass alloc] initWithData:data error:&error];
+        
+        if(!error){
+            
+            //present view controller to add the pass to the library
+            PKAddPassesViewController * vc = [[PKAddPassesViewController alloc] initWithPass:pass];
+            
+            [self showLoadingView];
+            [self presentViewController:vc animated:YES completion:^{
+                [[self activityIndicatorView] setHidden:YES];
+                [[self loadingView] removeFromSuperview];
+            }];
+            
+        } else {
+            [self presentAlertViewForForm:LS(@"error_could_not_open_pkpass")];
+        }
+        
+        
+    } else {
+        [self presentAlertViewForForm:LS(@"error_no_serial_found")];
+    }
 }
 
 -(void)presentAlertViewForForm:(NSString *)message{

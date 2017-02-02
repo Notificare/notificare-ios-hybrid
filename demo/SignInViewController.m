@@ -255,15 +255,21 @@
                 
                 NSDictionary * user = [info objectForKey:@"user"];
                 
-                if([[user objectForKey:@"token"] isKindOfClass:[NSNull class]]){
+                if(![user objectForKey:@"accessToken"] || [[user objectForKey:@"accessToken"] isKindOfClass:[NSNull class]]){
                     
                     [[NotificarePushLib shared] generateAccessToken:^(NSDictionary *info) {
                         //
+                        
+                        [self goToProfile];
+                        
                     } errorHandler:^(NSError *error) {
                         //
                         [self presentAlertViewForForm:LS(@"error_signin")];
                         [[self formButton] setEnabled:YES];
                     }];
+                    
+                } else {
+                    [self goToProfile];
                 }
                 
                 
@@ -329,6 +335,12 @@
 -(void)goToSignUp{
     [self performSegueWithIdentifier:@"SignUp" sender:self];
 }
+
+
+-(void)goToProfile{
+    [self performSegueWithIdentifier:@"Profile" sender:self];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

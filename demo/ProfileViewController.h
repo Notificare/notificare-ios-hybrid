@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import <PassKit/PassKit.h>
 
 @interface ProfileViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 

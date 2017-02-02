@@ -13,4 +13,5 @@
 
 }
 + (NSURL*) getGravatarURL:(NSString*) emailAddress;
++ (NSString*) getGravatarURLString:(NSString*) emailAddress;
 @end

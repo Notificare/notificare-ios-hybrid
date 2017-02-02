@@ -27,6 +27,8 @@
 "button_resetpass" = "Change Password";
 "button_generate_token" = "Generate Email Token";
 "button_logout" = "Sign Out";
+"button_open_pass" = "Open Member Card";
+"section_profile_segments" = "User Preferences";
 
 "signin_button_text" = "Sign In";
 "signup_button_text" = "Create Account";
@@ -34,6 +36,7 @@
 "lost_password_button_text" = "Have you lost your password?";
 
 "empty_inbox_text" = "You've got no messages!";
+"clear_all" = "Clear All";
 
 "storage_intro_text" = "Use the search option above to search for asset groups created in the dashboard.";
 "type_asset_group_name" = "Type a valid asset group name";
@@ -118,3 +121,6 @@
 "mail_body_text" = "Type a message";
 "mail_success_text" = "Message sent successfully. We will contact you as soon as possible. Thank you.";
 "mail_error_text" = "Message could not be sent at this moment. Please try again later.";
+
+"error_could_not_open_pkpass" = "Could not open member card. Please try again later.";
+"error_no_serial_found" = "Could not open member card. No serial number found. Please try again later.";

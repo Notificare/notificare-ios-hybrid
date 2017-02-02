@@ -151,6 +151,7 @@
                         <outlet property="tableView" destination="PF1-6I-bdU" id="ucd-nj-oKB"/>
                         <segue destination="kH8-hz-fUH" kind="show" identifier="LostPassword" id="DXl-qI-uA9"/>
                         <segue destination="g58-hY-GYj" kind="show" identifier="SignUp" id="isl-4y-RCE"/>
+                        <segue destination="Oc3-ZJ-yMD" kind="show" identifier="Profile" id="UY5-OK-uZo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qwU-Re-ON3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -460,7 +461,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tb8-Uw-NmG" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EgI-0F-DNZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EgI-0F-DNZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -506,7 +507,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wcZ-6P-bCn" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="gjV-Dm-ZhA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gjV-Dm-ZhA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -606,4 +607,7 @@
             <point key="canvasLocation" x="2052" y="-2806"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="UY5-OK-uZo"/>
+    </inferredMetricsTieBreakers>
 </document>

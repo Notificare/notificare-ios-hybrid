@@ -19,9 +19,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
     [[NotificarePushLib shared] handleOptions:launchOptions];
+    
     
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
@@ -81,6 +83,8 @@
 #pragma Deep Links
 -(void)handleDeepLinks:(NSURL *)url{
     
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
     if ([[url path] isEqualToString:@"/inbox"]) {
 
        [[NSNotificationCenter defaultCenter] postNotificationName:@"openInbox" object:nil];
@@ -106,7 +110,15 @@
         
     } else if ([[url path] isEqualToString:@"/membercard"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openMemberCard" object:nil];
+        if([settings objectForKey:@"memberCardSerial"]){
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"openMemberCard" object:nil];
+            
+        } else {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignUp" object:nil];
+        }
+        
         
     } else if ([[url path] isEqualToString:@"/signin"]) {
         
@@ -141,8 +153,6 @@
 - (void)notificarePushLib:(NotificarePushLib *)library onReady:(NSDictionary *)info{
     
     [self initalConfig];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"onReady" object:nil];
     
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
