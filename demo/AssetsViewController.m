@@ -32,6 +32,10 @@
     [leftButton setTintColor:MAIN_COLOR];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
     
+    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearchAlert)];
+    [rightButton setTintColor:MAIN_COLOR];
+    [[self navigationItem] setRightBarButtonItem:rightButton];
+    
     [[self collectionView] setBackgroundColor:WILD_SAND_COLOR];
     [[self view] setBackgroundColor:WILD_SAND_COLOR];
     
@@ -69,12 +73,53 @@
 -(void)showIntroView{
     [self setIntroView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)]];
     
-    [self setIntroLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height / 2 - 30, self.view.bounds.size.width - 20, 60)]];
+    [self setIntroLabel:[[UILabel alloc] initWithFrame:CGRectMake(40, self.view.bounds.size.height / 2 - 30, self.view.bounds.size.width - 80, 60)]];
     [[self introLabel] setText:LS(@"storage_intro_text")];
     [[self introLabel] setFont:LATO_LIGHT_FONT(16)];
+    [[self introLabel] setTextAlignment:NSTextAlignmentCenter];
+    [[self introLabel] setNumberOfLines:3];
     
     [[self introView] addSubview:[self introLabel]];
     [[self view] addSubview:[self introView]];
+}
+
+-(void)showSearchAlert{
+
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle: APP_NAME
+                                  message:LS(@"storage_search_text")
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = LS(@"type_asset_group_name");
+    }];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:LS(@"search")
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action){
+                             
+                             if([[[alert textFields][0] text] length] == 0){
+                                 [self presentAlertViewForForm:LS(@"storage_search_error")];
+                             } else {
+                                 [self searchAssets:[[alert textFields][0] text]];
+                             }
+                             
+                         }];
+    [alert addAction:ok];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:LS(@"cancel")
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action){}];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:^{
+        
+
+        
+    }];
+    
 }
 
 -(void)searchAssets:(NSString *)search{
@@ -91,12 +136,20 @@
         
     } errorHandler:^(NSError * _Nonnull error) {
         
+        [[self activityIndicatorView] removeFromSuperview];
+        
+        if(![[self introView] isDescendantOfView:[self view]]){
+            [self showIntroView];
+        }
+        
         [self setGridObjects:[NSMutableArray array]];
         [[self collectionView] reloadData];
         [[self introLabel] setText:LS(@"storage_empty_text")];
         [[self introLabel] setHidden:NO];
     }];
 }
+
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [[self gridObjects] count];
 }
@@ -125,11 +178,27 @@
         
     } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"video/mp4"]){
         
-        [image setImage:[UIImage imageNamed:@"VideoPlaceholder"]];
+        [image setImage:[UIImage imageNamed:@"video"]];
         
     } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"application/pdf"]){
         
-        [image setImage:[UIImage imageNamed:@"PdfPlaceholder"]];
+        [image setImage:[UIImage imageNamed:@"pdf"]];
+        
+    } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"application/json"]){
+        
+        [image setImage:[UIImage imageNamed:@"json"]];
+        
+    } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"text/javascript"]){
+        
+        [image setImage:[UIImage imageNamed:@"javascript"]];
+        
+    } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"text/css"]){
+        
+        [image setImage:[UIImage imageNamed:@"css"]];
+        
+    } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"text/html"]){
+        
+        [image setImage:[UIImage imageNamed:@"html"]];
         
     }
     
@@ -172,12 +241,20 @@
             [[UIApplication sharedApplication] openURL:target];
         }
         
+    } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"text/html"]){
+        
+        NSURL * target = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[item assetUrl]]];
+        
+        if(target && [target scheme] && [target host]){
+            [[UIApplication sharedApplication] openURL:target];
+        }
+        
     }
 }
 
 #pragma mark Collection view layout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((collectionView.frame.size.width / 2)-12, 96);
+    return CGSizeMake((collectionView.frame.size.width / 2)-12, 95);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -191,7 +268,6 @@
 // Layout: Set Edges
 - (UIEdgeInsets)collectionView:
 (UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    // return UIEdgeInsetsMake(0,8,0,8);  // top, left, bottom, right
     return UIEdgeInsetsMake(2,8,0,8);  // top, left, bottom, right
 }
 
@@ -244,7 +320,6 @@
     [UIView animateWithDuration:.5f animations:^{
         
         [[self highlightView] setAlpha:0.0f];
-        //[[self highlightView] removeFromSuperview];
         
     } completion:nil];
     
@@ -254,6 +329,23 @@
     
     [[self navigationController] popToRootViewControllerAnimated:YES];
     
+}
+
+-(void)presentAlertViewForForm:(NSString *)message{
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle: APP_NAME
+                                  message:message
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:LS(@"ok")
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action){}];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

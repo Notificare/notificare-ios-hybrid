@@ -36,6 +36,10 @@
 "empty_inbox_text" = "You've got no messages!";
 
 "storage_intro_text" = "Use the search option above to search for asset groups created in the dashboard.";
+"type_asset_group_name" = "Type a valid asset group name";
+"storage_search_error" = "Please insert a valid asset group name";
+"storage_empty_text" = "No asset group found";
+"storage_search_text" = "Search for asset groups previously created in the dashboard";
 
 "section_item_settings_notifications" = "Notification Settings";
 "section_item_settings_about" = "About this app";
