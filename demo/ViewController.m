@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) IBOutlet UIWebView * webView;
 @property (nonatomic, strong) UIActivityIndicatorView * activityIndicatorView;
+@property (nonatomic, strong) UIView * launchingView;
 @property (nonatomic, strong) NSURL * targetUrl;
 @property (nonatomic, strong) NSString * token;
 @property (nonatomic, assign) BOOL isLoading;
@@ -139,6 +140,16 @@
     UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 22)];
     [statusBar setBackgroundColor:[UIColor whiteColor]];
     [[self view] addSubview:statusBar];
+    
+    
+    [self setLaunchingView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)]];
+    UIImageView * logo = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [logo setImage:[UIImage imageNamed:@"logo"]];
+    [logo setContentMode:UIViewContentModeCenter];
+    
+    [[self launchingView] addSubview:logo];
+    [[self view] addSubview:[self launchingView]];
+    
 
     [[self view]  setBackgroundColor:[UIColor whiteColor]];
 
@@ -173,7 +184,7 @@
 -(void)webViewDidStartLoad:(UIWebView *)webView{
     
     [self setIsLoading:YES];
-    
+    [[self launchingView] removeFromSuperview];
     [[self view] addSubview:[self activityIndicatorView]];
     [[self activityIndicatorView]  startAnimating];
 

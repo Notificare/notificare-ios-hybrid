@@ -44,6 +44,9 @@
 "storage_empty_text" = "No asset group found";
 "storage_search_text" = "Search for asset groups previously created in the dashboard";
 
+"new_password_label" = "type a new password";
+"confirm_new_password_label" = "confirm the new password";
+
 "section_item_settings_notifications" = "Notification Settings";
 "section_item_settings_about" = "About this app";
 

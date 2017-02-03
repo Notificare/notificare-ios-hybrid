@@ -196,18 +196,19 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    return SIGNIN_HEADER_HEIGHT;
+    return SIGNUP_HEADER_HEIGHT;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
-    return SIGNIN_FOOTER_HEIGHT;
+    return SIGNUP_FOOTER_HEIGHT;
     
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
+    
     NSInteger nextTag = textField.tag + 1;
     // Try to find next responder
     UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
@@ -223,10 +224,12 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
-    
+    [[self tableView] scrollRectToVisible:CGRectMake(0, 0, 1, self.tableView.frame.size.height + SIGNUP_FOOTER_HEIGHT) animated:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    [[self tableView] scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     
     [textField resignFirstResponder];
     
@@ -292,75 +295,6 @@
     
 }
 
-/*
--(void)createMemberCard:(NSString*)name andEmail:(NSString*)email{
-
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-    
-    if (![[[self appDelegate] passTemplate] isKindOfClass:[NSNull class]]) {
-
-        NSMutableDictionary * payload = [NSMutableDictionary dictionaryWithDictionary:[self passTemplate]];
-        NSMutableDictionary * dataPayload = [NSMutableDictionary dictionaryWithDictionary:[[self passTemplate] objectForKey:@"data"]];
-        
-        NSMutableArray * tempPrimaryFields = [NSMutableArray arrayWithArray:[dataPayload objectForKey:@"primaryFields"]];
-        for (NSDictionary * primaryField in [dataPayload objectForKey:@"primaryFields"]) {
-            if ([[primaryField objectForKey:@"key"] isEqualToString:@"name"]) {
-            
-                NSMutableDictionary * field = [NSMutableDictionary dictionaryWithDictionary:primaryField];
-                
-                [tempPrimaryFields removeObject:primaryField];
-                
-                [field setObject:name forKey:@"value"];
-                [tempPrimaryFields addObject:field];
-            }
-        }
-        
-        [dataPayload setObject:tempPrimaryFields forKey:@"primaryFields"];
-        
-        NSMutableArray * tempSecondaryFields = [NSMutableArray arrayWithArray:[dataPayload objectForKey:@"secondaryFields"]];
-        
-        for (NSDictionary * secondaryField in [dataPayload objectForKey:@"secondaryFields"]) {
-            if ([[secondaryField objectForKey:@"key"] isEqualToString:@"email"]) {
-                
-                NSMutableDictionary * field = [NSMutableDictionary dictionaryWithDictionary:secondaryField];
-                
-                [tempSecondaryFields removeObject:secondaryField];
-                
-                [field setObject:email forKey:@"value"];
-                [tempSecondaryFields addObject:field];
-            }
-        }
-        
-        [dataPayload setObject:tempSecondaryFields forKey:@"secondaryFields"];
-        [dataPayload setObject:[[GravatarHelper getGravatarURL:email] absoluteString] forKey:@"thumbnail"];
-        
-        [payload setObject:[[self passTemplate] objectForKey:@"_id"] forKey:@"passbook"];
-        [payload setObject:dataPayload forKey:@"data"];
-        
-
-        [[NotificarePushLib shared] doCloudHostOperation:@"POST" path:@"/pass" URLParams:nil bodyJSON:payload successHandler:^(NSDictionary * _Nonnull info) {
-            
-            if (info && [info objectForKey:@"pass"] && [[info objectForKey:@"pass"] objectForKey:@"serial"] ) {
-                
-                [settings setObject:[[info objectForKey:@"pass"] objectForKey:@"serial"] forKey:@"memberCardSerial"];
-                [settings synchronize];
-                
-                [self setIsCreationFinished:YES];
-                
-                [self presentAlertViewForForm:LS(@"success_create_account")];
-            }
-            
-        } errorHandler:^(NotificareNetworkOperation * _Nonnull operation, NSError * _Nonnull error) {
-     
-            [self presentAlertViewForForm:LS(@"error_create_member_card")];
-        }];
-
-        
-    } else {
-        [self presentAlertViewForForm:LS(@"error_no_template_selected")];
-    }
-}
-*/
 
 
 -(void)presentAlertViewForForm:(NSString *)message{

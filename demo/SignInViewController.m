@@ -207,7 +207,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
-    return SIGNIN_FOOTER_HEIGHT;
+    return SIGNUP_FOOTER_HEIGHT;
     
 }
 
@@ -228,11 +228,13 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
+    [[self tableView] scrollRectToVisible:CGRectMake(0, 0, 1, self.tableView.frame.size.height + SIGNUP_FOOTER_HEIGHT) animated:YES];
     
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
+    [[self tableView] scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     [textField resignFirstResponder];
     
 }
