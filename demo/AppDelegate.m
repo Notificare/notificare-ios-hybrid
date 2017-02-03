@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "NotificareAsset.h"
+#import "GravatarHelper.h"
 
 
 @interface AppDelegate ()
@@ -116,7 +117,7 @@
             
         } else {
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignUp" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignIn" object:nil];
         }
         
         
@@ -175,7 +176,7 @@
 
     } errorHandler:^(NSError *error) {
         //
-
+        NSLog(@"%@", error);
     }];
 
 }
@@ -360,9 +361,14 @@
                                                     NSString* jsString = [[NSString alloc] initWithData:jsData encoding:NSUTF8StringEncoding];
                                                     
                                                     [settings setObject:jsString forKey:@"customJSFile"];
-                                                    [settings synchronize];
-
-                                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
+                                                    
+                                                    if ( [settings synchronize] ){
+                                                    
+                                                        // Fetch Main Template
+                                                        [self fetchTemplate];
+                                                        
+                                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
+                                                    }
                                                     
                                                 } else {
                                                     
@@ -375,6 +381,9 @@
                                     
                                 } else {
                                 
+                                    // Fetch Main Template
+                                    [self fetchTemplate];
+                                    
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
                                 }
                                 
@@ -401,11 +410,107 @@
         [self initalConfig];
         
     }];
-    
-    
-    
+
 }
 
+
+-(void)createMemberCard:(NSString*)name andEmail:(NSString*)email completionHandler:(PassSuccess)completionBlock errorHandler:(PassError)errorBlock{
+    
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
+    if (![[self passTemplate] isKindOfClass:[NSNull class]]) {
+        
+        NSMutableDictionary * payload = [NSMutableDictionary dictionaryWithDictionary:[self passTemplate]];
+        NSMutableDictionary * dataPayload = [NSMutableDictionary dictionaryWithDictionary:[[self passTemplate] objectForKey:@"data"]];
+        
+        NSMutableArray * tempPrimaryFields = [NSMutableArray arrayWithArray:[dataPayload objectForKey:@"primaryFields"]];
+        for (NSDictionary * primaryField in [dataPayload objectForKey:@"primaryFields"]) {
+            if ([[primaryField objectForKey:@"key"] isEqualToString:@"name"]) {
+                
+                NSMutableDictionary * field = [NSMutableDictionary dictionaryWithDictionary:primaryField];
+                
+                [tempPrimaryFields removeObject:primaryField];
+                
+                [field setObject:name forKey:@"value"];
+                [tempPrimaryFields addObject:field];
+            }
+        }
+        
+        [dataPayload setObject:tempPrimaryFields forKey:@"primaryFields"];
+        
+        NSMutableArray * tempSecondaryFields = [NSMutableArray arrayWithArray:[dataPayload objectForKey:@"secondaryFields"]];
+        
+        for (NSDictionary * secondaryField in [dataPayload objectForKey:@"secondaryFields"]) {
+            if ([[secondaryField objectForKey:@"key"] isEqualToString:@"email"]) {
+                
+                NSMutableDictionary * field = [NSMutableDictionary dictionaryWithDictionary:secondaryField];
+                
+                [tempSecondaryFields removeObject:secondaryField];
+                
+                [field setObject:email forKey:@"value"];
+                [tempSecondaryFields addObject:field];
+            }
+        }
+        
+        [dataPayload setObject:tempSecondaryFields forKey:@"secondaryFields"];
+        [dataPayload setObject:[[GravatarHelper getGravatarURL:email] absoluteString] forKey:@"thumbnail"];
+        
+        [payload setObject:[[self passTemplate] objectForKey:@"_id"] forKey:@"passbook"];
+        [payload setObject:dataPayload forKey:@"data"];
+        
+        
+        [[NotificarePushLib shared] doCloudHostOperation:@"POST" path:@"/pass" URLParams:nil bodyJSON:payload successHandler:^(NSDictionary * _Nonnull info) {
+            
+            if (info && [info objectForKey:@"pass"] && [[info objectForKey:@"pass"] objectForKey:@"serial"] ) {
+                
+                [settings setObject:[[info objectForKey:@"pass"] objectForKey:@"serial"] forKey:@"memberCardSerial"];
+                
+                
+                if ([settings synchronize]) {
+                
+                    completionBlock(@{@"serial" : [settings objectForKey:@"memberCardSerial"]});
+                }
+       
+            }
+            
+        } errorHandler:^(NotificareNetworkOperation * _Nonnull operation, NSError * _Nonnull error) {
+            errorBlock(error);
+        }];
+        
+        
+    } else {
+        NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+        [userInfo setObject:LS(@"error_no_pass_template_selected") forKey:@"response"];
+        NSError * e = [NSError errorWithDomain:@"re.notifica.push" code:400 userInfo:userInfo];
+        errorBlock(e);
+    }
+}
+
+
+-(void)fetchTemplate{
+    
+    NSDictionary * memberCardConfig = [[Configuration shared] getDictionary:@"memberCard"];
+    
+    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/passbook" URLParams:nil bodyJSON:nil successHandler:^(NSDictionary * _Nonnull info) {
+        
+        if (info && [info objectForKey:@"passbooks"]) {
+            
+            for (NSDictionary * template in [info objectForKey:@"passbooks"]) {
+                if ([[memberCardConfig objectForKey:@"templateId"] isEqualToString:[template objectForKey:@"_id"]]) {
+                    
+                    [self setPassTemplate:[NSDictionary dictionaryWithDictionary:template]];
+                    
+                }
+            }
+        } else {
+            NSLog(@"%@", info);
+        }
+        
+    } errorHandler:^(NotificareNetworkOperation * _Nonnull operation, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
+    }];
+    
+}
 
 
 #pragma Notificare OAuth2 delegates

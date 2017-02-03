@@ -32,7 +32,7 @@
     [super viewWillAppear:animated];
     
     
-    [self evaluateJS];  
+    [self evaluateJS];
     
     [[self navigationController] setNavigationBarHidden:YES];
     
@@ -148,6 +148,7 @@
     //Is it first time?
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
+    
     if(![settings boolForKey:@"OnBoardingFinished"]){
         
         [[self navigationController] performSegueWithIdentifier:@"OnBoarding" sender:self];
@@ -221,19 +222,22 @@
 
 -(void)evaluateJS{
     
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(evaluateJS)
-                                               object:nil];
-    
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    NSString * badge = @"";
-    
-    if ( [[NotificarePushLib shared] myBadge] ) {
-       badge = [NSString stringWithFormat:@"%i", [[NotificarePushLib shared] myBadge]];
+    if ([settings objectForKey:@"customJSFile"]) {
+        
+        [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                                 selector:@selector(evaluateJS)
+                                                   object:nil];
+        
+        NSString * badge = @"";
+        
+        if ( [[NotificarePushLib shared] myBadge]) {
+            badge = [NSString stringWithFormat:@"%i", [[NotificarePushLib shared] myBadge]];
+        }
+        
+        [[self webView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge]];
     }
-    
-    [[self webView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge]];
 }
 
 -(void)onNewNotification {

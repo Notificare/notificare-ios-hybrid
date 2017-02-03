@@ -48,7 +48,10 @@
     [[self scrollView] setShowsVerticalScrollIndicator:NO];
     [[self scrollView] setScrollsToTop:NO];
     [[self scrollView] setDelegate:self];
+    [[self scrollView] setScrollEnabled:NO];
     [[self scrollView] setBackgroundColor:[UIColor whiteColor]];
+    
+    [[self pageControl] setHidden:YES];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -184,7 +187,7 @@
     UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width - 40, 48)];
     [button.titleLabel setFont:LATO_FONT(20)];
     [button.titleLabel setTextColor:[UIColor whiteColor]];
-    [button setBackgroundColor:[UIColor redColor]];
+    [button setBackgroundColor:MAIN_COLOR];
     [button.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [button setTitle:[buttonObj objectForKey:@"label"] forState:UIControlStateNormal];
     

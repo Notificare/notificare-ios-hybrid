@@ -124,3 +124,5 @@
 
 "error_could_not_open_pkpass" = "Could not open member card. Please try again later.";
 "error_no_serial_found" = "Could not open member card. No serial number found. Please try again later.";
+"error_create_member_card" = "Could not create a member card. Please try again later.";
+"error_no_template_selected" = "Could not find a pass template. Please check app configurations.";

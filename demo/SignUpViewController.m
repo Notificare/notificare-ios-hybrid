@@ -12,6 +12,7 @@
 #import "NotificarePushLib.h"
 #import "Configuration.h"
 #import "GravatarHelper.h"
+#import "AppDelegate.h"
 
 @interface SignUpViewController ()
 
@@ -30,6 +31,10 @@
 @end
 
 @implementation SignUpViewController
+
+- (AppDelegate *)appDelegate {
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,8 +55,6 @@
     [[self navSections] addObject:section1];
     
     [[self tableView] reloadData];
-    
-    [self fetchTemplate];
     
     UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     [leftButton setTintColor:MAIN_COLOR];
@@ -262,14 +265,21 @@
                              andPassword:[[self passwordField] text]
                        completionHandler:^(NSDictionary *info) {
                            
-                           [self createMemberCard:[[self nameField] text] andEmail:[[[self emailField] text] lowercaseString]];
-                           
-                           [[self formButton] setEnabled:YES];
-                           
-                           [[self emailField] setText:@""];
-                           [[self nameField] setText:@""];
-                           [[self passwordField] setText:@""];
-                           [[self confirmPasswordField] setText:@""];
+                           [[self appDelegate] createMemberCard:[[self nameField] text] andEmail:[[[self emailField] text] lowercaseString] completionHandler:^(NSDictionary *info) {
+                               
+                               [[self formButton] setEnabled:YES];
+                               
+                               [[self emailField] setText:@""];
+                               [[self nameField] setText:@""];
+                               [[self passwordField] setText:@""];
+                               [[self confirmPasswordField] setText:@""];
+                               
+                               [self setIsCreationFinished:YES];
+                               [self presentAlertViewForForm:LS(@"success_create_account")];
+                               
+                           } errorHandler:^(NSError *error) {
+                               [self presentAlertViewForForm:LS(@"error_create_member_card")];
+                           }];
                            
                        } errorHandler:^(NSError *error) {
                            
@@ -282,11 +292,12 @@
     
 }
 
+/*
 -(void)createMemberCard:(NSString*)name andEmail:(NSString*)email{
 
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    if (![[self passTemplate] isKindOfClass:[NSNull class]]) {
+    if (![[[self appDelegate] passTemplate] isKindOfClass:[NSNull class]]) {
 
         NSMutableDictionary * payload = [NSMutableDictionary dictionaryWithDictionary:[self passTemplate]];
         NSMutableDictionary * dataPayload = [NSMutableDictionary dictionaryWithDictionary:[[self passTemplate] objectForKey:@"data"]];
@@ -321,7 +332,7 @@
         }
         
         [dataPayload setObject:tempSecondaryFields forKey:@"secondaryFields"];
-        [dataPayload setObject:[GravatarHelper getGravatarURLString:email] forKey:@"thumbnail"];
+        [dataPayload setObject:[[GravatarHelper getGravatarURL:email] absoluteString] forKey:@"thumbnail"];
         
         [payload setObject:[[self passTemplate] objectForKey:@"_id"] forKey:@"passbook"];
         [payload setObject:dataPayload forKey:@"data"];
@@ -349,29 +360,8 @@
         [self presentAlertViewForForm:LS(@"error_no_template_selected")];
     }
 }
+*/
 
--(void)fetchTemplate{
-
-    NSDictionary * memberCardConfig = [[Configuration shared] getDictionary:@"memberCard"];
-    
-    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/passbook" URLParams:nil bodyJSON:nil successHandler:^(NSDictionary * _Nonnull info) {
-
-        if (info && [info objectForKey:@"passbooks"]) {
-        
-            for (NSDictionary * template in [info objectForKey:@"passbooks"]) {
-                if ([[memberCardConfig objectForKey:@"templateId"] isEqualToString:[template objectForKey:@"_id"]]) {
-                    
-                    [self setPassTemplate:[NSDictionary dictionaryWithDictionary:template]];
-                    
-                }
-            }
-        }
-        
-    } errorHandler:^(NotificareNetworkOperation * _Nonnull operation, NSError * _Nonnull error) {
-        [self presentAlertViewForForm:LS(@"error_retrieve_passbook_templates")];
-    }];
-    
-}
 
 -(void)presentAlertViewForForm:(NSString *)message{
     UIAlertController * alert=   [UIAlertController

@@ -10,6 +10,7 @@
 #import "Definitions.h"
 #import "FormButton.h"
 #import "NotificarePushLib.h"
+#import "AppDelegate.h"
 
 @interface SignInViewController ()
 
@@ -25,6 +26,10 @@
 @end
 
 @implementation SignInViewController
+
+- (AppDelegate *)appDelegate {
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -234,6 +239,9 @@
 
 -(void)doLogin:(id)sender{
     
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
+    
     [[self formButton] setEnabled:NO];
     
     if ([[[self emailField] text] length] == 0) {
@@ -258,7 +266,13 @@
                 if(![user objectForKey:@"accessToken"] || [[user objectForKey:@"accessToken"] isKindOfClass:[NSNull class]]){
                     
                     [[NotificarePushLib shared] generateAccessToken:^(NSDictionary *info) {
-                        //
+                        
+                        
+                        if(![settings objectForKey:@"memberCardSerial"]){
+                            
+                            [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
+                            
+                        }
                         
                         [self goToProfile];
                         
@@ -269,6 +283,13 @@
                     }];
                     
                 } else {
+                    
+                    if(![settings objectForKey:@"memberCardSerial"]){
+                        
+                        [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
+                        
+                    }
+                    
                     [self goToProfile];
                 }
                 
@@ -341,6 +362,14 @@
     [self performSegueWithIdentifier:@"Profile" sender:self];
 }
 
+-(void)createMemberCard:(NSString*)name andEmail:(NSString*)email{
+
+    [[self appDelegate] createMemberCard:name andEmail:email completionHandler:^(NSDictionary *info) {
+        //
+    } errorHandler:^(NSError *error) {
+        //
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

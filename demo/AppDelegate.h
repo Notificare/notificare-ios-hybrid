@@ -22,8 +22,13 @@
 @property (strong, nonatomic) NotificareNetworkReachability *internetReachability;
 @property (strong, nonatomic) NotificareNetworkReachability *wifiReachability;
 @property (assign, nonatomic) BOOL isInitialLoadingDone;
+@property (strong, nonatomic) NSDictionary *passTemplate;
+
+typedef void (^PassSuccess)(NSDictionary * info);
+typedef void (^PassError)(NSError * error);
 
 -(void)handleDeepLinks:(NSURL *)url;
+-(void)createMemberCard:(NSString*)name andEmail:(NSString*)email completionHandler:(PassSuccess)completionBlock errorHandler:(PassError)errorBlock;
 
 @end
 
