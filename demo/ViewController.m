@@ -150,7 +150,7 @@
     [[self launchingView] addSubview:logo];
     [[self view] addSubview:[self launchingView]];
     
-
+    [[[self webView] scrollView] setBounces:NO];
     [[self view]  setBackgroundColor:[UIColor whiteColor]];
 
 }
@@ -249,6 +249,26 @@
         
         [[self webView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge]];
     }
+    
+    /*
+     
+     THIS CAN BE USED FOR THE INITIAL CONFIG, JUST ADD A customScripts.js FILE
+     
+     [NSObject cancelPreviousPerformRequestsWithTarget:self
+     selector:@selector(evaluateJS)
+     object:nil];
+     
+     NSString * file = [[NSBundle mainBundle] pathForResource:@"customScripts" ofType:@"js"];
+     NSString * jsString = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
+     
+     NSString * badge = @"";
+     
+     if ( [[NotificarePushLib shared] myBadge]) {
+     badge = [NSString stringWithFormat:@"%i", [[NotificarePushLib shared] myBadge]];
+     }
+     
+     [[self webView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:jsString, badge]];
+     */
 }
 
 -(void)onNewNotification {
