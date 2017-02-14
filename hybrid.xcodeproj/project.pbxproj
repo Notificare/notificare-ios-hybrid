@@ -82,6 +82,7 @@
 		5D7C2E331E097FD100BCEA41 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E321E097FD100BCEA41 /* Localizable.strings */; };
 		5D7C2E351E09819A00BCEA41 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */; };
 		5D7C2E381E09D31100BCEA41 /* NoInternetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */; };
+		5D7CF2E11E52947E00589FF9 /* BeaconsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7CF2E01E52947E00589FF9 /* BeaconsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,6 +275,9 @@
 		5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		5D7C2E361E09D31100BCEA41 /* NoInternetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoInternetViewController.h; sourceTree = "<group>"; };
 		5D7C2E371E09D31100BCEA41 /* NoInternetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoInternetViewController.m; sourceTree = "<group>"; };
+		5D7CF2DF1E52947E00589FF9 /* BeaconsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconsViewController.h; sourceTree = "<group>"; };
+		5D7CF2E01E52947E00589FF9 /* BeaconsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconsViewController.m; sourceTree = "<group>"; };
+		5DE9E14B1E529BDF00B68805 /* NotificareStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareStore.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -543,6 +547,7 @@
 		5D58D4531E3CFF45000334E3 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				5DE9E14A1E529BDF00B68805 /* Store */,
 				5D58D4541E3CFF45000334E3 /* Alert */,
 				5D58D4561E3CFF45000334E3 /* Beacons */,
 				5D58D4581E3CFF45000334E3 /* Form */,
@@ -742,6 +747,8 @@
 				5D58D4901E3E21B1000334E3 /* RegionsViewController.m */,
 				5D58D4981E3E3DA8000334E3 /* RegionsMarker.h */,
 				5D58D4991E3E3DA8000334E3 /* RegionsMarker.m */,
+				5D7CF2DF1E52947E00589FF9 /* BeaconsViewController.h */,
+				5D7CF2E01E52947E00589FF9 /* BeaconsViewController.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -918,6 +925,14 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		5DE9E14A1E529BDF00B68805 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				5DE9E14B1E529BDF00B68805 /* NotificareStore.h */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1063,6 +1078,7 @@
 				5D58D5541E3F5CEB000334E3 /* ProfileViewController.m in Sources */,
 				5D7C2D4A1E06EC0400BCEA41 /* AppDelegate.m in Sources */,
 				5D5CCB041E40D70F000D9B0B /* FormButton.m in Sources */,
+				5D7CF2E11E52947E00589FF9 /* BeaconsViewController.m in Sources */,
 				5D7C2E381E09D31100BCEA41 /* NoInternetViewController.m in Sources */,
 				5D7C2DE21E06ED8000BCEA41 /* Configuration.m in Sources */,
 				5D7C2E311E097C4800BCEA41 /* SettingsViewController.m in Sources */,

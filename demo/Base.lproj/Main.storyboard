@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Tb8-Uw-NmG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12100" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Tb8-Uw-NmG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12072"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -48,6 +48,7 @@
                         <segue destination="ygC-YO-F7I" kind="show" identifier="ResetPassword" id="noK-tX-hkn"/>
                         <segue destination="Oc3-ZJ-yMD" kind="show" identifier="Profile" id="Bdt-Kf-Bmi"/>
                         <segue destination="fbp-7m-xyZ" kind="show" identifier="Assets" id="Tns-MQ-2JZ"/>
+                        <segue destination="RKc-TE-QEa" kind="show" identifier="Beacons" id="GQp-Jd-FOc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -270,6 +271,43 @@
             </objects>
             <point key="canvasLocation" x="2054" y="1560"/>
         </scene>
+        <!--Beacons View Controller-->
+        <scene sceneID="zzb-sE-NaJ">
+            <objects>
+                <viewController id="RKc-TE-QEa" customClass="BeaconsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BnZ-0W-RbP"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZGa-Fn-qaP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DyS-0y-HTz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="9u6-rd-fE3">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="RKc-TE-QEa" id="Pem-5i-Dwk"/>
+                                    <outlet property="delegate" destination="RKc-TE-QEa" id="wSe-J5-7cj"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9u6-rd-fE3" firstAttribute="bottom" secondItem="ZGa-Fn-qaP" secondAttribute="top" id="DQw-xu-gX9"/>
+                            <constraint firstItem="9u6-rd-fE3" firstAttribute="leading" secondItem="DyS-0y-HTz" secondAttribute="leading" id="dae-is-Ovh"/>
+                            <constraint firstItem="9u6-rd-fE3" firstAttribute="top" secondItem="DyS-0y-HTz" secondAttribute="top" id="dkF-dl-lsR"/>
+                            <constraint firstAttribute="trailing" secondItem="9u6-rd-fE3" secondAttribute="trailing" id="v1c-qc-9hK"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="9u6-rd-fE3" id="Yel-sa-fC4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pEd-aA-9dB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2056.8000000000002" y="2248.4257871064469"/>
+        </scene>
         <!--Preferences View Controller-->
         <scene sceneID="MZp-Ef-ICd">
             <objects>
@@ -461,7 +499,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tb8-Uw-NmG" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EgI-0F-DNZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EgI-0F-DNZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -507,7 +545,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wcZ-6P-bCn" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="gjV-Dm-ZhA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gjV-Dm-ZhA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

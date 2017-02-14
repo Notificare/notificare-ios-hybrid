@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NotificareNetworkReachability *wifiReachability;
 @property (assign, nonatomic) BOOL isInitialLoadingDone;
 @property (strong, nonatomic) NSDictionary *passTemplate;
+@property (strong, nonatomic) NSArray *beacons;
 
 typedef void (^PassSuccess)(NSDictionary * info);
 typedef void (^PassError)(NSError * error);

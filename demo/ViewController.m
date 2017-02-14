@@ -57,6 +57,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openAssets) name:@"openAssets" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openBeacons) name:@"openBeacons" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onInitialConfig) name:@"initialConfig" object:nil];
@@ -109,6 +111,10 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openAssets"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"openBeacons"
                                                   object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -379,6 +385,10 @@
 
 -(void)openAssets{
     [self performSegueWithIdentifier:@"Assets" sender:self];
+}
+
+-(void)openBeacons{
+    [self performSegueWithIdentifier:@"Beacons" sender:self];
 }
 
 -(void)reloadURL:(NSNotification*)notification{

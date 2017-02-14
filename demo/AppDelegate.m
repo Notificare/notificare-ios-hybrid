@@ -137,6 +137,10 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"openAssets" object:nil];
         
+    } else if ([[url path] isEqualToString:@"/beacons"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openBeacons" object:nil];
+        
     } else {
     
         
@@ -546,6 +550,11 @@
 - (void)notificarePushLib:(NotificarePushLib *)library didReceiveResetPasswordToken:(NSString *)token{
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"openResetPassword" object:nil userInfo:@{@"token":token}];
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didRangeBeacons:(nonnull NSArray *)beacons inRegion:(nonnull CLBeaconRegion *)region{
+    [self setBeacons:beacons];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"beaconsReload" object:nil];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
