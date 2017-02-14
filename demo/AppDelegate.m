@@ -145,7 +145,9 @@
     
         
         if ([[[Configuration shared] getProperty:@"urlScheme"] isEqualToString:[url scheme]]) {
-            url  = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[Configuration shared] getProperty:@"url"], [url path]]];
+            NSURL * mainURL = [NSURL URLWithString:[[Configuration shared] getProperty:@"url"]];
+            url  = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@?%@", [mainURL scheme],  [[Configuration shared] getProperty:@"host"], [url path], [url query]]];
+            NSLog(@"Openning URL: %@", [url absoluteString]);
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadURL" object:self userInfo:@{@"url":url}];

@@ -229,7 +229,18 @@
     
     NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     
-    [[NotificarePushLib shared] openInboxItem:item];
+    //Check for type
+    [[NotificarePushLib shared] getNotification:[item notification] completionHandler:^(NSDictionary * _Nonnull info) {
+        if (info && [info objectForKey:@"notification"] && [[[info objectForKey:@"notification"] objectForKey:@"type"] isEqualToString:@"re.notifica.notification.URLScheme"]) {
+            
+            [[self navigationController] popToRootViewControllerAnimated:YES];
+        }
+        
+            [[NotificarePushLib shared] openInboxItem:item];
+        
+    } errorHandler:^(NSError * _Nonnull error) {
+        //
+    }];
     
 }   
 
