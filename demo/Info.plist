@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Hybrid</string>
+	<string>Demo</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,7 +45,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>We will need access to the device&apos;s camera to reply to notifications</string>
+	<string>We will need access to the device's camera to reply to notifications</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We will need to make use of your location to present relevant information about offers around you.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -77,7 +77,7 @@
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>shortcut_title_profile</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>re.notifica://notifica.re/settings</string>
+			<string>re.notifica://notifica.re/profile</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconType</key>
