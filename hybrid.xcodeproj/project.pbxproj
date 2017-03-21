@@ -1127,7 +1127,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/demo/Libs/notificare-push-lib-1.9.7",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.hybrid.notification;
+				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.demo.notification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1143,7 +1143,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/demo/Libs/notificare-push-lib-1.9.7",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.hybrid.notification;
+				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.demo.notification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
