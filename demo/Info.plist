@@ -44,7 +44,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>We will need access to the device&apos;s camera to reply to notifications</string>
+	<string>We will need access to the device's camera to reply to notifications</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We will need to make use of your location to present relevant information about offers around you.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

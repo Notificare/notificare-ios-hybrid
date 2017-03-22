@@ -1254,7 +1254,7 @@
 					"$(PROJECT_DIR)/demo/Libs/notificare-push-lib-1.9.7",
 				);
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.demo.test;
+				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1274,7 +1274,7 @@
 					"$(PROJECT_DIR)/demo/Libs/notificare-push-lib-1.9.7",
 				);
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.demo.test;
+				PRODUCT_BUNDLE_IDENTIFIER = re.notifica.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

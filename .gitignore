@@ -58,3 +58,6 @@ fastlane/screenshots
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+#Notificare
+demo/Libs/notificare-push-lib-1.9.7/Notificare.plist
