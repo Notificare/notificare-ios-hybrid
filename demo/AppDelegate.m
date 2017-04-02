@@ -213,6 +213,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     
+
     [[NotificarePushLib shared] handleNotification:userInfo forApplication:application completionHandler:^(NSDictionary *info) {
         
         completionHandler(UIBackgroundFetchResultNewData);
@@ -220,17 +221,20 @@
         
         completionHandler(UIBackgroundFetchResultNoData);
     }];
+    
 
 }
 
 
 -(void)notificarePushLib:(NotificarePushLib *)library willHandleNotification:(nonnull UNNotification *)notification{
     
+
     [[NotificarePushLib shared] handleNotification:notification completionHandler:^(NSDictionary * _Nonnull info) {
         //
     } errorHandler:^(NSError * _Nonnull error) {
         //
     }];
+    
 }
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateBadge:(int)badge{
