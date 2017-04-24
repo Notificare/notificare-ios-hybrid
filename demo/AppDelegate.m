@@ -244,6 +244,13 @@
 }
 
 
+
+-(void)notificarePushLib:(NotificarePushLib *)library didClickURL:(nonnull NSURL *)url inNotification:(nonnull NotificareNotification *)notification{
+    
+    [self handleDeepLinks:url];
+}
+
+
 /*!
  * Called by Reachability whenever status changes.
  */
