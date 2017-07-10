@@ -13,7 +13,7 @@
 
 @interface ViewController ()
 
-@property (nonatomic, strong) IBOutlet UIWebView * webView;
+@property (nonatomic, strong) WKWebView * webView;
 @property (nonatomic, strong) UIActivityIndicatorView * activityIndicatorView;
 @property (nonatomic, strong) UIView * launchingView;
 @property (nonatomic, strong) NSURL * targetUrl;
@@ -148,6 +148,11 @@
     [statusBar setBackgroundColor:[UIColor whiteColor]];
     [[self view] addSubview:statusBar];
     
+    [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 22, self.view.frame.size.width, self.view.frame.size.height - 22) configuration:[WKWebViewConfiguration new]]];
+    
+    [[[self webView] scrollView] setBounces:NO];
+    [[self webView] setNavigationDelegate:self];
+    [[self view] addSubview:[self webView]];
     
     [self setLaunchingView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)]];
     UIImageView * logo = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -156,8 +161,26 @@
     
     [[self launchingView] addSubview:logo];
     [[self view] addSubview:[self launchingView]];
+
+    NSSet *websiteDataTypes = [NSSet setWithArray:@[
+                                                    WKWebsiteDataTypeDiskCache,
+                                                    //WKWebsiteDataTypeOfflineWebApplicationCache,
+                                                    WKWebsiteDataTypeMemoryCache,
+                                                    //WKWebsiteDataTypeLocalStorage,
+                                                    //WKWebsiteDataTypeCookies,
+                                                    //WKWebsiteDataTypeSessionStorage,
+                                                    //WKWebsiteDataTypeIndexedDBDatabases,
+                                                    //WKWebsiteDataTypeWebSQLDatabases
+                                                    ]];
+    //// All kinds of data
+    //NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+    //// Date from
+    NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+    //// Execute
+    [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
+        // Done
+    }];
     
-    [[[self webView] scrollView] setBounces:NO];
     [[self view]  setBackgroundColor:[UIColor whiteColor]];
 
 }
@@ -188,6 +211,7 @@
 
 }
 
+/*
 -(void)webViewDidStartLoad:(UIWebView *)webView{
     
     [self setIsLoading:YES];
@@ -214,10 +238,6 @@
     
 }
 
-
-/**
- * Listen to clicks or events with known URL schemes
- */
 -(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
     if ([[[Configuration shared] getArray:@"nativeViews"] containsObject:[request URL]]) {
@@ -237,6 +257,47 @@
     return YES;
     
 }
+ */
+
+-(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(nonnull WKNavigationAction *)navigationAction decisionHandler:(nonnull void (^)(WKNavigationActionPolicy))decisionHandler{
+    
+    if ([[[Configuration shared] getArray:@"nativeViews"] containsObject:[[navigationAction request] URL]]) {
+        
+        [[self appDelegate] handleDeepLinks:[webView URL]];
+        
+        decisionHandler(WKNavigationActionPolicyCancel);
+        
+    } else if (![[[[navigationAction request] URL] host] isEqualToString:[[NSURL URLWithString:[[Configuration shared] getProperty:@"url"]] host]] ) {
+        
+        [[UIApplication sharedApplication] openURL:[[navigationAction request] URL] options:@{} completionHandler:^(BOOL success) {
+            
+        }];
+        decisionHandler(WKNavigationActionPolicyCancel);
+    }
+    
+    decisionHandler(WKNavigationActionPolicyAllow);
+    
+}
+
+-(void)webView:(WKWebView *)webView didFailLoadWithError:(nonnull NSError *)error{
+    NSLog(@"didFailLoadWithError %@", error);
+    [self setIsLoading:NO];
+}
+
+
+-(void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
+    
+    
+    [[self activityIndicatorView]  stopAnimating];
+    [[self activityIndicatorView] removeFromSuperview];
+    
+    [self setIsLoading:NO];
+    
+    [[self launchingView] removeFromSuperview];
+    
+    
+    [self performSelector:@selector(evaluateJS) withObject:nil afterDelay:1.0];
+}
 
 -(void)evaluateJS{
     
@@ -254,7 +315,9 @@
             badge = [NSString stringWithFormat:@"%i", [[NotificarePushLib shared] myBadge]];
         }
         
-        [[self webView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge]];
+        [[self webView] evaluateJavaScript:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge] completionHandler:^(id result, NSError * _Nullable error) {
+            //
+        }];
     }
     
     /*
@@ -274,7 +337,9 @@
      badge = [NSString stringWithFormat:@"%i", [[NotificarePushLib shared] myBadge]];
      }
      
-     [[self webView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:jsString, badge]];
+     [[self webView] evaluateJavaScript:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge] completionHandler:^(id result, NSError * _Nullable error) {
+     //
+     }];
      */
 }
 

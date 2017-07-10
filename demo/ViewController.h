@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <PassKit/PassKit.h>
+#import <WebKit/WebKit.h>
+#import <WebKit/WKWebsiteDataStore.h>
 
-@interface ViewController : UIViewController <UIWebViewDelegate, PKAddPassesViewControllerDelegate>
+
+@interface ViewController : UIViewController <WKNavigationDelegate, PKAddPassesViewControllerDelegate>
 
 
 

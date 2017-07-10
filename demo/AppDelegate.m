@@ -247,7 +247,8 @@
 
 -(void)notificarePushLib:(NotificarePushLib *)library didClickURL:(nonnull NSURL *)url inNotification:(nonnull NotificareNotification *)notification{
     
-    [self handleDeepLinks:url];
+    [self performSelector:@selector(handleDeepLinks:) withObject:url afterDelay:1.0];
+    
 }
 
 
