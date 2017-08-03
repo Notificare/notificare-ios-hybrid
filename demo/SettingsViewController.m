@@ -129,13 +129,7 @@
                     [[self navSections] addObject:section1];
                     
                     
-                    [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
-                    NSMutableArray * section2 = [NSMutableArray array];
-                    [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
-                    [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
-                    [[self navSections] addObject:section2];
-                    
-                    [[self tableView] reloadData];
+                    [self handleTags];
                     
                 } errorHandler:^(NSError *error) {
                     //
@@ -148,13 +142,7 @@
                 
                 [[self navSections] addObject:section1];
                 
-                [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
-                NSMutableArray * section2 = [NSMutableArray array];
-                [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
-                [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
-                [[self navSections] addObject:section2];
-                
-                [[self tableView] reloadData];
+                [self handleTags];
                 
             }
             
@@ -170,13 +158,7 @@
             
             [[self navSections] addObject:section1];
             
-            [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
-            NSMutableArray * section2 = [NSMutableArray array];
-            [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
-            [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
-            [[self navSections] addObject:section2];
-            
-            [[self tableView] reloadData];
+           [self handleTags];
             
         } else {
             
@@ -206,13 +188,7 @@
                 [[self navSections] addObject:section1];
                 
                 
-                [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
-                NSMutableArray * section2 = [NSMutableArray array];
-                [section2 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
-                [section2 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
-                [[self navSections] addObject:section2];
-                
-                [[self tableView] reloadData];
+                [self handleTags];
                 
                 
             } errorHandler:^(NSError *error) {
@@ -225,6 +201,56 @@
         
     }
     
+    
+}
+
+
+-(void)handleTags{
+
+    
+    [[NotificarePushLib shared] getTags:^(NSDictionary * _Nonnull info) {
+        
+        if (info && [info objectForKey:@"tags"]) {
+            
+            [[self sectionTitles] addObject:LS(@"section_item_settings_tags")];
+            NSMutableArray * section2 = [NSMutableArray array];
+            
+            if ([[info objectForKey:@"tags"] containsObject:@"tag_press"]) {
+                [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@1}];
+            } else {
+                [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@0}];
+            }
+            
+            
+            if ([[info objectForKey:@"tags"] containsObject:@"tag_newsletter"]) {
+                [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@1}];
+            } else {
+                [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@0}];
+            }
+            
+            if ([[info objectForKey:@"tags"] containsObject:@"tag_events"]) {
+                [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@1}];
+            } else {
+                [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@0}];
+            }
+            
+            [[self navSections] addObject:section2];
+            
+        }
+        
+        [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
+        NSMutableArray * section3 = [NSMutableArray array];
+        [section3 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
+        [section3 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
+        [[self navSections] addObject:section3];
+        
+        
+        
+        [[self tableView] reloadData];
+        
+    } errorHandler:^(NSError * _Nonnull error) {
+        [[self tableView] reloadData];
+    }];
     
 }
 
@@ -375,6 +401,41 @@
         }
         
         
+    } else if ([indexPath section] == 1) {
+        
+        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NotificationCell"];
+        
+        NSDictionary * item = (NSDictionary *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+        
+        cell.textLabel.text = [item objectForKey:@"label"];
+        cell.textLabel.font = LATO_FONT(16);
+        
+        cell.detailTextLabel.text = [item objectForKey:@"description"];
+        cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+        cell.detailTextLabel.numberOfLines = 2;
+        
+        UISwitch * notificationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [cell setAccessoryView:notificationSwitch];
+        
+        if ([[item objectForKey:@"segue"] isEqualToString:@"tag_press"]) {
+            [notificationSwitch addTarget:self action:@selector(toggleTagPress:) forControlEvents:UIControlEventValueChanged];
+        } else if ([[item objectForKey:@"segue"] isEqualToString:@"tag_newsletter"]) {
+            [notificationSwitch addTarget:self action:@selector(toggleTagNewsletter:) forControlEvents:UIControlEventValueChanged];
+        } else if ([[item objectForKey:@"segue"] isEqualToString:@"tag_events"]) {
+            [notificationSwitch addTarget:self action:@selector(toggleTagEvents:) forControlEvents:UIControlEventValueChanged];
+        }
+        
+        
+        if ([[item objectForKey:@"value"] isEqual:@0]) {
+            [notificationSwitch setOn:NO];
+        } else {
+            [notificationSwitch setOn:YES];
+        }
+        
+        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        return cell;
+        
     } else {
         
         UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell"];
@@ -385,7 +446,7 @@
         [label setText:[item objectForKey:@"label"]];
         [label setFont:LATO_FONT(16)];
         
-        if ( [[item objectForKey:@"label"] isEqualToString:LS(@"app_version")] ) {
+        if ( [[item objectForKey:@"label"] isEqualToString:LS(@"settings_app_version")] ) {
             
             UILabel * accessoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
             accessoryLabel.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
@@ -413,7 +474,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return ([indexPath section] == 0) ? ([indexPath row] == 3 || [indexPath row] == 4) ? DEFAULT_CELLHEIGHT : SETTINGS_CELLHEIGHT : DEFAULT_CELLHEIGHT;
+    return ([indexPath section] == 0) ? ([indexPath row] == 3 || [indexPath row] == 4) ? DEFAULT_CELLHEIGHT : SETTINGS_CELLHEIGHT : ([indexPath section] == 1) ? SETTINGS_CELLHEIGHT : DEFAULT_CELLHEIGHT;
     
 }
 
@@ -451,11 +512,7 @@
     
     NSDictionary * item = (NSDictionary *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     
-    if ([[item objectForKey:@"label"] isEqualToString:LS(@"settings_title_topics")]) {
-        [self performSegueWithIdentifier:@"Topics" sender:self];
-    }
-    
-    if ([[item objectForKey:@"label"] isEqualToString:LS(@"settings_title_feedback")]) {
+    if ([[item objectForKey:@"label"] isEqualToString:LS(@"settings_feedback")]) {
         
         if([MFMailComposeViewController canSendMail]){
             
@@ -568,6 +625,73 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+    
+}
+
+
+-(void)toggleTagPress:(id)sender{
+    
+    if ([(UISwitch *)sender isOn]) {
+        
+        
+        [[NotificarePushLib shared] addTags:@[@"tag_press"] completionHandler:^(NSDictionary * _Nonnull info) {
+            
+        } errorHandler:^(NSError * _Nonnull error) {
+            
+        }];
+        
+    } else {
+        
+        [[NotificarePushLib shared] removeTag:@"tag_press" completionHandler:^(NSDictionary * _Nonnull info) {
+            
+        } errorHandler:^(NSError * _Nonnull error) {
+            
+        }];
+    }
+    
+}
+
+-(void)toggleTagNewsletter:(id)sender{
+    
+    if ([(UISwitch *)sender isOn]) {
+        
+        
+        [[NotificarePushLib shared] addTags:@[@"tag_newsletter"] completionHandler:^(NSDictionary * _Nonnull info) {
+            
+        } errorHandler:^(NSError * _Nonnull error) {
+            
+        }];
+        
+    } else {
+        
+        [[NotificarePushLib shared] removeTag:@"tag_newsletter" completionHandler:^(NSDictionary * _Nonnull info) {
+            
+        } errorHandler:^(NSError * _Nonnull error) {
+            
+        }];
+    }
+    
+}
+
+-(void)toggleTagEvents:(id)sender{
+    
+    if ([(UISwitch *)sender isOn]) {
+        
+        
+        [[NotificarePushLib shared] addTags:@[@"tag_events"] completionHandler:^(NSDictionary * _Nonnull info) {
+            
+        } errorHandler:^(NSError * _Nonnull error) {
+            
+        }];
+        
+    } else {
+        
+        [[NotificarePushLib shared] removeTag:@"tag_events" completionHandler:^(NSDictionary * _Nonnull info) {
+            
+        } errorHandler:^(NSError * _Nonnull error) {
+            
+        }];
+    }
     
 }
 

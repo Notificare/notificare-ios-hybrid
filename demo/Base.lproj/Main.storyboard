@@ -42,7 +42,7 @@
         <!--Assets View Controller-->
         <scene sceneID="Rc4-vi-G5Q">
             <objects>
-                <viewController id="fbp-7m-xyZ" customClass="AssetsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/storage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fbp-7m-xyZ" customClass="AssetsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WC2-5s-7tm"/>
                         <viewControllerLayoutGuide type="bottom" id="fhj-3m-rVa"/>
@@ -106,7 +106,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="23N-Uu-5H3">
             <objects>
-                <viewController id="3N0-Hl-ul5" customClass="SignInViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/signin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3N0-Hl-ul5" customClass="SignInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XmZ-Sa-PYh"/>
                         <viewControllerLayoutGuide type="bottom" id="dSw-JO-uix"/>
@@ -146,7 +146,7 @@
         <!--Sign Up View Controller-->
         <scene sceneID="wSa-K6-NIy">
             <objects>
-                <viewController id="g58-hY-GYj" customClass="SignUpViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/signup" useStoryboardIdentifierAsRestorationIdentifier="YES" id="g58-hY-GYj" customClass="SignUpViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IN5-aU-Cqu"/>
                         <viewControllerLayoutGuide type="bottom" id="8so-AE-bTl"/>
@@ -183,7 +183,7 @@
         <!--Reset Password View Controller-->
         <scene sceneID="5L0-EN-eaT">
             <objects>
-                <viewController id="ygC-YO-F7I" customClass="ResetPasswordViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/resetpass" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ygC-YO-F7I" customClass="ResetPasswordViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7PA-U0-bgl"/>
                         <viewControllerLayoutGuide type="bottom" id="xWJ-j4-oY1"/>
@@ -220,7 +220,7 @@
         <!--Profile View Controller-->
         <scene sceneID="QVa-XF-nKa">
             <objects>
-                <viewController id="Oc3-ZJ-yMD" customClass="ProfileViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/profile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Oc3-ZJ-yMD" customClass="ProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QbV-tN-kdx"/>
                         <viewControllerLayoutGuide type="bottom" id="dPS-1k-EVu"/>
@@ -258,7 +258,7 @@
         <!--Beacons View Controller-->
         <scene sceneID="zzb-sE-NaJ">
             <objects>
-                <viewController id="RKc-TE-QEa" customClass="BeaconsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/beacons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RKc-TE-QEa" customClass="BeaconsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BnZ-0W-RbP"/>
                         <viewControllerLayoutGuide type="bottom" id="ZGa-Fn-qaP"/>
@@ -332,7 +332,7 @@
         <!--Lost Password View Controller-->
         <scene sceneID="aKZ-4F-TFM">
             <objects>
-                <viewController id="kH8-hz-fUH" customClass="LostPasswordViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/lostpass" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kH8-hz-fUH" customClass="LostPasswordViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xup-VY-E85"/>
                         <viewControllerLayoutGuide type="bottom" id="KSi-E8-iRn"/>
@@ -369,7 +369,7 @@
         <!--Inbox View Controller-->
         <scene sceneID="t71-DD-b8R">
             <objects>
-                <viewController id="gOS-Xr-lKR" customClass="InboxViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/inbox" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gOS-Xr-lKR" customClass="InboxViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7oD-Hf-Tt6"/>
                         <viewControllerLayoutGuide type="bottom" id="vrX-Au-LZc"/>
@@ -449,7 +449,7 @@
         <!--Regions View Controller-->
         <scene sceneID="cmT-ys-Ctz">
             <objects>
-                <viewController id="1hb-eH-Bv5" customClass="RegionsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/regions" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1hb-eH-Bv5" customClass="RegionsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yjA-35-7Wk"/>
                         <viewControllerLayoutGuide type="bottom" id="b8u-ek-Ehl"/>
@@ -545,7 +545,7 @@
         <!--Settings View Controller-->
         <scene sceneID="7TG-ST-QuV">
             <objects>
-                <viewController id="s4x-OZ-oGd" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="/settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="s4x-OZ-oGd" customClass="SettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="U9t-pR-ZaQ"/>
                         <viewControllerLayoutGuide type="bottom" id="xk5-vx-oPc"/>
@@ -630,6 +630,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Bdt-Kf-Bmi"/>
+        <segue reference="UY5-OK-uZo"/>
     </inferredMetricsTieBreakers>
 </document>

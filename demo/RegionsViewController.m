@@ -91,7 +91,7 @@
         if (info && [info objectForKey:@"regions"] && [[info objectForKey:@"regions"] count] > 0) {
         
             for (NSDictionary * region in [info objectForKey:@"regions"]) {
-                
+
                 if (region && ![[region objectForKey:@"advancedGeometry"] isKindOfClass:[NSNull class]]) {
                     
                     NSMutableArray * coordinates = [[[region objectForKey:@"advancedGeometry"] objectForKey:@"coordinates"] objectAtIndex:0];
@@ -108,7 +108,7 @@
                     NSMutableArray * points = [[region objectForKey:@"geometry"] objectForKey:@"coordinates"];
                     CLLocationCoordinate2D center = CLLocationCoordinate2DMake([[points objectAtIndex:1] floatValue], [[points objectAtIndex:0] floatValue]);
     
-                    RegionsMarker *annotation = [[RegionsMarker alloc] initWithName:[region objectForKey:@"name"] address: (![[region objectForKey:@"address"] isKindOfClass:[NSNull class]]) ? [region objectForKey:@"address"] : @"" coordinate:center];
+                    RegionsMarker *annotation = [[RegionsMarker alloc] initWithName:[region objectForKey:@"name"] address:(![[region objectForKey:@"address"] isKindOfClass:[NSNull class]]) ? [region objectForKey:@"address"] : @"" coordinate:center] ;
                     [markers addObject:annotation];
                     
                     [regions addObject:polygon];

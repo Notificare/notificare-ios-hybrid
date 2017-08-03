@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "NotificareAsset.h"
 #import "GravatarHelper.h"
+#import "ResetPasswordViewController.h"
 
 
 @interface AppDelegate ()
@@ -84,29 +85,33 @@
 #pragma Deep Links
 -(void)handleDeepLinks:(NSURL *)url{
     
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+    
+    
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
     if ([[url path] isEqualToString:@"/inbox"]) {
 
-       [[NSNotificationCenter defaultCenter] postNotificationName:@"openInbox" object:nil];
+        [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/settings"]) {
         
-       [[NSNotificationCenter defaultCenter] postNotificationName:@"openSettings" object:nil];
+       [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/regions"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openRegions" object:nil];
+        [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/profile"]) {
         
         if([[NotificarePushLib shared] isLoggedIn]){
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"openProfile" object:nil];
+            [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
             
         } else {
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignIn" object:nil];
+            [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"/signin"] animated:YES];
         }
         
     } else if ([[url path] isEqualToString:@"/membercard"]) {
@@ -117,17 +122,17 @@
             
         } else {
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignIn" object:nil];
+            [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"/signin"] animated:YES];
         }
         
         
     } else if ([[url path] isEqualToString:@"/signin"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignIn" object:nil];
+        [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/signup"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openSignUp" object:nil];
+        [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/analytics"]) {
         
@@ -135,11 +140,11 @@
         
     } else if ([[url path] isEqualToString:@"/storage"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openAssets" object:nil];
+        [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/beacons"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openBeacons" object:nil];
+        [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else {
     
@@ -167,7 +172,7 @@
         
         [[NotificarePushLib shared] registerForNotifications];
     }
-    
+
 }
 
 
@@ -244,13 +249,12 @@
 }
 
 
-
 -(void)notificarePushLib:(NotificarePushLib *)library didClickURL:(nonnull NSURL *)url inNotification:(nonnull NotificareNotification *)notification{
+
     
     [self performSelector:@selector(handleDeepLinks:) withObject:url afterDelay:1.0];
     
 }
-
 
 /*!
  * Called by Reachability whenever status changes.
@@ -563,7 +567,15 @@
 
 - (void)notificarePushLib:(NotificarePushLib *)library didReceiveResetPasswordToken:(NSString *)token{
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"openResetPassword" object:nil userInfo:@{@"token":token}];
+    
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+    
+    ResetPasswordViewController *viewController = (ResetPasswordViewController *)[storyboard instantiateViewControllerWithIdentifier:@"/resetpass"];
+    
+    [viewController setToken:token];
+    [navController pushViewController:viewController animated:YES];
+    
 }
 
 -(void)notificarePushLib:(NotificarePushLib *)library didRangeBeacons:(nonnull NSArray *)beacons inRegion:(nonnull CLBeaconRegion *)region{

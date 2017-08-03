@@ -37,27 +37,12 @@
     
     [[self navigationController] setNavigationBarHidden:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openInbox) name:@"openInbox" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSettings) name:@"openSettings" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openRegions) name:@"openRegions" object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSignIn) name:@"openSignIn" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSignUp) name:@"openSignUp" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openProfile) name:@"openProfile" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openMemberCard) name:@"openMemberCard" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openResetPassword:) name:@"openResetPassword" object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCustomEvents) name:@"openCustomEvents" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openAssets) name:@"openAssets" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openBeacons) name:@"openBeacons" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
     
@@ -74,50 +59,18 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openInbox"
-                                                  object:nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openSettings"
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openRegions"
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openSignIn"
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openSignUp"
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openProfile"
-                                                  object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openMemberCard"
                                                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openResetPassword"
-                                                  object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openCustomEvents"
                                                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openAssets"
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"openBeacons"
-                                                  object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"reloadURL"
                                                   object:nil];
@@ -211,53 +164,6 @@
 
 }
 
-/*
--(void)webViewDidStartLoad:(UIWebView *)webView{
-    
-    [self setIsLoading:YES];
-    [[self launchingView] removeFromSuperview];
-    [[self view] addSubview:[self activityIndicatorView]];
-    [[self activityIndicatorView]  startAnimating];
-
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    NSLog(@"didFailLoadWithError %@", error);
-    
-    [self setIsLoading:NO];
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    
-    [[self activityIndicatorView]  stopAnimating];
-    [[self activityIndicatorView] removeFromSuperview];
-    
-    [self setIsLoading:NO];
-    
-    [self performSelector:@selector(evaluateJS) withObject:nil afterDelay:1.0];
-    
-}
-
--(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    
-    if ([[[Configuration shared] getArray:@"nativeViews"] containsObject:[request URL]]) {
-        
-        [[self appDelegate] handleDeepLinks:[request URL]];
-        
-        return NO;
-        
-    } else if (![[[request URL] host] isEqualToString:[[NSURL URLWithString:[[Configuration shared] getProperty:@"url"]] host]] && ![self isLoading]) {
-    
-        [[UIApplication sharedApplication] openURL:[request URL] options:@{} completionHandler:^(BOOL success) {
-            
-        }];
-        return NO;
-    }
-    
-    return YES;
-    
-}
- */
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(nonnull WKNavigationAction *)navigationAction decisionHandler:(nonnull void (^)(WKNavigationActionPolicy))decisionHandler{
     
@@ -347,29 +253,12 @@
     [self evaluateJS];
 }
 
--(void)openInbox{
-    [self performSegueWithIdentifier:@"Inbox" sender:self];
-}
 
--(void)openSettings{
-    [self performSegueWithIdentifier:@"Settings" sender:self];
-}
-
--(void)openRegions{
-    [self performSegueWithIdentifier:@"Regions" sender:self];
-}
-
--(void)openSignIn{
-    [self performSegueWithIdentifier:@"SignIn" sender:self];
-}
 
 -(void)openSignUp{
     [self performSegueWithIdentifier:@"SignUp" sender:self];
 }
 
--(void)openProfile{
-    [self performSegueWithIdentifier:@"Profile" sender:self];
-}
 
 -(void)openCustomEvents{
     
@@ -449,32 +338,16 @@
     }
 }
 
--(void)openAssets{
-    [self performSegueWithIdentifier:@"Assets" sender:self];
-}
-
--(void)openBeacons{
-    [self performSegueWithIdentifier:@"Beacons" sender:self];
-}
 
 -(void)reloadURL:(NSNotification*)notification{
     [self setTargetUrl:[[notification userInfo] objectForKey:@"url"]];
     [self goToUrl];
 }
 
--(void)openResetPassword:(NSNotification *) notification
-{
-    [self setToken:[[notification userInfo] valueForKey:@"token"]];
-    [self performSegueWithIdentifier:@"ResetPassword" sender:self];
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"ResetPassword"])
-    {
-        ResetPasswordViewController *vc = [segue destinationViewController];
-        [vc setToken:[self token]];
-    }
+
 }
 
 

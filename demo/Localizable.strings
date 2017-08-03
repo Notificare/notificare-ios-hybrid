@@ -73,6 +73,15 @@
 "your_subject" = "Write a subject";
 "your_message" = "Write a message";
 
+"section_item_settings_tags" = "Tags";
+"settings_tag_press_label" = "Press";
+"settings_tag_press_description" = "Subscribe me to the group of devices that would like to receive all the news via push notifications";
+
+"settings_tag_newsletter_label" = "Newsletter";
+"settings_tag_newsletter_description" = "Subscribe me to the group of devices that would like to receive your newsletter";
+
+"settings_tag_events_label" = "Events";
+"settings_tag_events_description" = "Subscribe me to the group of devices that would like to receive all the events via push notifications";
 
 "success_create_account" = "Account created successfully. Please check your mail box for more information.";
 "error_create_account" = "An error occured while creating an account. Please try again.";
