@@ -440,7 +440,7 @@
     
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    if (![[self passTemplate] isKindOfClass:[NSNull class]]) {
+    if (![[[self passTemplate] class] isKindOfClass:[NSNull class]]) {
         
         NSMutableDictionary * payload = [NSMutableDictionary dictionaryWithDictionary:[self passTemplate]];
         NSMutableDictionary * dataPayload = [NSMutableDictionary dictionaryWithDictionary:[[self passTemplate] objectForKey:@"data"]];

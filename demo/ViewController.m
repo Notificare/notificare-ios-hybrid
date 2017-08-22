@@ -160,7 +160,9 @@
     }
     
     NSURLRequest *nsRequest=[NSURLRequest requestWithURL:[self targetUrl]];
-    [[self webView] loadRequest:nsRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self webView] loadRequest:nsRequest];
+    });
 
 }
 
@@ -179,9 +181,9 @@
             
         }];
         decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
+        decisionHandler(WKNavigationActionPolicyAllow);
     }
-    
-    decisionHandler(WKNavigationActionPolicyAllow);
     
 }
 
