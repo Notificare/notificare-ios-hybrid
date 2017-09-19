@@ -146,6 +146,10 @@
         
         [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
+    } else if ([[url path] isEqualToString:@"/scan"]) {
+        
+        [[NotificarePushLib shared] startScannableSession];
+        
     } else {
     
         
@@ -581,6 +585,36 @@
 -(void)notificarePushLib:(NotificarePushLib *)library didRangeBeacons:(nonnull NSArray *)beacons inRegion:(nonnull CLBeaconRegion *)region{
     [self setBeacons:beacons];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"beaconsReload" object:nil];
+}
+
+
+-(void)notificarePushLib:(NotificarePushLib *)library didDetectScannable:(nonnull NotificareScannable *)scannable{
+    
+    [[NotificarePushLib shared] openNotification:[scannable data]];
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didInvalidateScannableSessionWithError:(nonnull NSError *)error{
+    
+    
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:APP_NAME
+                                 message:error.localizedDescription
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:LS(@"ok")
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action){
+                                 
+                             }];
+    [alert addAction:cancel];
+    
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    
+    [navController presentViewController:alert animated:YES completion:^{
+        
+    }];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

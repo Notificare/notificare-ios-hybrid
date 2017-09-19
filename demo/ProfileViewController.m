@@ -811,7 +811,7 @@
             }];
             
         } else {
-            [self presentAlertViewForForm:LS(@"error_could_not_open_pkpass")];
+            [self presentAlertViewForForm:[error localizedDescription]];
         }
         
         

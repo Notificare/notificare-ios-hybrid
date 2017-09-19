@@ -46,7 +46,7 @@
     [self setEmptyMessage:[[UILabel alloc] initWithFrame:CGRectMake(20, 0, [[UIScreen mainScreen] bounds].size.width - 40, [[UIScreen mainScreen] bounds].size.height)]];
     
     [[self emptyMessage] setText:LS(@"empty_beacons_text")];
-    [[self emptyMessage] setFont:LATO_HAIRLINE_FONT(14)];
+    [[self emptyMessage] setFont:LATO_LIGHT_FONT(14)];
     [[self emptyMessage] setTextAlignment:NSTextAlignmentCenter];
     [[self emptyMessage] setNumberOfLines:2];
     [[self emptyMessage] setTextColor:MAIN_COLOR];
