@@ -16,14 +16,14 @@
 	<string>DefaultTheme.bundle</string>
 	<key>OPTIONS</key>
 	<dict>
-		<key>USE_SAFARI_VIEW</key>
-		<true/>
-		<key>USE_TEST_API</key>
-		<false/>
 		<key>URL_SCHEMES</key>
 		<array>
 			<string>re.notifica</string>
 		</array>
+		<key>USE_SAFARI_VIEW</key>
+		<true/>
+		<key>USE_TEST_API</key>
+		<false/>
 		<key>APP_RUNS_ON_BACKGROUND</key>
 		<false/>
 		<key>IMAGES_SHARING</key>

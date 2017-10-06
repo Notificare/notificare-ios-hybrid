@@ -24,7 +24,12 @@
     
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
+    [[NotificarePushLib shared] setNotificationPresentationOptions:UNNotificationPresentationOptionAlert];
     [[NotificarePushLib shared] handleOptions:launchOptions];
+    
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
+        [self setLaunchURL:[launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]];
+    }
     
     
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
@@ -74,6 +79,12 @@
 
 }
 
+-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+    [[NotificarePushLib shared]  handleOpenURL:url];
+    [self handleDeepLinks:url];
+    
+    return YES;
+}
 
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation{
     [[NotificarePushLib shared]  handleOpenURL:url];
@@ -149,6 +160,10 @@
     } else if ([[url path] isEqualToString:@"/scan"]) {
         
         [[NotificarePushLib shared] startScannableSession];
+        
+    } else if ([[url path] isEqualToString:@"/qrcode"]) {
+
+        [[NotificarePushLib shared] fetchScannable:[url absoluteString]];
         
     } else {
     
@@ -590,7 +605,9 @@
 
 -(void)notificarePushLib:(NotificarePushLib *)library didDetectScannable:(nonnull NotificareScannable *)scannable{
     
-    [[NotificarePushLib shared] openNotification:[scannable data]];
+    if (![[scannable data] isKindOfClass:[NSNull class]]) {
+        [[NotificarePushLib shared] openNotification:[scannable data]];
+    }
 }
 
 -(void)notificarePushLib:(NotificarePushLib *)library didInvalidateScannableSessionWithError:(nonnull NSError *)error{
@@ -636,6 +653,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if ([self launchURL]) {
+        [[UIApplication sharedApplication] openURL:[self launchURL] options:@{} completionHandler:^(BOOL success) {
+            [self setLaunchURL:nil];
+        }];
+    }
+    
 }
 
 

@@ -10,11 +10,13 @@
 NSLocationUsageDescription = "We would like to use your location to easily provide you maps, directions, updates and relevant alerts.";
 
 NSLocationAlwaysUsageDescription = "We will need to make use of your location to present relevant information about offers around you.";
+
 NSLocationWhenInUseUsageDescription = "We would like to use your location to easily provide your location in  maps or  give you directions.";
 
 NSLocationAlwaysAndWhenInUseUsageDescription = "You will need to select the Always Allow option if you wish to receive geo-fencing and beacon notifications. Selecting the option Only While Using the App will prevent us from sending you these messages.";
 
 NSCameraUsageDescription = "We would like to use the device's camera to reply to notifications.";
+
 NSPhotoLibraryUsageDescription = "We would like to use your photo library to reply to notifications.";
 
 NFCReaderUsageDescription = "We will need access to your phone's NFC Reader in order to unlock new content.";
