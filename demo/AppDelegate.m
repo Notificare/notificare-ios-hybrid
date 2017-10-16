@@ -27,10 +27,6 @@
     [[NotificarePushLib shared] setNotificationPresentationOptions:UNNotificationPresentationOptionAlert];
     [[NotificarePushLib shared] handleOptions:launchOptions];
     
-    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
-        [self setLaunchURL:[launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]];
-    }
-    
     
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
@@ -653,11 +649,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    if ([self launchURL]) {
-        [[UIApplication sharedApplication] openURL:[self launchURL] options:@{} completionHandler:^(BOOL success) {
-            [self setLaunchURL:nil];
-        }];
-    }
     
 }
 
