@@ -200,6 +200,13 @@
         
         [image setImage:[UIImage imageNamed:@"html"]];
         
+    } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"audio/mp3"]){
+        
+        [image setImage:[UIImage imageNamed:@"sound"]];
+        
+    } else {
+        
+        [image setImage:[UIImage imageNamed:@"text"]];
     }
     
     [cell setBackgroundColor:WILD_SAND_COLOR];
@@ -242,6 +249,14 @@
         }
         
     } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"text/html"]){
+        
+        NSURL * target = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[item assetUrl]]];
+        
+        if(target && [target scheme] && [target host]){
+            [[UIApplication sharedApplication] openURL:target];
+        }
+        
+    } else if([[[item assetMetaData] objectForKey:@"contentType"] isEqualToString:@"audio/mp3"]){
         
         NSURL * target = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[item assetUrl]]];
         
