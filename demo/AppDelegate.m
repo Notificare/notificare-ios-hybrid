@@ -155,7 +155,7 @@
         
     } else if ([[url path] isEqualToString:@"/scan"]) {
         
-        [[NotificarePushLib shared] startScannableSession];
+        [self startScannableSession];
         
     } else if ([[url path] isEqualToString:@"/qrcode"]) {
 
@@ -208,7 +208,10 @@
 }
 
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(nonnull NSDictionary *)userInfo withResponseInfo:(nonnull NSDictionary *)responseInfo completionHandler:(nonnull void (^)())completionHandler{
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(nonnull NSDictionary *)userInfo withResponseInfo:(nonnull NSDictionary *)responseInfo
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wstrict-prototypes"
+completionHandler:(nonnull void (^)())completionHandler{
     
     
     [[NotificarePushLib shared] handleAction:identifier forNotification:userInfo withData:responseInfo completionHandler:^(NSDictionary *info) {
@@ -629,6 +632,97 @@
     }];
     
 }
+
+
+-(void)startScannableSession{
+    if (@available(iOS 11.0, *)) {
+        if ([NFCNDEFReaderSession readingAvailable]) {
+            NFCNDEFReaderSession * session = [[NFCNDEFReaderSession alloc] initWithDelegate:self queue:nil invalidateAfterFirstRead:YES];
+            [session beginSession];
+        } else {
+            // Fallback for devices with no hardware support with QRCode
+            [[NotificarePushLib shared] startScannableSessionWithQRCode];
+        }
+    } else {
+        // Fallback on earlier versions with QRCode
+        [[NotificarePushLib shared] startScannableSessionWithQRCode];
+    }
+}
+
+-(void)readerSession:(NFCNDEFReaderSession *)session didDetectNDEFs:(NSArray<NFCNDEFMessage *> *)messages NS_AVAILABLE_IOS(11.0){
+    
+    if (@available(iOS 11.0, *)) {
+        NSString * scannable = @"";
+        for (NFCNDEFMessage *tagMessage in messages) {
+            for (NFCNDEFPayload *tagPayload in [tagMessage records]) {
+                
+                NSString * typeString = [[NSString alloc] initWithData:tagPayload.type encoding:NSUTF8StringEncoding];
+                NSUInteger payloadBytesLength = [tagPayload.payload length];
+                unsigned char *payloadBytes = (unsigned char*)[tagPayload.payload bytes];
+                
+                if (tagPayload.typeNameFormat == NFCTypeNameFormatNFCWellKnown) {
+                    if ([typeString isEqualToString:@"U"]) {
+                        scannable = [[NotificarePushLib shared] parseURIPayload:payloadBytes length:payloadBytesLength];
+                        
+                        if (scannable && scannable.length > 0) {
+                            [[NotificarePushLib shared] fetchScannable:scannable];
+                        } else {
+                            
+                            NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+                            [userInfo setObject:@"Notificare: This is not a supportable scannable" forKey:@"response"];
+                            NSError * e = [NSError errorWithDomain:@"re.notifica.push" code:404 userInfo:userInfo];
+                            
+                            [self notificarePushLib:[NotificarePushLib shared] didInvalidateScannableSessionWithError:e];
+                            
+                        }
+                        
+                        
+                    } else {
+                        
+                        NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+                        [userInfo setObject:@"Notificare: This is not a supportable scannable" forKey:@"response"];
+                        NSError * e = [NSError errorWithDomain:@"re.notifica.push" code:404 userInfo:userInfo];
+                        
+                        [self notificarePushLib:[NotificarePushLib shared] didInvalidateScannableSessionWithError:e];
+                    }
+                } else {
+                    
+                    NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+                    [userInfo setObject:@"Notificare: This is not a supportable scannable" forKey:@"response"];
+                    NSError * e = [NSError errorWithDomain:@"re.notifica.push" code:404 userInfo:userInfo];
+                    
+                    [self notificarePushLib:[NotificarePushLib shared] didInvalidateScannableSessionWithError:e];
+                    
+                }
+                
+            }
+        }
+        
+    }
+    
+}
+
+-(void)readerSession:(NFCNDEFReaderSession *)session didInvalidateWithError:(nonnull NSError *)error NS_AVAILABLE_IOS(11.0) {
+    
+    switch ([error code]) {
+        case NFCReaderSessionInvalidationErrorFirstNDEFTagRead:
+            ///Session is close after first read don't trigger the delegate
+            break;
+        case NFCReaderErrorUnsupportedFeature:
+            // Fallback for devices with no hardware support with QRCode
+            [[NotificarePushLib shared] startScannableSessionWithQRCode];
+            break;
+        default:
+            
+            [self notificarePushLib:[NotificarePushLib shared] didInvalidateScannableSessionWithError:error];
+            
+            break;
+    }
+    
+    
+    
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
