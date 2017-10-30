@@ -11,7 +11,6 @@
 		5D40F0691FA67C3F009C9C0B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 5D40EFF01FA67C3F009C9C0B /* .gitignore */; };
 		5D40F06A1FA67C3F009C9C0B /* DefaultTheme.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5D40EFF11FA67C3F009C9C0B /* DefaultTheme.bundle */; };
 		5D40F06B1FA67C3F009C9C0B /* libNotificarePushLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D40EFF21FA67C3F009C9C0B /* libNotificarePushLib.a */; };
-		5D40F06C1FA67C3F009C9C0B /* NotificarePassbook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D40F0511FA67C3F009C9C0B /* NotificarePassbook.m */; };
 		5D40F06D1FA67C3F009C9C0B /* Notificare.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D40F0661FA67C3F009C9C0B /* Notificare.plist */; };
 		5D40F06E1FA67C3F009C9C0B /* NotificareManagedModels.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5D40F0671FA67C3F009C9C0B /* NotificareManagedModels.bundle */; };
 		5D40F06F1FA67C3F009C9C0B /* NotificareTags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D40F0681FA67C3F009C9C0B /* NotificareTags.plist */; };
@@ -190,7 +189,6 @@
 		5D40F04D1FA67C3F009C9C0B /* NotificationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationDelegate.h; sourceTree = "<group>"; };
 		5D40F04E1FA67C3F009C9C0B /* NotificationType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationType.h; sourceTree = "<group>"; };
 		5D40F0501FA67C3F009C9C0B /* NotificarePassbook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificarePassbook.h; sourceTree = "<group>"; };
-		5D40F0511FA67C3F009C9C0B /* NotificarePassbook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificarePassbook.m; sourceTree = "<group>"; };
 		5D40F0531FA67C3F009C9C0B /* NotificareQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareQRCode.h; sourceTree = "<group>"; };
 		5D40F0551FA67C3F009C9C0B /* NotificareRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareRate.h; sourceTree = "<group>"; };
 		5D40F0571FA67C3F009C9C0B /* NotificareStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareStore.h; sourceTree = "<group>"; };
@@ -634,7 +632,6 @@
 			isa = PBXGroup;
 			children = (
 				5D40F0501FA67C3F009C9C0B /* NotificarePassbook.h */,
-				5D40F0511FA67C3F009C9C0B /* NotificarePassbook.m */,
 			);
 			path = Passbook;
 			sourceTree = "<group>";
@@ -1108,7 +1105,6 @@
 				5D7C2E2D1E095B0200BCEA41 /* GravatarHelper.m in Sources */,
 				5D58D4911E3E21B1000334E3 /* RegionsViewController.m in Sources */,
 				5D58D5511E3F5A96000334E3 /* SignInViewController.m in Sources */,
-				5D40F06C1FA67C3F009C9C0B /* NotificarePassbook.m in Sources */,
 				5D7C2D471E06EC0400BCEA41 /* main.m in Sources */,
 				5D5CCB5F1E427959000D9B0B /* AssetsViewController.m in Sources */,
 				5D58D4971E3E228A000334E3 /* SignUpViewController.m in Sources */,
