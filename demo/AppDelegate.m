@@ -657,12 +657,10 @@ completionHandler:(nonnull void (^)())completionHandler{
             for (NFCNDEFPayload *tagPayload in [tagMessage records]) {
                 
                 NSString * typeString = [[NSString alloc] initWithData:tagPayload.type encoding:NSUTF8StringEncoding];
-                NSUInteger payloadBytesLength = [tagPayload.payload length];
-                unsigned char *payloadBytes = (unsigned char*)[tagPayload.payload bytes];
-                
+
                 if (tagPayload.typeNameFormat == NFCTypeNameFormatNFCWellKnown) {
                     if ([typeString isEqualToString:@"U"]) {
-                        scannable = [[NotificarePushLib shared] parseURIPayload:payloadBytes length:payloadBytesLength];
+                        scannable = [[NotificarePushLib shared] parseURIPayload:tagPayload.payload];
                         
                         if (scannable && scannable.length > 0) {
                             [[NotificarePushLib shared] fetchScannable:scannable];
