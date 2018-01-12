@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Configuration.h"
 #import "ResetPasswordViewController.h"
+#import <SafariServices/SafariServices.h>
 
 @interface ViewController ()
 
@@ -169,20 +170,26 @@
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(nonnull WKNavigationAction *)navigationAction decisionHandler:(nonnull void (^)(WKNavigationActionPolicy))decisionHandler{
     
-    if ([[[Configuration shared] getArray:@"nativeViews"] containsObject:[[navigationAction request] URL]]) {
+    if ([[[Configuration shared] getArray:@"nativeViews"] containsObject:[[[navigationAction request] URL] absoluteString]]) {
         
-        [[self appDelegate] handleDeepLinks:[webView URL]];
+        [[self appDelegate] handleDeepLinks:[[navigationAction request] URL]];
         
         decisionHandler(WKNavigationActionPolicyCancel);
         
-    } else if (![[[[navigationAction request] URL] host] isEqualToString:[[NSURL URLWithString:[[Configuration shared] getProperty:@"url"]] host]] ) {
-        
-        [[UIApplication sharedApplication] openURL:[[navigationAction request] URL] options:@{} completionHandler:^(BOOL success) {
-            
-        }];
-        decisionHandler(WKNavigationActionPolicyCancel);
     } else {
-        decisionHandler(WKNavigationActionPolicyAllow);
+        if (!navigationAction.targetFrame.isMainFrame && [[[[navigationAction request] URL] host] isEqualToString:[[NSURL URLWithString:[[Configuration shared] getProperty:@"url"]] host]] ) {
+            
+            SFSafariViewController * sfController = [[SFSafariViewController alloc] initWithURL:[[navigationAction request] URL]];
+            [self presentViewController:sfController animated:YES completion:^{
+                
+            }];
+            
+            decisionHandler(WKNavigationActionPolicyCancel);
+            
+        } else {
+            
+            decisionHandler(WKNavigationActionPolicyAllow);
+        }
     }
     
 }
