@@ -24,8 +24,10 @@
     
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
-    [[NotificarePushLib shared] setNotificationPresentationOptions:UNNotificationPresentationOptionAlert];
-    [[NotificarePushLib shared] handleOptions:launchOptions];
+    
+    if (@available(iOS 10.0, *)) {
+        [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
+    }
     
     
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
@@ -76,14 +78,14 @@
 }
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
-    [[NotificarePushLib shared]  handleOpenURL:url];
+    //[[NotificarePushLib shared]  handleOpenURL:url];
     [self handleDeepLinks:url];
     
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation{
-    [[NotificarePushLib shared]  handleOpenURL:url];
+    //[[NotificarePushLib shared]  handleOpenURL:url];
     [self handleDeepLinks:url];
     
     return YES;
@@ -112,7 +114,7 @@
         
     } else if ([[url path] isEqualToString:@"/profile"]) {
         
-        if([[NotificarePushLib shared] isLoggedIn]){
+        if([[[NotificarePushLib shared] authManager] isLoggedIn]){
             
             [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
             
@@ -192,6 +194,7 @@
 
 
 #pragma APNS Delegates
+/*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     [[NotificarePushLib shared] registerDevice:deviceToken completionHandler:^(NSDictionary *info) {
@@ -259,6 +262,7 @@ completionHandler:(nonnull void (^)())completionHandler{
     }];
     
 }
+*/
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateBadge:(int)badge{
 
@@ -269,8 +273,8 @@ completionHandler:(nonnull void (^)())completionHandler{
 
 -(void)notificarePushLib:(NotificarePushLib *)library didClickURL:(nonnull NSURL *)url inNotification:(nonnull NotificareNotification *)notification{
 
-    
-    [self performSelector:@selector(handleDeepLinks:) withObject:url afterDelay:1.0];
+    [self handleDeepLinks:url];
+    //[self performSelector:@selector(handleDeepLinks:) withObject:url afterDelay:1.0];
     
 }
 
@@ -358,97 +362,97 @@ completionHandler:(nonnull void (^)())completionHandler{
 
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    [[NotificarePushLib shared] fetchAssets:@"CONFIG" completionHandler:^(NSArray * _Nonnull info) {
-
-        if (info && [info count] > 0 && [info firstObject]) {
-        
-            NotificareAsset * configAsset = (NotificareAsset*)[info firstObject];
+    [[NotificarePushLib shared] fetchAssets:@"CONFIG"  completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
             
-            NSURL *url = [NSURL URLWithString:[configAsset assetUrl]];
-            
-            NSURLSession *session = [NSURLSession sharedSession];
-            
-            [[session dataTaskWithURL:url
-                    completionHandler:^(NSData *data,
-                                        NSURLResponse *response,
-                                        NSError *fileError) {
-                        
-                        if (!fileError) {
+            if (response && [response count] > 0 && [response firstObject]) {
+                
+                NotificareAsset * configAsset = (NotificareAsset*)[response firstObject];
+                
+                NSURL *url = [NSURL URLWithString:[configAsset assetUrl]];
+                
+                NSURLSession *session = [NSURLSession sharedSession];
+                
+                [[session dataTaskWithURL:url
+                        completionHandler:^(NSData *data,
+                                            NSURLResponse *response,
+                                            NSError *fileError) {
                             
-                            NSError *errorJson=nil;
-                            NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&errorJson];
-                            
-                            [settings setObject:responseDict forKey:@"configFile"];
-                            [settings synchronize];
-                            
-                            [[NotificarePushLib shared] fetchAssets:@"CUSTOMJS" completionHandler:^(NSArray * _Nonnull info) {
+                            if (!fileError) {
                                 
-                                if (info && [info count] > 0 && [info firstObject]) {
-                                    
-                                    NotificareAsset * customJSAsset = (NotificareAsset*)[info firstObject];
-                                    
-                                    NSURL *url = [NSURL URLWithString:[customJSAsset assetUrl]];
-                                    
-                                    NSURLSession *session = [NSURLSession sharedSession];
-                                    
-                                    [[session dataTaskWithURL:url
-                                            completionHandler:^(NSData *jsData,
-                                                                NSURLResponse *response,
-                                                                NSError *fileError) {
-                                                
-                                                if (!fileError) {
-                                                    
-                                                    NSString* jsString = [[NSString alloc] initWithData:jsData encoding:NSUTF8StringEncoding];
-                                                    
-                                                    [settings setObject:jsString forKey:@"customJSFile"];
-                                                    
-                                                    if ( [settings synchronize] ){
-                                                    
-                                                        // Fetch Main Template
-                                                        [self fetchTemplate];
+                                NSError *errorJson=nil;
+                                NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&errorJson];
+                                
+                                [settings setObject:responseDict forKey:@"configFile"];
+                                [settings synchronize];
+                                
+                                [[NotificarePushLib shared] fetchAssets:@"CUSTOMJS" completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+                                    if (!error) {
+                                        
+                                        if (response && [response count] > 0 && [response firstObject]) {
+                                            
+                                            NotificareAsset * customJSAsset = (NotificareAsset*)[response firstObject];
+                                            
+                                            NSURL *url = [NSURL URLWithString:[customJSAsset assetUrl]];
+                                            
+                                            NSURLSession *session = [NSURLSession sharedSession];
+                                            
+                                            [[session dataTaskWithURL:url
+                                                    completionHandler:^(NSData *jsData,
+                                                                        NSURLResponse *response,
+                                                                        NSError *fileError) {
                                                         
-                                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
-                                                    }
-                                                    
-                                                } else {
-                                                    
-                                                    [self initalConfig];
-                                                    
-                                                }
-                                                
-                                    }] resume];
-                                    
-                                    
-                                } else {
+                                                        if (!fileError) {
+                                                            
+                                                            NSString* jsString = [[NSString alloc] initWithData:jsData encoding:NSUTF8StringEncoding];
+                                                            
+                                                            [settings setObject:jsString forKey:@"customJSFile"];
+                                                            
+                                                            if ( [settings synchronize] ){
+                                                                
+                                                                // Fetch Main Template
+                                                                [self fetchTemplate];
+                                                                
+                                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
+                                                            }
+                                                            
+                                                        } else {
+                                                            
+                                                            [self initalConfig];
+                                                            
+                                                        }
+                                                        
+                                                    }] resume];
+                                            
+                                            
+                                        } else {
+                                            
+                                            // Fetch Main Template
+                                            [self fetchTemplate];
+                                            
+                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
+                                        }
+                                        
+                                    } else {
+                                        [self initalConfig];
+                                    }
+                                }];
+                            
                                 
-                                    // Fetch Main Template
-                                    [self fetchTemplate];
-                                    
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
-                                }
-                                
-                            } errorHandler:^(NSError * _Nonnull error) {
+                            } else {
                                 
                                 [self initalConfig];
                                 
-                            }];
+                            }
                             
-                        } else {
                             
-                            [self initalConfig];
-                            
-                        }
-                        
-                        
-            }] resume];
-
+                        }] resume];
+                
+            }
+            
+        } else {
+            [self initalConfig];
         }
-        
-    } errorHandler:^(NSError * _Nonnull error) {
-        //
-        
-        [self initalConfig];
-        
     }];
 
 }
@@ -498,26 +502,24 @@ completionHandler:(nonnull void (^)())completionHandler{
         [payload setObject:[[self passTemplate] objectForKey:@"_id"] forKey:@"passbook"];
         [payload setObject:dataPayload forKey:@"data"];
         
-        
-        [[NotificarePushLib shared] doCloudHostOperation:@"POST" path:@"/pass" URLParams:nil bodyJSON:payload successHandler:^(NSDictionary * _Nonnull info) {
-            
-            if (info && [info objectForKey:@"pass"] && [[info objectForKey:@"pass"] objectForKey:@"serial"] ) {
-                
-                [settings setObject:[[info objectForKey:@"pass"] objectForKey:@"serial"] forKey:@"memberCardSerial"];
-                
-                
-                if ([settings synchronize]) {
-                
-                    completionBlock(@{@"serial" : [settings objectForKey:@"memberCardSerial"]});
+        [[NotificarePushLib shared] doCloudHostOperation:@"POST" path:@"/pass" URLParams:nil customHeaders:nil bodyJSON:payload completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            if (!error) {
+                if (response && [response objectForKey:@"pass"] && [[response objectForKey:@"pass"] objectForKey:@"serial"] ) {
+                    
+                    [settings setObject:[[response objectForKey:@"pass"] objectForKey:@"serial"] forKey:@"memberCardSerial"];
+                    
+                    if ([settings synchronize]) {
+                        
+                        completionBlock(@{@"serial" : [settings objectForKey:@"memberCardSerial"]});
+                    }
+                    
                 }
-       
+                
+            } else {
+                errorBlock(error);
             }
-            
-        } errorHandler:^(NotificareNetworkOperation * _Nonnull operation, NSError * _Nonnull error) {
-            errorBlock(error);
         }];
-        
-        
+
     } else {
         NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
         [userInfo setObject:LS(@"error_no_pass_template_selected") forKey:@"response"];
@@ -531,25 +533,24 @@ completionHandler:(nonnull void (^)())completionHandler{
     
     NSDictionary * memberCardConfig = [[Configuration shared] getDictionary:@"memberCard"];
     
-    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/passbook" URLParams:nil bodyJSON:nil successHandler:^(NSDictionary * _Nonnull info) {
-        
-        if (info && [info objectForKey:@"passbooks"]) {
-            
-            for (NSDictionary * template in [info objectForKey:@"passbooks"]) {
-                if ([[memberCardConfig objectForKey:@"templateId"] isEqualToString:[template objectForKey:@"_id"]]) {
-                    
-                    [self setPassTemplate:[NSDictionary dictionaryWithDictionary:template]];
-                    
+    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/passbook" URLParams:nil customHeaders:nil bodyJSON:nil completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if (response && [response objectForKey:@"passbooks"]) {
+                
+                for (NSDictionary * template in [response objectForKey:@"passbooks"]) {
+                    if ([[memberCardConfig objectForKey:@"templateId"] isEqualToString:[template objectForKey:@"_id"]]) {
+                        
+                        [self setPassTemplate:[NSDictionary dictionaryWithDictionary:template]];
+                        
+                    }
                 }
+            } else {
+                NSLog(@"%@", response);
             }
         } else {
-            NSLog(@"%@", info);
+            NSLog(@"%@", error);
         }
-        
-    } errorHandler:^(NotificareNetworkOperation * _Nonnull operation, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
     }];
-    
 }
 
 
@@ -570,17 +571,14 @@ completionHandler:(nonnull void (^)())completionHandler{
 
 - (void)notificarePushLib:(NotificarePushLib *)library didReceiveActivationToken:(NSString *)token{
     
-    [[NotificarePushLib shared] validateAccount:token completionHandler:^(NSDictionary *info) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAlertWithMessage" object:nil userInfo:@{@"message": LS(@"success_validate")}];
-        
-    } errorHandler:^(NSError *error) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAlertWithMessage" object:nil userInfo:@{@"message": LS(@"error_validate")}];
-        
+    [[[NotificarePushLib shared] authManager] validateAccount:token completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"showAlertWithMessage" object:nil userInfo:@{@"message": LS(@"success_validate")}];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"showAlertWithMessage" object:nil userInfo:@{@"message": LS(@"error_validate")}];
+        }
     }];
     
-
 }
 
 - (void)notificarePushLib:(NotificarePushLib *)library didReceiveResetPasswordToken:(NSString *)token{
@@ -605,7 +603,7 @@ completionHandler:(nonnull void (^)())completionHandler{
 -(void)notificarePushLib:(NotificarePushLib *)library didDetectScannable:(nonnull NotificareScannable *)scannable{
     
     if (![[scannable data] isKindOfClass:[NSNull class]]) {
-        [[NotificarePushLib shared] openNotification:[scannable data]];
+        //[[NotificarePushLib shared] openNotification:[scannable data]];
     }
 }
 
@@ -641,11 +639,11 @@ completionHandler:(nonnull void (^)())completionHandler{
             [session beginSession];
         } else {
             // Fallback for devices with no hardware support with QRCode
-            [[NotificarePushLib shared] startScannableSessionWithQRCode];
+            //[[NotificarePushLib shared] startScannableSessionWithQRCode];
         }
     } else {
         // Fallback on earlier versions with QRCode
-        [[NotificarePushLib shared] startScannableSessionWithQRCode];
+        //[[NotificarePushLib shared] startScannableSessionWithQRCode];
     }
 }
 
@@ -708,7 +706,7 @@ completionHandler:(nonnull void (^)())completionHandler{
             break;
         case NFCReaderErrorUnsupportedFeature:
             // Fallback for devices with no hardware support with QRCode
-            [[NotificarePushLib shared] startScannableSessionWithQRCode];
+            //[[NotificarePushLib shared] startScannableSessionWithQRCode];
             break;
         default:
             
