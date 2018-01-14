@@ -66,62 +66,59 @@
 
 -(void)loadOnBoarding{
     
-    [[NotificarePushLib shared] fetchAssets:@"ONBOARDING" completionHandler:^(NSArray * _Nonnull info) {
-        
-        self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * [info count], self.scrollView.bounds.size.height);
-        
-  
-        for (NotificareAsset * asset in info) {
-           
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
-
-            NSMutableDictionary * assetObj = [NSMutableDictionary new];
-
-            NSURL *imageURL = [NSURL URLWithString:[asset assetUrl]];
+    [[NotificarePushLib shared] fetchAssets:@"ONBOARDING" completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * [response count], self.scrollView.bounds.size.height);
             
             
-            NotificareNetworkHost *notificareNetworkHost = [[NotificareNetworkHost alloc] initWithHostName:[imageURL host]
-                                                                                                  isSecure:[[imageURL scheme] isEqualToString:@"https"]];
-            [notificareNetworkHost setDefaultCachePolicy:NSURLRequestUseProtocolCachePolicy];
-            
-            
-            NotificareNetworkOperation *imageOperation = [notificareNetworkHost operationWithHTTPMethod:@"GET" withPath:[imageURL path]];
-            
-            [imageOperation setSuccessHandler:^(NotificareNetworkOperation *operation) {
+            for (NotificareAsset * asset in response) {
                 
-                [imageView setImage:[operation responseDataToImage]];
-                [imageView setContentMode:UIViewContentModeScaleAspectFit];
-      
-            }];
-            
-            [imageOperation setErrorHandler:^(NotificareNetworkOperation *operation, NSError *error) {
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
                 
-                NSLog(@"Notificare Loading Image: %@",error);
-            }];
+                NSMutableDictionary * assetObj = [NSMutableDictionary new];
+                
+                NSURL *imageURL = [NSURL URLWithString:[asset assetUrl]];
+                
+                
+                NotificareNetworkHost *notificareNetworkHost = [[NotificareNetworkHost alloc] initWithHostName:[imageURL host]
+                                                                                                      isSecure:[[imageURL scheme] isEqualToString:@"https"]];
+                [notificareNetworkHost setDefaultCachePolicy:NSURLRequestUseProtocolCachePolicy];
+                
+                
+                NotificareNetworkOperation *imageOperation = [notificareNetworkHost operationWithHTTPMethod:@"GET" withPath:[imageURL path]];
+                
+                [imageOperation setSuccessHandler:^(NotificareNetworkOperation *operation) {
+                    
+                    [imageView setImage:[operation responseDataToImage]];
+                    [imageView setContentMode:UIViewContentModeScaleAspectFit];
+                    
+                }];
+                
+                [imageOperation setErrorHandler:^(NotificareNetworkOperation *operation, NSError *error) {
+                    
+                    NSLog(@"Notificare Loading Image: %@",error);
+                }];
+                
+                [imageOperation buildRequest];
+                
+                [notificareNetworkHost startOperation:imageOperation];
+                
+                
+                [assetObj setObject:imageView forKey:@"assetView"];
+                [assetObj setObject:[asset assetTitle] forKey:@"assetTitle"];
+                [assetObj setObject:[asset assetDescription] forKey:@"assetDescription"];
+                [assetObj setObject:[asset assetButton] forKey:@"assetButton"];
+                [assetObj setObject:[asset assetMetaData] forKey:@"assetMetaData"];
+                [[self images] addObject:assetObj];
+                
+            }
             
-            [imageOperation buildRequest];
+            [self loadScrollViewWithPage:0];
+            [self loadScrollViewWithPage:1];
             
-            [notificareNetworkHost startOperation:imageOperation];
-            
-            
-            [assetObj setObject:imageView forKey:@"assetView"];
-            [assetObj setObject:[asset assetTitle] forKey:@"assetTitle"];
-            [assetObj setObject:[asset assetDescription] forKey:@"assetDescription"];
-            [assetObj setObject:[asset assetButton] forKey:@"assetButton"];
-            [assetObj setObject:[asset assetMetaData] forKey:@"assetMetaData"];
-            [[self images] addObject:assetObj];
-            
+            [[self pageControl] setNumberOfPages:[[self images] count]];
+            [[self pageControl] setCurrentPage:0];
         }
-        
-        [self loadScrollViewWithPage:0];
-        [self loadScrollViewWithPage:1];
-        
-        [[self pageControl] setNumberOfPages:[[self images] count]];
-        [[self pageControl] setCurrentPage:0];
-
-        
-    } errorHandler:^(NSError * _Nonnull error) {
-        //
     }];
 }
 

@@ -216,21 +216,19 @@
 
     } else {
         
-        [[NotificarePushLib shared] resetPassword:[[self passwordField] text] withToken:[self token] completionHandler:^(NSDictionary *info) {
-            
-            [self presentAlertViewForForm:LS(@"success_resetpass")];
-            [[self formButton] setEnabled:YES];
-            
-            [[self passwordField] setText:@""];
-            [[self confirmPasswordField] setText:@""];
-            
-            [[self navigationController] popToRootViewControllerAnimated:YES];
-            
-        } errorHandler:^(NSError *error) {
-            //
-            [self presentAlertViewForForm:LS(@"error_resetpass")];
-            [[self formButton] setEnabled:YES];
-
+        [[[NotificarePushLib shared] authManager] resetPassword:[[self passwordField] text] withToken:[self token] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            if (!error) {
+                [self presentAlertViewForForm:LS(@"success_resetpass")];
+                [[self formButton] setEnabled:YES];
+                
+                [[self passwordField] setText:@""];
+                [[self confirmPasswordField] setText:@""];
+                
+                [[self navigationController] popToRootViewControllerAnimated:YES];
+            } else {
+                [self presentAlertViewForForm:LS(@"error_resetpass")];
+                [[self formButton] setEnabled:YES];
+            }
         }];
         
     }

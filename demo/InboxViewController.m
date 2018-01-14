@@ -71,26 +71,26 @@
 
 -(void)reloadData{
     
-    [[NotificarePushLib shared] fetchInbox:nil skip:[NSNumber numberWithInt:0] limit:[NSNumber numberWithInt:100] completionHandler:^(NSDictionary *info) {
-        
-        if([[info objectForKey:@"inbox"] count] == 0){
-            [[self navSections] addObject:@[]];
-            [[self spinnerView] removeFromSuperview];
-            [[self emptyMessage] setHidden:NO];
+    [[[NotificarePushLib shared] inboxManager] fetchInbox:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if([[response objectForKey:@"inbox"] count] == 0){
+                [[self navSections] addObject:@[]];
+                [[self spinnerView] removeFromSuperview];
+                [[self emptyMessage] setHidden:NO];
+            } else {
+                [[self navSections] removeAllObjects];
+                [[self navSections] addObject:[response objectForKey:@"inbox"]];
+                [[self loadingView] removeFromSuperview];
+            }
+            
+            [[self tableView] reloadData];
+            [self setupNavigationBar];
         } else {
             [[self navSections] removeAllObjects];
-            [[self navSections] addObject:[info objectForKey:@"inbox"]];
-            [[self loadingView] removeFromSuperview];
+            [[self navSections] addObject:@[]];
+            [[self tableView] reloadData];
+            [self setupNavigationBar];
         }
-        
-        [[self tableView] reloadData];
-        [self setupNavigationBar];
-        
-    } errorHandler:^(NSError *error) {
-        [[self navSections] removeAllObjects];
-        [[self navSections] addObject:@[]];
-        [[self tableView] reloadData];
-         [self setupNavigationBar];
     }];
     
 }
@@ -229,17 +229,12 @@
     
     NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     
-    //Check for type
-    [[NotificarePushLib shared] getNotification:[item notification] completionHandler:^(NSDictionary * _Nonnull info) {
-        if (info && [info objectForKey:@"notification"] && [[[info objectForKey:@"notification"] objectForKey:@"type"] isEqualToString:@"re.notifica.notification.URLScheme"]) {
+    [[[NotificarePushLib shared] inboxManager] openInboxItem:item completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
             
-            [[self navigationController] popToRootViewControllerAnimated:YES];
+            [[NotificarePushLib shared] presentInboxItem:item inNavigationController:[self navigationController] withController:response];
+            
         }
-        
-            [[NotificarePushLib shared] openInboxItem:item];
-        
-    } errorHandler:^(NSError * _Nonnull error) {
-        //
     }];
     
 }   
@@ -247,14 +242,12 @@
 
 -(void)clearInbox{
     
-    [[NotificarePushLib shared] clearInbox:^(NSDictionary *info) {
-        
-        [[self navSections] removeAllObjects];
-        [[self navSections] addObject:@[]];
-        [[self tableView] reloadData];
-        
-    } errorHandler:^(NSError *error) {
-        
+    [[[NotificarePushLib shared] inboxManager] clearInbox:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            [[self navSections] removeAllObjects];
+            [[self navSections] addObject:@[]];
+            [[self tableView] reloadData];
+        }
     }];
     
 }
@@ -278,17 +271,13 @@
         
         NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         
-        
-        [[NotificarePushLib shared] removeFromInbox:item completionHandler:^(NSDictionary *info) {
-            //
-            
-            [tableView beginUpdates];
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [[[self navSections] objectAtIndex:0] removeObject:item];
-            [tableView endUpdates];
-            
-        } errorHandler:^(NSError *error) {
-            //
+        [[[NotificarePushLib shared] inboxManager] removeFromInbox:item completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            if (!error) {
+                [tableView beginUpdates];
+                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [[[self navSections] objectAtIndex:0] removeObject:item];
+                [tableView endUpdates];
+            }
         }];
         
     }

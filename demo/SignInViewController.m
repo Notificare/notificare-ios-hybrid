@@ -258,69 +258,68 @@
         
     } else {
         
-        [[NotificarePushLib shared] loginWithUsername:[[self emailField] text] andPassword:[[self passwordField] text] completionHandler:^(NSDictionary *info) {
-            //
-            
-            [[NotificarePushLib shared] fetchAccountDetails:^(NSDictionary *info) {
+        
+        [[[NotificarePushLib shared] authManager] loginWithUsername:[[self emailField] text] andPassword:[[self passwordField] text] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            if (!error) {
                 
-                NSDictionary * user = [info objectForKey:@"user"];
-                
-                if(![user objectForKey:@"accessToken"] || [[user objectForKey:@"accessToken"] isKindOfClass:[NSNull class]]){
-                    
-                    [[NotificarePushLib shared] generateAccessToken:^(NSDictionary *info) {
+                [[[NotificarePushLib shared] authManager] fetchAccountDetails:^(id  _Nullable response, NSError * _Nullable error) {
+                    if (!error) {
                         
+                        NSDictionary * user = [response objectForKey:@"user"];
                         
-                        if(![settings objectForKey:@"memberCardSerial"]){
+                        if(![user objectForKey:@"accessToken"] || [[user objectForKey:@"accessToken"] isKindOfClass:[NSNull class]]){
                             
-                            [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
+                            [[[NotificarePushLib shared] authManager] generateAccessToken:^(id  _Nullable response, NSError * _Nullable error) {
+                                if (!error) {
+                                    
+                                    if(![settings objectForKey:@"memberCardSerial"]){
+                                        
+                                        [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
+                                        
+                                    }
+                                    [self goToProfile];
+                                    
+                                } else {
+                                    [self presentAlertViewForForm:LS(@"error_signin")];
+                                    [[self formButton] setEnabled:YES];
+                                }
+                            }];
                             
+                        } else {
+                            
+                            if(![settings objectForKey:@"memberCardSerial"]){
+                                
+                                [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
+                                
+                            }
+                            
+                            [self goToProfile];
                         }
                         
-                        [self goToProfile];
-                        
-                    } errorHandler:^(NSError *error) {
-                        //
+                    } else {
                         [self presentAlertViewForForm:LS(@"error_signin")];
                         [[self formButton] setEnabled:YES];
-                    }];
-                    
-                } else {
-                    
-                    if(![settings objectForKey:@"memberCardSerial"]){
-                        
-                        [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
-                        
                     }
-                    
-                    [self goToProfile];
-                }
+                }];
                 
-                
-            } errorHandler:^(NSError *error) {
-                
-                [self presentAlertViewForForm:LS(@"error_signin")];
+            } else {
                 [[self formButton] setEnabled:YES];
                 
-            }];
-            
-            
-        } errorHandler:^(NSError *error) {
-            //
-            [[self formButton] setEnabled:YES];
-            
-            switch ([error code]) {
-                case kNotificareErrorCodeBadRequest:
-                    [self presentAlertViewForForm:LS(@"error_signin_invalid_email")];
-                    break;
-                    
-                case kNotificareErrorCodeForbidden:
-                    [self presentAlertViewForForm:LS(@"error_signin_invalid_password")];
-                    break;
-                    
-                default:
-                    break;
+                switch ([error code]) {
+                    case kNotificareErrorCodeBadRequest:
+                        [self presentAlertViewForForm:LS(@"error_signin_invalid_email")];
+                        break;
+                        
+                    case kNotificareErrorCodeForbidden:
+                        [self presentAlertViewForForm:LS(@"error_signin_invalid_password")];
+                        break;
+                        
+                    default:
+                        break;
+                }
             }
         }];
+        
     }
     
 }

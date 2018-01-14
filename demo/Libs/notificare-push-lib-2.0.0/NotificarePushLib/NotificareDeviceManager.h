@@ -57,6 +57,8 @@ typedef void (^ErrorDeviceDnDBlock)(NSError * response);
 
 -(void)fetchTags:(SuccessTagsBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;
 -(void)addTags:(NSArray *)tags completionHandler:(SuccessTagBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;
+-(void)addTag:(NSString *)tag completionHandler:(SuccessTagBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;
+-(void)removeTags:(NSArray *)tags completionHandler:(SuccessTagBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;
 -(void)removeTag:(NSString *)tag completionHandler:(SuccessTagBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;
 -(void)clearTags:(SuccessTagBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;
 

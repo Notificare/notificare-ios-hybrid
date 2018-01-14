@@ -97,45 +97,44 @@
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10")) {
         
         
-        [[[NotificarePushLib shared] notificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+        [[[NotificarePushLib shared] userNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
             //
             
             if ([settings authorizationStatus] == UNNotificationSettingEnabled) {
                 
                 
-                [[NotificarePushLib shared] fetchDoNotDisturb:^(NSDictionary *info) {
-                    //
-                    
-                    if([info objectForKey:@"start"] && [info objectForKey:@"end"]){
+                [[NotificarePushLib shared] fetchDoNotDisturb:^(id  _Nullable response, NSError * _Nullable error) {
+                    if (!error) {
                         
-                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                        [dateFormatter setDateFormat:@"HH:mm"];
-                        NSString *startTime = [dateFormatter stringFromDate:[info objectForKey:@"start"]];
-                        NSString *endTime = [dateFormatter stringFromDate:[info objectForKey:@"end"]];
+                        NotificareDeviceDnD * dnd = (NotificareDeviceDnD*)response;
+                        
+                        if([dnd start] && [dnd end]){
+                            
+                            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                            [dateFormatter setDateFormat:@"HH:mm"];
+                            NSString *startTime = [dateFormatter stringFromDate:[dnd start]];
+                            NSString *endTime = [dateFormatter stringFromDate:[dnd end]];
+                            
+                            
+                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"true"}];
+                            
+                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_start"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_start_description"), @"value":startTime}];
+                            
+                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_end"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_end_description"), @"value":endTime}];
+                            
+                        } else {
+                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
+                        }
                         
                         
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"true"}];
                         
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_start"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_start_description"), @"value":startTime}];
+                        [[self navSections] addObject:section1];
                         
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_end"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_end_description"), @"value":endTime}];
                         
-                    } else {
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
+                        [self handleTags];
+                        
                     }
-                    
-                    
-                    
-                    [[self navSections] addObject:section1];
-                    
-                    
-                    [self handleTags];
-                    
-                } errorHandler:^(NSError *error) {
-                    //
                 }];
-                
-                
                 
             } else {
                 
@@ -163,38 +162,38 @@
         } else {
             
             
-            [[NotificarePushLib shared] fetchDoNotDisturb:^(NSDictionary *info) {
-                //
-                
-                if([info objectForKey:@"start"] && [info objectForKey:@"end"]){
+            [[NotificarePushLib shared] fetchDoNotDisturb:^(id  _Nullable response, NSError * _Nullable error) {
+                if (!error) {
                     
-                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    [dateFormatter setDateFormat:@"HH:mm"];
-                    NSString *startTime = [dateFormatter stringFromDate:[info objectForKey:@"start"]];
-                    NSString *endTime = [dateFormatter stringFromDate:[info objectForKey:@"end"]];
+                    NotificareDeviceDnD * dnd = (NotificareDeviceDnD*)response;
+                    
+                    if([dnd start] && [dnd end]){
+                        
+                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                        [dateFormatter setDateFormat:@"HH:mm"];
+                        NSString *startTime = [dateFormatter stringFromDate:[dnd start]];
+                        NSString *endTime = [dateFormatter stringFromDate:[dnd end]];
+                        
+                        
+                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"true"}];
+                        
+                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_start"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_start_description"), @"value":startTime}];
+                        
+                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_end"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_end_description"), @"value":endTime}];
+                        
+                    } else {
+                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
+                    }
                     
                     
-                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"true"}];
                     
-                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_start"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_start_description"), @"value":startTime}];
+                    [[self navSections] addObject:section1];
                     
-                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_end"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_end_description"), @"value":endTime}];
                     
-                } else {
-                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
+                    [self handleTags];
+                    
                 }
-                
-                
-                [[self navSections] addObject:section1];
-                
-                
-                [self handleTags];
-                
-                
-            } errorHandler:^(NSError *error) {
-                //
             }];
-            
             
         }
         
@@ -207,49 +206,48 @@
 
 -(void)handleTags{
 
-    
-    [[NotificarePushLib shared] getTags:^(NSDictionary * _Nonnull info) {
-        
-        if (info && [info objectForKey:@"tags"]) {
-            
-            [[self sectionTitles] addObject:LS(@"section_item_settings_tags")];
-            NSMutableArray * section2 = [NSMutableArray array];
-            
-            if ([[info objectForKey:@"tags"] containsObject:@"tag_press"]) {
-                [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@1}];
-            } else {
-                [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@0}];
+    [[NotificarePushLib shared] fetchTags:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if (response && [response objectForKey:@"tags"]) {
+                
+                [[self sectionTitles] addObject:LS(@"section_item_settings_tags")];
+                NSMutableArray * section2 = [NSMutableArray array];
+                
+                if ([[response objectForKey:@"tags"] containsObject:@"tag_press"]) {
+                    [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@1}];
+                } else {
+                    [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@0}];
+                }
+                
+                
+                if ([[response objectForKey:@"tags"] containsObject:@"tag_newsletter"]) {
+                    [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@1}];
+                } else {
+                    [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@0}];
+                }
+                
+                if ([[response objectForKey:@"tags"] containsObject:@"tag_events"]) {
+                    [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@1}];
+                } else {
+                    [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@0}];
+                }
+                
+                [[self navSections] addObject:section2];
+                
             }
             
+            [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
+            NSMutableArray * section3 = [NSMutableArray array];
+            [section3 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
+            [section3 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
+            [[self navSections] addObject:section3];
             
-            if ([[info objectForKey:@"tags"] containsObject:@"tag_newsletter"]) {
-                [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@1}];
-            } else {
-                [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@0}];
-            }
             
-            if ([[info objectForKey:@"tags"] containsObject:@"tag_events"]) {
-                [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@1}];
-            } else {
-                [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@0}];
-            }
             
-            [[self navSections] addObject:section2];
-            
+            [[self tableView] reloadData];
+        } else {
+            [[self tableView] reloadData];
         }
-        
-        [[self sectionTitles] addObject:LS(@"section_item_settings_about")];
-        NSMutableArray * section3 = [NSMutableArray array];
-        [section3 addObject:@{@"label":LS(@"settings_feedback"), @"segue":@"Feedback"}];
-        [section3 addObject:@{@"label":LS(@"settings_app_version"), @"segue":@""}];
-        [[self navSections] addObject:section3];
-        
-        
-        
-        [[self tableView] reloadData];
-        
-    } errorHandler:^(NSError * _Nonnull error) {
-        [[self tableView] reloadData];
     }];
     
 }
@@ -322,7 +320,7 @@
             [notificationSwitch addTarget:self action:@selector(toggleLocationServices:) forControlEvents:UIControlEventValueChanged];
             
             
-            if ([[NotificarePushLib shared] checkLocationUpdates]) {
+            if ([[NotificarePushLib shared] locationServicesEnabled]) {
                 [notificationSwitch setOn:YES];
             } else {
                 [notificationSwitch setOn:NO];
@@ -533,7 +531,7 @@
 
 -(void)toggleLocationServices:(id)sender{
     
-    if ([[NotificarePushLib shared] checkLocationUpdates]) {
+    if ([[NotificarePushLib shared] locationServicesEnabled]) {
         
         [[NotificarePushLib shared] stopLocationUpdates];
         
@@ -547,24 +545,32 @@
     
     if ([(UISwitch *)sender isOn]) {
         
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"HH:mm"];
-        NSDate *startTime = [dateFormat dateFromString:@"00:00"];
-        NSDate *endTime = [dateFormat dateFromString:@"08:00"];
+        NSDate *date = [NSDate date];
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDateComponents *sComponents = [gregorian components: NSUIntegerMax fromDate: date];
+        [sComponents setHour:0];
+        [sComponents setMinute:0];
+        NSDate *startTime = [gregorian dateFromComponents:sComponents];
         
-        [[NotificarePushLib shared] updateDoNotDisturb:startTime endTime:endTime completionHandler:^(NSDictionary *info) {
-            [self refreshView];
-        } errorHandler:^(NSError *error) {
-            [self refreshView];
+        NSDateComponents *eComponents = [gregorian components: NSUIntegerMax fromDate: date];
+        [eComponents setHour:8];
+        [eComponents setMinute:0];
+        NSDate *endTime = [gregorian dateFromComponents:eComponents];
+        
+        NotificareDeviceDnD * dnd = [NotificareDeviceDnD new];
+        [dnd setStart:startTime];
+        [dnd setEnd:endTime];
+        
+        [[NotificarePushLib shared] updateDoNotDisturb:dnd completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            
         }];
         
     } else {
         
-        [[NotificarePushLib shared] clearDoNotDisturb:^(NSDictionary *info) {
-            [self refreshView];
-        } errorHandler:^(NSError *error) {
-            [self refreshView];
+        [[NotificarePushLib shared] clearDoNotDisturb:^(id  _Nullable response, NSError * _Nullable error) {
+             [self refreshView];
         }];
+
     }
     
 }
@@ -572,10 +578,12 @@
 
 -(void)timeChanged:(id)sender{
     
-    [[NotificarePushLib shared] updateDoNotDisturb:self.startPicker.date endTime:self.endPicker.date completionHandler:^(NSDictionary *info) {
+    NotificareDeviceDnD * dnd = [NotificareDeviceDnD new];
+    [dnd setStart:self.startPicker.date];
+    [dnd setEnd:self.endPicker.date];
+    
+    [[NotificarePushLib shared] updateDoNotDisturb:dnd completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
         [self refreshView];
-    } errorHandler:^(NSError *error) {
-        
     }];
     
 }
@@ -633,20 +641,16 @@
     
     if ([(UISwitch *)sender isOn]) {
         
-        
-        [[NotificarePushLib shared] addTags:@[@"tag_press"] completionHandler:^(NSDictionary * _Nonnull info) {
-            
-        } errorHandler:^(NSError * _Nonnull error) {
+        [[NotificarePushLib shared] addTags:@[@"tag_press"] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
             
         }];
         
     } else {
         
-        [[NotificarePushLib shared] removeTag:@"tag_press" completionHandler:^(NSDictionary * _Nonnull info) {
-            
-        } errorHandler:^(NSError * _Nonnull error) {
+        [[NotificarePushLib shared] removeTag:@"tag_press" completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
             
         }];
+
     }
     
 }
@@ -655,20 +659,16 @@
     
     if ([(UISwitch *)sender isOn]) {
         
-        
-        [[NotificarePushLib shared] addTags:@[@"tag_newsletter"] completionHandler:^(NSDictionary * _Nonnull info) {
-            
-        } errorHandler:^(NSError * _Nonnull error) {
+        [[NotificarePushLib shared] addTags:@[@"tag_newsletter"] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
             
         }];
         
     } else {
         
-        [[NotificarePushLib shared] removeTag:@"tag_newsletter" completionHandler:^(NSDictionary * _Nonnull info) {
-            
-        } errorHandler:^(NSError * _Nonnull error) {
+        [[NotificarePushLib shared] removeTag:@"tag_newsletter" completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
             
         }];
+        
     }
     
 }
@@ -677,20 +677,16 @@
     
     if ([(UISwitch *)sender isOn]) {
         
-        
-        [[NotificarePushLib shared] addTags:@[@"tag_events"] completionHandler:^(NSDictionary * _Nonnull info) {
-            
-        } errorHandler:^(NSError * _Nonnull error) {
+        [[NotificarePushLib shared] addTags:@[@"tag_events"] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
             
         }];
         
     } else {
         
-        [[NotificarePushLib shared] removeTag:@"tag_events" completionHandler:^(NSDictionary * _Nonnull info) {
-            
-        } errorHandler:^(NSError * _Nonnull error) {
+        [[NotificarePushLib shared] removeTag:@"tag_events" completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
             
         }];
+        
     }
     
 }

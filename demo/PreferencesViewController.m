@@ -159,10 +159,9 @@
         if([checkCell accessoryType] != UITableViewCellAccessoryCheckmark){
             
             checkCell.accessoryType = UITableViewCellAccessoryCheckmark;
-            [[NotificarePushLib shared] addSegment:item toPreference:[self preference] completionHandler:^(NSDictionary *info) {
+            
+            [[[NotificarePushLib shared] authManager] addSegment:item toPreference:[self preference] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
                 [self back];
-            } errorHandler:^(NSError *error) {
-                //
             }];
             
         }
@@ -179,19 +178,16 @@
     
     if([tempSwitch isOn]){
         
-        [[NotificarePushLib shared] addSegment:item toPreference:[self preference] completionHandler:^(NSDictionary *info) {
-            //
-        } errorHandler:^(NSError *error) {
-            //
+        [[[NotificarePushLib shared] authManager] addSegment:item toPreference:[self preference] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+
         }];
         
     }else{
         
-        [[NotificarePushLib shared] removeSegment:item fromPreference:[self preference] completionHandler:^(NSDictionary *info) {
-            //
-        } errorHandler:^(NSError *error) {
-            //
+        [[[NotificarePushLib shared] authManager] removeSegment:item fromPreference:[self preference] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+
         }];
+
         
     }
     

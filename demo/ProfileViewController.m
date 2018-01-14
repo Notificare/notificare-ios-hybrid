@@ -63,18 +63,19 @@
     
     [self showLoadingView];
     
-    if ([[[NotificarePushLib shared] applicationInfo] objectForKey:@"userDataFields"] && [[[[NotificarePushLib shared] applicationInfo] objectForKey:@"userDataFields"] count] > 0) {
-        
-        UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"] style:UIBarButtonItemStylePlain target:self action:@selector(updateUser)];
-        [rightButton setTintColor:MAIN_COLOR];
-        [[self navigationItem] setRightBarButtonItem:rightButton];
-        
-    } else {
-        
-        [[self navigationItem] setRightBarButtonItem:nil];
-
-    }
     
+    [[NotificarePushLib shared] fetchUserData:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if (response && [response count] > 0) {
+                UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"] style:UIBarButtonItemStylePlain target:self action:@selector(updateUser)];
+                [rightButton setTintColor:MAIN_COLOR];
+                [[self navigationItem] setRightBarButtonItem:rightButton];
+            }
+        } else{
+            [[self navigationItem] setRightBarButtonItem:nil];
+        }
+    }];
+
 }
 
 
@@ -99,44 +100,29 @@
 
 -(void)loadAccount{
     
-    [[NotificarePushLib shared] fetchAccountDetails:^(NSDictionary *info) {
-        //
-        
-        NotificareUser * tmpUser = [NotificareUser new];
-        
-        [tmpUser setUserID:[[info objectForKey:@"user"] objectForKey:@"userID"]];
-        [tmpUser setUserName:[[info objectForKey:@"user"] objectForKey:@"userName"]];
-        [tmpUser setSegments:[[info objectForKey:@"user"] objectForKey:@"segments"]];
-        [tmpUser setAccessToken:[[info objectForKey:@"user"] objectForKey:@"accessToken"]];
-        [tmpUser setAccount:[[info objectForKey:@"user"] objectForKey:@"account"]];
-        [tmpUser setApplication:[[info objectForKey:@"user"] objectForKey:@"application"]];
-        [tmpUser setValidated:[[[info objectForKey:@"user"] objectForKey:@"validated"] boolValue]];
-        [tmpUser setActive:[[[info objectForKey:@"user"] objectForKey:@"active"] boolValue]];
-        [self setUser:tmpUser];
-        
-        [self loadSegments];
-    } errorHandler:^(NSError *error) {
-        
+    [[[NotificarePushLib shared] authManager] fetchAccountDetails:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error)  {
+            [self setUser:response];
+             [self loadSegments];
+        }
     }];
-    
-    
-    
+
 }
 
 -(void)loadSegments{
     
     [self setSegments:[NSMutableArray array]];
     
-    [[NotificarePushLib shared] fetchUserPreferences:^(NSArray *info) {
-        
-        for (NotificareUserPreference * preference in info){
-            [[self segments] addObject:preference];
+    [[[NotificarePushLib shared] authManager] fetchUserPreferences:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            for (NotificareUserPreference * preference in response){
+                [[self segments] addObject:preference];
+            }
+            
+            [self loadUserData];
+        } else {
+            [self loadSegments];
         }
-        
-        [self loadUserData];
-        
-    } errorHandler:^(NSError *error) {
-        [self loadSegments];
     }];
 }
 
@@ -144,38 +130,13 @@
 
 -(void)loadUserData{
     
-    
-    NSMutableArray * tempUserData = [NSMutableArray array];
-    
-    [[NotificarePushLib shared] fetchUserData:^(NSDictionary * _Nonnull info) {
-        //
-        
-        for (NSMutableDictionary * field in [[[NotificarePushLib shared] applicationInfo] objectForKey:@"userDataFields"]) {
-            
-            NSMutableDictionary * tempField = [NSMutableDictionary dictionaryWithDictionary:field];
-            
-            if (![[info objectForKey:@"userData"] isKindOfClass:[NSNull class]] && [info objectForKey:@"userData"] && [[info objectForKey:@"userData"] objectForKey:[field objectForKey:@"key"]]) {
-                
-                [tempField setObject:[[info objectForKey:@"userData"] objectForKey:[field objectForKey:@"key"]] forKey:@"value"];
-                
-            } else {
-                
-                [tempField setObject:@"" forKey:@"value"];
-                
-            }
-            
-            [tempUserData addObject:tempField];
+    [[NotificarePushLib shared] fetchUserData:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            [self setUserData:response];
+            [self setupTable];
         }
-        
-        [self setUserData:tempUserData];
-        [self setupTable];
-        
-    } errorHandler:^(NSError * _Nonnull error) {
-        //
     }];
-    
-    
-    
+   
 }
 
 
@@ -214,14 +175,14 @@
         
         if ([self userData] && [[self userData] count] > 0) {
             
-            for (NSDictionary * field in [self userData]) {
+            for (NotificareUserData * field in [self userData]) {
                 
                 [userCell addObject:@{
                                       @"type": @"editable",
                                       @"tag": [NSString stringWithFormat:@"%lu", (unsigned long) (200 +  [[self userData] indexOfObject:field])],
-                                      @"key": [field objectForKey:@"key"],
-                                      @"value": [field objectForKey:@"value"],
-                                      @"label": [field objectForKey:@"label"]}];
+                                      @"key": [field key],
+                                      @"value": [field value],
+                                      @"label": [field label]}];
                 
             }
             
@@ -444,10 +405,13 @@
                                      } else if ([[[alert textFields][0] text] length] < 5) {
                                          [self presentAlertViewForForm:LS(@"error_create_account_small_password")];
                                      } else {
-                                         [[NotificarePushLib shared] changePassword:[[alert textFields][0] text] completionHandler:^(NSDictionary *info) {
-                                             [self presentAlertViewForForm:LS(@"success_message_changepass")];
-                                         } errorHandler:^(NSError *error) {
-                                             [self presentAlertViewForForm:LS(@"error_message_changepass")];
+                                         
+                                         [[[NotificarePushLib shared] authManager] changePassword:[[alert textFields][0] text] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+                                             if (!error) {
+                                                 [self presentAlertViewForForm:LS(@"success_message_changepass")];
+                                             } else {
+                                                 [self presentAlertViewForForm:LS(@"error_message_changepass")];
+                                             }
                                          }];
                                      }
                                      
@@ -632,22 +596,14 @@
         
         if([tempSwitch isOn]){
             
-            [[NotificarePushLib shared] addSegment:seg toPreference:item completionHandler:^(NSDictionary *info) {
-                //
-                NSLog(@"%@", info);
-            } errorHandler:^(NSError *error) {
-                //
-                NSLog(@"%@", error);
+            [[[NotificarePushLib shared] authManager] addSegment:seg toPreference:item completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+                NSLog(@"%@ - %@", response, error);
             }];
             
         }else{
-            
-            [[NotificarePushLib shared] removeSegment:seg fromPreference:item completionHandler:^(NSDictionary *info) {
-                //
-                NSLog(@"%@", info);
-            } errorHandler:^(NSError *error) {
-                //
-                NSLog(@"%@", error);
+ 
+            [[[NotificarePushLib shared] authManager] removeSegment:seg fromPreference:item completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+                NSLog(@"%@ - %@", response, error);
             }];
             
         }
@@ -659,7 +615,7 @@
 
 -(void)updateUser{
     
-    NSMutableDictionary * data = [NSMutableDictionary dictionary];
+    NSMutableArray * userData = [NSMutableArray array];
     
     for (NSDictionary * dict in [[self navSections] objectAtIndex:0]) {
         
@@ -667,9 +623,12 @@
             
             UITextField *myField = (UITextField *)[self.view viewWithTag:[[dict objectForKey:@"tag"] intValue]];
             
-
             if ([[myField text] length] > 0) {
-                [data setObject:[myField text] forKey:[dict objectForKey:@"key"]];
+                NotificareUserData * data = [NotificareUserData new];
+                [data setKey:[dict objectForKey:@"key"]];
+                [data setValue:[myField text]];
+                [data setLabel:[dict objectForKey:@"label"]];
+                [userData addObject:data];
             }
 
             [myField resignFirstResponder];
@@ -677,10 +636,12 @@
     }
     
 
-    [[NotificarePushLib shared] updateUserData:data completionHandler:^(NSDictionary * _Nonnull info) {
-        [self presentAlertViewForForm:LS(@"success_message_update_user_data")];
-    } errorHandler:^(NSError * _Nonnull error) {
-         [self presentAlertViewForForm:LS(@"error_message_update_user_data")];
+    [[NotificarePushLib shared] updateUserData:userData completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            [self presentAlertViewForForm:LS(@"success_message_update_user_data")];
+        } else {
+           [self presentAlertViewForForm:LS(@"error_message_update_user_data")];
+        }
     }];
     
 }
@@ -715,14 +676,14 @@
 
 -(void)generateNewToken{
     
-    
-    [[NotificarePushLib shared] generateAccessToken:^(NSDictionary *info) {
-        [self loadAccount];
-        [self presentAlertViewForForm:LS(@"success_message_generate_token")];
-    } errorHandler:^(NSError *error) {
-        [self presentAlertViewForForm:LS(@"success_message_generate_token")];
+    [[[NotificarePushLib shared] authManager] generateAccessToken:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            [self loadAccount];
+            [self presentAlertViewForForm:LS(@"success_message_generate_token")];
+        } else {
+            [self presentAlertViewForForm:LS(@"success_message_generate_token")];
+        }
     }];
-    
 
 }
 
@@ -739,7 +700,7 @@
                              style:UIAlertActionStyleDestructive
                              handler:^(UIAlertAction * action){
                                  
-                                 [[NotificarePushLib shared] logoutAccount];
+                                 [[[NotificarePushLib shared] authManager] logoutAccount];
                                  [self back];
                                  
                              }];

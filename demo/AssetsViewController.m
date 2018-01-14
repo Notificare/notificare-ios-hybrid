@@ -127,26 +127,27 @@
     [[self introLabel] setHidden:YES];
     [[self introView] addSubview:[self activityIndicatorView]];
     
-    [[NotificarePushLib shared] fetchAssets:search completionHandler:^(NSArray * _Nonnull info) {
-        
-        [self setGridObjects:[NSMutableArray arrayWithArray:info]];
-        [[self collectionView] reloadData];
-        [[self activityIndicatorView] removeFromSuperview];
-        [[self introView] removeFromSuperview];
-        
-    } errorHandler:^(NSError * _Nonnull error) {
-        
-        [[self activityIndicatorView] removeFromSuperview];
-        
-        if(![[self introView] isDescendantOfView:[self view]]){
-            [self showIntroView];
+    
+    [[NotificarePushLib shared] fetchAssets:search completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            [self setGridObjects:[NSMutableArray arrayWithArray:response]];
+            [[self collectionView] reloadData];
+            [[self activityIndicatorView] removeFromSuperview];
+            [[self introView] removeFromSuperview];
+        } else {
+            [[self activityIndicatorView] removeFromSuperview];
+            
+            if(![[self introView] isDescendantOfView:[self view]]){
+                [self showIntroView];
+            }
+            
+            [self setGridObjects:[NSMutableArray array]];
+            [[self collectionView] reloadData];
+            [[self introLabel] setText:LS(@"storage_empty_text")];
+            [[self introLabel] setHidden:NO];
         }
-        
-        [self setGridObjects:[NSMutableArray array]];
-        [[self collectionView] reloadData];
-        [[self introLabel] setText:LS(@"storage_empty_text")];
-        [[self introLabel] setHidden:NO];
     }];
+
 }
 
 

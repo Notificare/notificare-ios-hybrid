@@ -50,7 +50,7 @@
     
     [[self mapView] setDelegate:self];
     
-    if([[NotificarePushLib shared] checkLocationUpdates]){
+    if([[NotificarePushLib shared] locationServicesEnabled]){
         [[self mapView] setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
         [[self mapView] setShowsUserLocation:YES];
     }
@@ -86,57 +86,54 @@
     NSMutableArray * regions = [NSMutableArray array];
     
 
-    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/region" URLParams:@{} bodyJSON:nil successHandler:^(NSDictionary * _Nonnull info) {
-        //
-        if (info && [info objectForKey:@"regions"] && [[info objectForKey:@"regions"] count] > 0) {
-        
-            for (NSDictionary * region in [info objectForKey:@"regions"]) {
-
-                if (region && ![[region objectForKey:@"advancedGeometry"] isKindOfClass:[NSNull class]]) {
+    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/region" URLParams:@{} customHeaders:nil bodyJSON:nil completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if (response && [response objectForKey:@"regions"] && [[response objectForKey:@"regions"] count] > 0) {
+                
+                for (NSDictionary * region in [response objectForKey:@"regions"]) {
                     
-                    NSMutableArray * coordinates = [[[region objectForKey:@"advancedGeometry"] objectForKey:@"coordinates"] objectAtIndex:0];
-                    
-                    CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D) * [coordinates count]);
-                    
-                    for (int i=0; i < [coordinates count]; i++) {
-                        NSArray * c = [coordinates objectAtIndex:i];
-                        coords[i] = CLLocationCoordinate2DMake([[c objectAtIndex:1] floatValue], [[c objectAtIndex:0] floatValue]);
+                    if (region && ![[region objectForKey:@"advancedGeometry"] isKindOfClass:[NSNull class]]) {
+                        
+                        NSMutableArray * coordinates = [[[region objectForKey:@"advancedGeometry"] objectForKey:@"coordinates"] objectAtIndex:0];
+                        
+                        CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D) * [coordinates count]);
+                        
+                        for (int i=0; i < [coordinates count]; i++) {
+                            NSArray * c = [coordinates objectAtIndex:i];
+                            coords[i] = CLLocationCoordinate2DMake([[c objectAtIndex:1] floatValue], [[c objectAtIndex:0] floatValue]);
+                        }
+                        
+                        MKPolygon * polygon = [MKPolygon polygonWithCoordinates:coords count:[coordinates count]];
+                        
+                        NSMutableArray * points = [[region objectForKey:@"geometry"] objectForKey:@"coordinates"];
+                        CLLocationCoordinate2D center = CLLocationCoordinate2DMake([[points objectAtIndex:1] floatValue], [[points objectAtIndex:0] floatValue]);
+                        
+                        RegionsMarker *annotation = [[RegionsMarker alloc] initWithName:[region objectForKey:@"name"] address:(![[region objectForKey:@"address"] isKindOfClass:[NSNull class]]) ? [region objectForKey:@"address"] : @"" coordinate:center] ;
+                        [markers addObject:annotation];
+                        
+                        [regions addObject:polygon];
+                        
+                    } else {
+                        
+                        NSMutableArray * coordinates = [[region objectForKey:@"geometry"] objectForKey:@"coordinates"];
+                        CLLocationCoordinate2D center = CLLocationCoordinate2DMake([[coordinates objectAtIndex:1] floatValue], [[coordinates objectAtIndex:0] floatValue]);
+                        RegionsMarker *annotation = [[RegionsMarker alloc] initWithName:[region objectForKey:@"name"] address: (![[region objectForKey:@"address"] isKindOfClass:[NSNull class]]) ? [region objectForKey:@"address"] : @"" coordinate:center];
+                        [markers addObject:annotation];
+                        MKCircle *circle = [MKCircle circleWithCenterCoordinate:center radius:[[region objectForKey:@"distance"] floatValue]];
+                        [regions addObject:circle];
+                        
                     }
-                    
-                    MKPolygon * polygon = [MKPolygon polygonWithCoordinates:coords count:[coordinates count]];
-
-                    NSMutableArray * points = [[region objectForKey:@"geometry"] objectForKey:@"coordinates"];
-                    CLLocationCoordinate2D center = CLLocationCoordinate2DMake([[points objectAtIndex:1] floatValue], [[points objectAtIndex:0] floatValue]);
-    
-                    RegionsMarker *annotation = [[RegionsMarker alloc] initWithName:[region objectForKey:@"name"] address:(![[region objectForKey:@"address"] isKindOfClass:[NSNull class]]) ? [region objectForKey:@"address"] : @"" coordinate:center] ;
-                    [markers addObject:annotation];
-                    
-                    [regions addObject:polygon];
-                    
-                } else {
-                    
-                    NSMutableArray * coordinates = [[region objectForKey:@"geometry"] objectForKey:@"coordinates"];
-                    CLLocationCoordinate2D center = CLLocationCoordinate2DMake([[coordinates objectAtIndex:1] floatValue], [[coordinates objectAtIndex:0] floatValue]);
-                    RegionsMarker *annotation = [[RegionsMarker alloc] initWithName:[region objectForKey:@"name"] address: (![[region objectForKey:@"address"] isKindOfClass:[NSNull class]]) ? [region objectForKey:@"address"] : @"" coordinate:center];
-                    [markers addObject:annotation];
-                    MKCircle *circle = [MKCircle circleWithCenterCoordinate:center radius:[[region objectForKey:@"distance"] floatValue]];
-                    [regions addObject:circle];
                     
                 }
                 
+                
             }
-
             
+            [self setOverlays:regions];
+            [self setMarkers:markers];
+            [[self mapView] addOverlays:regions];
+            [[self mapView] addAnnotations:markers];
         }
-        
-        [self setOverlays:regions];
-        [self setMarkers:markers];
-        [[self mapView] addOverlays:regions];
-        [[self mapView] addAnnotations:markers];
-
-    
-    } errorHandler:^(NotificareNetworkOperation * _Nonnull operation, NSError * _Nonnull error) {
-        //
     }];
     
 }

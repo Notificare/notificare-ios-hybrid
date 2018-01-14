@@ -263,33 +263,28 @@
         
     } else {
         
-        [[NotificarePushLib shared] createAccount:[[[self emailField] text] lowercaseString]
-                                withName:[[self nameField] text]
-                             andPassword:[[self passwordField] text]
-                       completionHandler:^(NSDictionary *info) {
-                           
-                           [[self appDelegate] createMemberCard:[[self nameField] text] andEmail:[[[self emailField] text] lowercaseString] completionHandler:^(NSDictionary *info) {
-                               
-                               [[self formButton] setEnabled:YES];
-                               
-                               [[self emailField] setText:@""];
-                               [[self nameField] setText:@""];
-                               [[self passwordField] setText:@""];
-                               [[self confirmPasswordField] setText:@""];
-                               
-                               [self setIsCreationFinished:YES];
-                               [self presentAlertViewForForm:LS(@"success_create_account")];
-                               
-                           } errorHandler:^(NSError *error) {
-                               [self presentAlertViewForForm:LS(@"error_create_member_card")];
-                           }];
-                           
-                       } errorHandler:^(NSError *error) {
-                           
-                           [self presentAlertViewForForm:LS(@"error_create_account")];
-                           [[self formButton] setEnabled:YES];
-                           
-                       }];
+        [[[NotificarePushLib shared] authManager] createAccount:[[[self emailField] text] lowercaseString] withName:[[self nameField] text] andPassword:[[self passwordField] text] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            if (!error) {
+                [[self appDelegate] createMemberCard:[[self nameField] text] andEmail:[[[self emailField] text] lowercaseString] completionHandler:^(NSDictionary *info) {
+                    
+                    [[self formButton] setEnabled:YES];
+                    
+                    [[self emailField] setText:@""];
+                    [[self nameField] setText:@""];
+                    [[self passwordField] setText:@""];
+                    [[self confirmPasswordField] setText:@""];
+                    
+                    [self setIsCreationFinished:YES];
+                    [self presentAlertViewForForm:LS(@"success_create_account")];
+                    
+                } errorHandler:^(NSError *error) {
+                    [self presentAlertViewForForm:LS(@"error_create_member_card")];
+                }];
+            } else {
+                [self presentAlertViewForForm:LS(@"error_create_account")];
+                [[self formButton] setEnabled:YES];
+            }
+        }];
         
     }
     

@@ -528,13 +528,30 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  */
 - (void)fetchTags:(NotificareCompletionBlock)completionBlock;
 /*!
- *  @abstract Add a tag to the device
+ *  @abstract Add one or more tags to the device
  *
  *  @discussion
  *  Add one or more tags to a device. This method uses blocks that returns success or failure for this operation. Make sure you only invoke this method after the onReady delegate.
  *  @param tags A NSArray that contains a list of tags to be added to the device
  */
 - (void)addTags:(NSArray *)tags completionHandler:(NotificareCompletionBlock)completionBlock;
+
+/*!
+ *  @abstract Add a tag to the device
+ *
+ *  @discussion
+ *  Add one tag to a device. This method uses blocks that returns success or failure for this operation. Make sure you only invoke this method after the onReady delegate.
+ *  @param tags A NSArray that contains a list of tags to be added to the device
+ */
+- (void)addTag:(NSString *)tag completionHandler:(NotificareCompletionBlock)completionBlock;
+/*!
+ *  @abstract Remove one or more tags from the device
+ *
+ *  @discussion
+ *  Remove one or more tags from a device. This method uses blocks that returns success or failure for this operation. Make sure you only invoke this method after the onReady delegate.
+ *  @param tag A NSString that represents the tag to be removed from the device
+ */
+- (void)removeTags:(NSArray *)tags completionHandler:(NotificareCompletionBlock)completionBlock;
 /*!
  *  @abstract Remove a tag to the device
  *
@@ -543,6 +560,7 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  *  @param tag A NSString that represents the tag to be removed from the device
  */
 - (void)removeTag:(NSString *)tag completionHandler:(NotificareCompletionBlock)completionBlock;
+
 /*!
  *  @abstract Remove all tags from the device
  *
@@ -803,7 +821,6 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @param path The relative path of the request, i.e. device
  * @param URLParams URL encoded parameters that are added to the request's URL
  * @param bodyJSON The JSON payload for the request's body
- * @param completionHandler NotificareCompletionBlock code block that is executed when the request completes
  */
 - (void)doPushHostOperation:(NSString *)HTTPMethod path:(NSString *)path URLParams:(NSDictionary<NSString *, NSString *> * _Nullable)URLParams bodyJSON:(id _Nullable)bodyJSON completionHandler:(NotificareCompletionBlock)completionBlock;
 
@@ -817,7 +834,6 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @param URLParams URL encoded parameters that are added to the request's URL
  * @param customHeaders Key/value pairs for optional custom HTTPS headers
  * @param bodyJSON The JSON payload for the request's body
- * @param completionHandler NotificareCompletionBlock code block that is executed when the request completes
  */
 - (void)doCloudHostOperation:(NSString *)HTTPMethod path:(NSString *)path URLParams:(NSDictionary<NSString *, NSString *> * _Nullable)URLParams customHeaders:(NSDictionary<NSString *, NSString *> * _Nullable)customHeaders bodyJSON:(id _Nullable)bodyJSON completionHandler:(NotificareCompletionBlock)completionBlock;
 

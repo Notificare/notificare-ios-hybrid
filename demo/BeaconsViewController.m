@@ -142,12 +142,12 @@
     
     NotificareBeacon * item = (NotificareBeacon *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     
-    cell.textLabel.text = [item name];
+    cell.textLabel.text = [item beaconName];
     cell.textLabel.font = LATO_FONT(14);
     
-    cell.detailTextLabel.text = [[item notification] objectForKey:@"message"];
-    cell.detailTextLabel.numberOfLines = 4;
-    cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+    //cell.detailTextLabel.text = [[item bea] objectForKey:@"message"];
+    //cell.detailTextLabel.numberOfLines = 4;
+    //cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
     
     UIImageView * signalImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
     

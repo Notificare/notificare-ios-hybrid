@@ -198,19 +198,18 @@
         [[self formButton] setEnabled:YES];
         
     } else {
-        [[NotificarePushLib shared] sendPassword:[[self emailField] text] completionHandler:^(NSDictionary *info) {
-            
-            [self presentAlertViewForForm:LS(@"success_forgotpass")];
-            [[self formButton] setEnabled:YES];
-            [[self emailField] setText:@""];
-            [[self emailField] resignFirstResponder];
-            [[self navigationController] popToRootViewControllerAnimated:YES];
-            
-        } errorHandler:^(NSError *error) {
-            //
-            [self presentAlertViewForForm:LS(@"error_forgotpass")];
-            [[self formButton] setEnabled:YES];
-            
+        
+        [[[NotificarePushLib shared] authManager] sendPassword:[[self emailField] text] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            if (!error) {
+                [self presentAlertViewForForm:LS(@"success_forgotpass")];
+                [[self formButton] setEnabled:YES];
+                [[self emailField] setText:@""];
+                [[self emailField] resignFirstResponder];
+                [[self navigationController] popToRootViewControllerAnimated:YES];
+            } else {
+                [self presentAlertViewForForm:LS(@"error_forgotpass")];
+                [[self formButton] setEnabled:YES];
+            }
         }];
         
     }
