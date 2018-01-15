@@ -265,16 +265,16 @@
                 [[[NotificarePushLib shared] authManager] fetchAccountDetails:^(id  _Nullable response, NSError * _Nullable error) {
                     if (!error) {
                         
-                        NSDictionary * user = [response objectForKey:@"user"];
+                        NotificareUser * user = (NotificareUser*)response;
                         
-                        if(![user objectForKey:@"accessToken"] || [[user objectForKey:@"accessToken"] isKindOfClass:[NSNull class]]){
+                        if([[user accessToken] isKindOfClass:[NSNull class]]){
                             
                             [[[NotificarePushLib shared] authManager] generateAccessToken:^(id  _Nullable response, NSError * _Nullable error) {
                                 if (!error) {
                                     
                                     if(![settings objectForKey:@"memberCardSerial"]){
                                         
-                                        [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
+                                        [self createMemberCard:[user userName] andEmail:[user userID]];
                                         
                                     }
                                     [self goToProfile];
@@ -289,7 +289,7 @@
                             
                             if(![settings objectForKey:@"memberCardSerial"]){
                                 
-                                [self createMemberCard:[user objectForKey:@"userName"] andEmail:[user objectForKey:@"userID"]];
+                                [self createMemberCard:[user userName] andEmail:[user userID]];
                                 
                             }
                             

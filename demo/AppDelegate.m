@@ -78,14 +78,14 @@
 }
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
-    //[[NotificarePushLib shared]  handleOpenURL:url];
+    [[NotificarePushLib shared]  handleOpenURL:url withOptions:options];
     [self handleDeepLinks:url];
     
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation{
-    //[[NotificarePushLib shared]  handleOpenURL:url];
+    [[NotificarePushLib shared]  handleOpenURL:url withOptions:nil];
     [self handleDeepLinks:url];
     
     return YES;
@@ -96,8 +96,7 @@
     
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
     UIStoryboard *storyboard = self.window.rootViewController.storyboard;
-    
-    
+
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
     if ([[url path] isEqualToString:@"/inbox"]) {
@@ -152,7 +151,7 @@
         [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/beacons"]) {
-        
+
         [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:[url path]] animated:YES];
         
     } else if ([[url path] isEqualToString:@"/scan"]) {
@@ -209,6 +208,7 @@
     NSLog(@"didReceiveRemoteNotificationInBackground %@", [notification notificationMessage]);
     
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    [navController setNavigationBarHidden:NO];
     [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
 }
 
@@ -392,7 +392,7 @@
                 
                 NotificareAsset * configAsset = (NotificareAsset*)[response firstObject];
                 
-                NSURL *url = [NSURL URLWithString:[configAsset assetUrl]];
+                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?x=%@", [configAsset assetUrl],  [NSString stringWithFormat:@"%.0f", [[NSDate new] timeIntervalSince1970]]]];
                 
                 NSURLSession *session = [NSURLSession sharedSession];
                 
@@ -405,7 +405,7 @@
                                 
                                 NSError *errorJson=nil;
                                 NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&errorJson];
-                                
+
                                 [settings setObject:responseDict forKey:@"configFile"];
                                 [settings synchronize];
                                 
@@ -416,7 +416,7 @@
                                             
                                             NotificareAsset * customJSAsset = (NotificareAsset*)[response firstObject];
                                             
-                                            NSURL *url = [NSURL URLWithString:[customJSAsset assetUrl]];
+                                            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?x=%@", [customJSAsset assetUrl],  [NSString stringWithFormat:@"%.0f", [[NSDate new] timeIntervalSince1970]]]];
                                             
                                             NSURLSession *session = [NSURLSession sharedSession];
                                             
@@ -657,11 +657,13 @@
             [session beginSession];
         } else {
             // Fallback for devices with no hardware support with QRCode
-            //[[NotificarePushLib shared] startScannableSessionWithQRCode];
+            UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+            [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:YES];
         }
     } else {
         // Fallback on earlier versions with QRCode
-        //[[NotificarePushLib shared] startScannableSessionWithQRCode];
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:YES];
     }
 }
 
