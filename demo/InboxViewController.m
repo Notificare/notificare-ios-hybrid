@@ -73,13 +73,13 @@
     
     [[[NotificarePushLib shared] inboxManager] fetchInbox:^(id  _Nullable response, NSError * _Nullable error) {
         if (!error) {
-            if([[response objectForKey:@"inbox"] count] == 0){
+            if([response count] == 0){
                 [[self navSections] addObject:@[]];
                 [[self spinnerView] removeFromSuperview];
                 [[self emptyMessage] setHidden:NO];
             } else {
                 [[self navSections] removeAllObjects];
-                [[self navSections] addObject:[response objectForKey:@"inbox"]];
+                [[self navSections] addObject:response];
                 [[self loadingView] removeFromSuperview];
             }
             

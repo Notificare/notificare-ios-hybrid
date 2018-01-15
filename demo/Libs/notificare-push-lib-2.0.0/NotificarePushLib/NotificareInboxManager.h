@@ -34,6 +34,7 @@ typedef void (^NotificareInboxCompletionBlock)(id _Nullable response , NSError *
 +(NotificareInboxManager*)shared;
 - (void)launch;
 - (void)updateInbox;
+- (int)myBadge;
 
 /*!
  *  @abstract Fetch the inbox items

@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreNFC/CoreNFC.h>
+#import <PassKit/PassKit.h>
 #import "NotificarePushLib.h"
 #import "Configuration.h"
 #import "NotificareNetworkReachability.h"
 #import "NoInternetViewController.h"
 #import "Definitions.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, NotificarePushLibDelegate, NFCNDEFReaderSessionDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NotificarePushLibDelegate, NFCNDEFReaderSessionDelegate, PKAddPassesViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL hasInternet;

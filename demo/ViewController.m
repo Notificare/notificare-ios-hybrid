@@ -226,8 +226,8 @@
         
         NSString * badge = @"";
         
-        if ( [[NotificarePushLib shared] myBadge]) {
-            badge = [NSString stringWithFormat:@"%i", [[NotificarePushLib shared] myBadge]];
+        if ( [[[NotificarePushLib shared] inboxManager] myBadge] && [[[NotificarePushLib shared] inboxManager] myBadge] > 0) {
+            badge = [NSString stringWithFormat:@"%i", [[[NotificarePushLib shared] inboxManager] myBadge]];
         }
         
         [[self webView] evaluateJavaScript:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge] completionHandler:^(id result, NSError * _Nullable error) {
@@ -289,10 +289,13 @@
                              if([[[alert textFields][0] text] length] == 0 ){
                                  [self presentAlertViewForForm:LS(@"error_custom_event_name")];
                              } else {
-                                 [[NotificarePushLib shared] logCustomEvent:[[alert textFields][0] text] withData:nil completionHandler:^(NSDictionary * _Nonnull info) {
-                                     [self presentAlertViewForForm:LS(@"success_custom_event")];
-                                 } errorHandler:^(NSError * _Nonnull error) {
-                                     [self presentAlertViewForForm:LS(@"error_custom_event")];
+                                 
+                                 [[NotificarePushLib shared] logCustomEvent:[[alert textFields][0] text] withData:nil completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+                                     if (!error) {
+                                         [self presentAlertViewForForm:LS(@"success_custom_event")];
+                                     } else {
+                                         [self presentAlertViewForForm:LS(@"error_custom_event")];
+                                     }
                                  }];
                              }
                              

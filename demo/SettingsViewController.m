@@ -208,25 +208,25 @@
 
     [[NotificarePushLib shared] fetchTags:^(id  _Nullable response, NSError * _Nullable error) {
         if (!error) {
-            if (response && [response objectForKey:@"tags"]) {
+            if (response) {
                 
                 [[self sectionTitles] addObject:LS(@"section_item_settings_tags")];
                 NSMutableArray * section2 = [NSMutableArray array];
                 
-                if ([[response objectForKey:@"tags"] containsObject:@"tag_press"]) {
+                if ([response containsObject:@"tag_press"]) {
                     [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@1}];
                 } else {
                     [section2 addObject:@{@"label":LS(@"settings_tag_press_label"), @"segue":@"tag_press", @"description":LS(@"settings_tag_press_description"), @"value":@0}];
                 }
                 
                 
-                if ([[response objectForKey:@"tags"] containsObject:@"tag_newsletter"]) {
+                if ([response containsObject:@"tag_newsletter"]) {
                     [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@1}];
                 } else {
                     [section2 addObject:@{@"label":LS(@"settings_tag_newsletter_label"), @"segue":@"tag_newsletter", @"description":LS(@"settings_tag_newsletter_description"), @"value":@0}];
                 }
                 
-                if ([[response objectForKey:@"tags"] containsObject:@"tag_events"]) {
+                if ([response containsObject:@"tag_events"]) {
                     [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@1}];
                 } else {
                     [section2 addObject:@{@"label":LS(@"settings_tag_events_label"), @"segue":@"tag_events", @"description":LS(@"settings_tag_events_description"), @"value":@0}];

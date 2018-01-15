@@ -193,76 +193,98 @@
 }
 
 
-#pragma APNS Delegates
-/*
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+-(void)notificarePushLib:(NotificarePushLib *)library didRegisterDevice:(NotificareDevice *)device {
     
-    [[NotificarePushLib shared] registerDevice:deviceToken completionHandler:^(NSDictionary *info) {
-
-        if([[NotificarePushLib shared] checkLocationUpdates]){
-            [[NotificarePushLib shared] startLocationUpdates];
-        }
-
-    } errorHandler:^(NSError *error) {
-        //
-        NSLog(@"%@", error);
-    }];
+    NSLog(@"didRegisterDevice: %@", [device deviceID]);
+    [[NotificarePushLib shared] startLocationUpdates];
 
 }
 
+-(void)notificarePushLib:(NotificarePushLib *)library didReceiveRemoteNotificationInForeground:(nonnull NotificareNotification *)notification withController:(id _Nullable)controller {
+    
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotification" object:nil];
+}
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(nonnull NSDictionary *)userInfo withResponseInfo:(nonnull NSDictionary *)responseInfo
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wstrict-prototypes"
-completionHandler:(nonnull void (^)())completionHandler{
+-(void)notificarePushLib:(NotificarePushLib *)library didReceiveRemoteNotificationInBackground:(nonnull NotificareNotification *)notification withController:(id _Nullable)controller{
+    NSLog(@"didReceiveRemoteNotificationInBackground %@", [notification notificationMessage]);
     
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didLoadInbox:(nonnull NSArray<NotificareDeviceInbox *> *)items{
     
-    [[NotificarePushLib shared] handleAction:identifier forNotification:userInfo withData:responseInfo completionHandler:^(NSDictionary *info) {
-        completionHandler();
-    } errorHandler:^(NSError *error) {
-        completionHandler();
-    }];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotification" object:nil];
     
 }
 
 
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+-(void)notificarePushLib:(NotificarePushLib *)library didReceivePass:(nonnull NSURL *)pass inNotification:(nonnull NotificareNotification *)notification{
     
-    NSLog(@"%@", error);
-
-}
-
-
-
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    NSData *data = [[NSData alloc] initWithContentsOfURL:pass];
+    NSError *error;
     
-
-    [[NotificarePushLib shared] handleNotification:userInfo forApplication:application completionHandler:^(NSDictionary *info) {
+    //init a pass object with the data
+    PKPass * pkPass = [[PKPass alloc] initWithData:data error:&error];
+    
+    if(!error){
+        //present view controller to add the pass to the library
+        PKAddPassesViewController * vc = [[PKAddPassesViewController alloc] initWithPass:pkPass];
+        [vc setDelegate:self];
         
-        completionHandler(UIBackgroundFetchResultNewData);
-    } errorHandler:^(NSError *error) {
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
-        completionHandler(UIBackgroundFetchResultNoData);
-    }];
-    
-
+        [[NotificarePushLib shared] presentWalletPass:notification inNavigationController:navController withController:vc];
+    }
 }
 
 
--(void)notificarePushLib:(NotificarePushLib *)library willHandleNotification:(nonnull UNNotification *)notification{
-    
+- (void)notificarePushLib:(NotificarePushLib *)library didFailToStartLocationServiceWithError:(NSError *)error {
+    NSLog(@"didFailToStartLocationServiceWithError: %@", error);
+}
 
-    [[NotificarePushLib shared] handleNotification:notification completionHandler:^(NSDictionary * _Nonnull info) {
-        //
-    } errorHandler:^(NSError * _Nonnull error) {
-        //
-    }];
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveLocationServiceAuthorizationStatus:(NSDictionary *)status {
+    NSLog(@"didReceiveLocationServiceAuthorizationStatus: %@", status);
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didUpdateLocations:(NSArray<NotificareLocation*> *)locations {
+    NSLog(@"didUpdateLocations: %@", locations);
+}
+- (void)notificarePushLib:(NotificarePushLib *)library monitoringDidFailForRegion:(id)region withError:(NSError *)error {
+    NSLog(@"monitoringDidFailForRegion: %@ - %@", region, error);
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didStartMonitoringForRegion:(id)region {
+    NSLog(@"didStartMonitoringForRegion: %@", region);
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didDetermineState:(NotificareRegionState)state forRegion:(id)region {
+    NSLog(@"didDetermineState: %@ - %lii", region,(long) (long)state);
+}
+- (void)notificarePushLib:(NotificarePushLib *)library didEnterRegion:(id)region {
+    NSLog(@"didEnterRegion: %@", region);
+}
+- (void)notificarePushLib:(NotificarePushLib *)library didExitRegion:(id)region {
+    NSLog(@"didExitRegion: %@", region);
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library rangingBeaconsDidFailForRegion:(NotificareBeacon *)region withError:(NSError *)error {
+    NSLog(@"rangingBeaconsDidFailForRegion: %@ - %@", region, error);
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didRangeBeacons:(NSArray<NotificareBeacon *> *)beacons inRegion:(NotificareBeacon *)region {
+    [self setBeacons:beacons];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"beaconsReload" object:nil];
     
 }
-*/
+
+- (void)notificarePushLib:(NotificarePushLib *)library didUpdateHeading:(nonnull NotificareHeading *)heading {
+    NSLog(@"didUpdateHeading: %@", heading);
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didVisit:(nonnull NotificareVisit *)visit {
+    NSLog(@"didVisit: %@", visit);
+}
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateBadge:(int)badge{
 
@@ -362,7 +384,8 @@ completionHandler:(nonnull void (^)())completionHandler{
 
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
-    [[NotificarePushLib shared] fetchAssets:@"CONFIG"  completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+    [[NotificarePushLib shared] fetchAssets:@"CONFIG" completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        
         if (!error) {
             
             if (response && [response count] > 0 && [response firstObject]) {
@@ -592,11 +615,6 @@ completionHandler:(nonnull void (^)())completionHandler{
     [viewController setToken:token];
     [navController pushViewController:viewController animated:YES];
     
-}
-
--(void)notificarePushLib:(NotificarePushLib *)library didRangeBeacons:(nonnull NSArray *)beacons inRegion:(nonnull CLBeaconRegion *)region{
-    [self setBeacons:beacons];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"beaconsReload" object:nil];
 }
 
 

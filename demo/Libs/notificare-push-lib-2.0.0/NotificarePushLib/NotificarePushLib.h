@@ -541,7 +541,7 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  *
  *  @discussion
  *  Add one tag to a device. This method uses blocks that returns success or failure for this operation. Make sure you only invoke this method after the onReady delegate.
- *  @param tags A NSArray that contains a list of tags to be added to the device
+ *  @param tag A NSString that represents the tag to be added to the device
  */
 - (void)addTag:(NSString *)tag completionHandler:(NotificareCompletionBlock)completionBlock;
 /*!
@@ -549,7 +549,7 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  *
  *  @discussion
  *  Remove one or more tags from a device. This method uses blocks that returns success or failure for this operation. Make sure you only invoke this method after the onReady delegate.
- *  @param tag A NSString that represents the tag to be removed from the device
+ *  @param tags A NSArray with a list of tags to be removed from the device
  */
 - (void)removeTags:(NSArray *)tags completionHandler:(NotificareCompletionBlock)completionBlock;
 /*!
@@ -807,10 +807,21 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  *  @abstract Fetch Rich Content Attachments
  *
  *  @discussion
- *  Helper method to Retrieve the attachment of a rich content notification
+ *  Helper method to retrieve the attachment of a rich content notification
  *  @param notification A NSDictionary holding the APNS payload
  */
 - (void)fetchAttachment:(NSDictionary *)notification completionHandler:(NotificareCompletionBlock)completionBlock;
+
+
+/*!
+ *  @abstract Log a custom event
+ *
+ *  @discussion
+ *  Helper method to log a custom event
+ *  @param event A NSString representing the event name
+ *  @param data A NSDictionary object containing extraneous data for an event (optional)
+ */
+- (void)logCustomEvent:(NSString *)event withData:(NSDictionary* _Nullable)data completionHandler:(NotificareCompletionBlock)completionBlock;
 
 /*!
  * @abstract Basic request method for Push API
