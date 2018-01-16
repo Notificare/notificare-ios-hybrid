@@ -19,7 +19,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^SuccessNotificationBlock)(NotificareNotification * notification);
-typedef void (^SuccessAttachmentBlock)(UNNotificationAttachment * attachment) NS_AVAILABLE_IOS(10.0);
+typedef void (^SuccessAttachmentBlock)(NSArray * attachments) NS_AVAILABLE_IOS(10.0);
 typedef void (^SuccessActionBlock)(NotificareAction * action);
 typedef void (^SuccessReplyBlock)(NSDictionary * response);
 typedef void (^ErrorNotificationBlock)(NSError * error);
