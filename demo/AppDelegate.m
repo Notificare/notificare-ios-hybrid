@@ -194,8 +194,14 @@
 
 -(void)notificarePushLib:(NotificarePushLib *)library didRegisterDevice:(NotificareDevice *)device {
     
-    NSLog(@"didRegisterDevice: %@", [device deviceID]);
-    [[NotificarePushLib shared] startLocationUpdates];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    
+    if([settings boolForKey:@"OnBoardingFinished"]){
+        
+        [[NotificarePushLib shared] startLocationUpdates];
+    }
+    
+   
 
 }
 
@@ -208,7 +214,11 @@
     NSLog(@"didReceiveRemoteNotificationInBackground %@", [notification notificationMessage]);
     
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    [navController setNavigationBarHidden:NO];
+    
+    if (![controller isKindOfClass:[UIAlertController class]]) {
+        [navController setNavigationBarHidden:NO];
+    }
+    
     [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
 }
 
@@ -237,6 +247,7 @@
         [[NotificarePushLib shared] presentWalletPass:notification inNavigationController:navController withController:vc];
     }
 }
+
 
 
 - (void)notificarePushLib:(NotificarePushLib *)library didFailToStartLocationServiceWithError:(NSError *)error {
@@ -620,9 +631,18 @@
 
 -(void)notificarePushLib:(NotificarePushLib *)library didDetectScannable:(nonnull NotificareScannable *)scannable{
     
-    if (![[scannable data] isKindOfClass:[NSNull class]]) {
-        //[[NotificarePushLib shared] openNotification:[scannable data]];
-    }
+    [[NotificarePushLib shared] openScannable:scannable completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            
+            UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+            
+            if (![response isKindOfClass:[UIAlertController class]]) {
+                [navController setNavigationBarHidden:NO];
+            }
+            [[NotificarePushLib shared] presentScannable:scannable inNavigationController:navController withController:response];
+            
+        }
+    }];
 }
 
 -(void)notificarePushLib:(NotificarePushLib *)library didInvalidateScannableSessionWithError:(nonnull NSError *)error{
@@ -720,13 +740,15 @@
 
 -(void)readerSession:(NFCNDEFReaderSession *)session didInvalidateWithError:(nonnull NSError *)error NS_AVAILABLE_IOS(11.0) {
     
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    
     switch ([error code]) {
         case NFCReaderSessionInvalidationErrorFirstNDEFTagRead:
             ///Session is close after first read don't trigger the delegate
             break;
         case NFCReaderErrorUnsupportedFeature:
             // Fallback for devices with no hardware support with QRCode
-            //[[NotificarePushLib shared] startScannableSessionWithQRCode];
+            [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:YES];
             break;
         default:
             

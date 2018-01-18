@@ -114,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		401A8C5E20101AF500858B7C /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		40346A71200844CB0053931E /* DefaultTheme.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DefaultTheme.bundle; sourceTree = "<group>"; };
 		40346A73200844CB0053931E /* NotificareMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareMap.h; sourceTree = "<group>"; };
 		40346A74200844CB0053931E /* NSData+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Hex.h"; sourceTree = "<group>"; };
@@ -368,6 +369,7 @@
 		40346A72200844CB0053931E /* NotificarePushLib */ = {
 			isa = PBXGroup;
 			children = (
+				401A8C5E20101AF500858B7C /* UIColor+Hex.h */,
 				40346A73200844CB0053931E /* NotificareMap.h */,
 				40346A74200844CB0053931E /* NSData+Hex.h */,
 				40346A75200844CB0053931E /* NotificareVideo.h */,

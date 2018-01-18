@@ -7,13 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NotificareNotification.h"
 
 @interface NotificareScannable : NSObject
 @property (strong, nonatomic, nonnull) NSString * scannableId;
 @property (strong, nonatomic, nonnull) NSString * name;
 @property (strong, nonatomic, nonnull) NSString * tag;
 @property (strong, nonatomic, nonnull) NSString * type;
-@property (strong, nonatomic, nonnull) NSDictionary * data;
+@property (strong, nonatomic, nullable) NSDictionary * data;
+@property (strong, nonatomic, nullable) NotificareNotification * notification;
 
 - (void)setValuesWithScannableJSON:(NSDictionary * _Nonnull)scannableJSON;
 @end

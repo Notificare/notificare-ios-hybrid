@@ -17,17 +17,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NotificareImage : UIViewController <NotificationType,UIScrollViewDelegate,UIPageViewControllerDelegate>
+@interface NotificareImage : UIViewController <NotificationType,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, assign) id<NotificationDelegate> delegate;
 @property (nonatomic, strong) NotificareNotification * notification;
 @property (nonatomic, strong) NotificareActions * notificareActions;
-@property (strong, nonatomic) UIActionSheet *actionSheet;
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UIPageControl *pageControl;
+@property (nonatomic, strong) UICollectionView * collectionView;
 @property (strong, nonatomic) NSMutableArray *imageList;
-@property (assign, nonatomic) BOOL pageControlUsed;
-@property (strong, nonatomic) UIActivityIndicatorView * activityIndicator;
 @property (strong, nonatomic) UIBarButtonItem * actionsButton;
 
 -(id)handleNotification;

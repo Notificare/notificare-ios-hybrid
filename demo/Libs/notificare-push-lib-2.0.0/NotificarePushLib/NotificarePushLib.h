@@ -804,6 +804,26 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
 - (nullable NSString *)parseURIPayload:(NSData*)data;
 
 /*!
+ *  @abstract Open a scannable
+ *
+ *  @discussion
+ *  Fetches a scannable object with a notification (if any) and returns a controller ready to be presented
+ *  @param scannable A NotificareScannable object
+ */
+- (void)openScannable:(NotificareScannable *)scannable completionHandler:(NotificareCompletionBlock)completionBlock;
+
+/*!
+ *  @abstract Present a Scannable
+ *
+ *  @discussion
+ *  This helper method will handle a scannable presentation given your own navigation controller and the controller received from us. This is usually done in response to the completion block of the openScannable method.
+ *  @param scannable A NotificareScannable object
+ *  @param navigationController A UINavigationController object
+ *  @param controller A UIAlertController or UIViewController object
+ */
+-(void)presentScannable:(NotificareScannable*)scannable inNavigationController:(UINavigationController*)navigationController withController:(id)controller;
+
+/*!
  *  @abstract Fetch Rich Content Attachments
  *
  *  @discussion
