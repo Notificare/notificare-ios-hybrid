@@ -502,10 +502,18 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  *  @abstract Check if Remote Notifications are ON
  *
  *  @discussion
- *  Use this method to quickly identify if the user has allowed remote notifications
- *  @return A Boolean indicating if remote notifications are enabled
+ *  Use this method to quickly identify if the user has a valid APNS token
+ *  @return A Boolean indicating if an APNS token has been requested and registered
  */
 -(BOOL)remoteNotificationsEnabled;
+/*!
+ *  @abstract Check if User allowed Alerts, Badges and Sounds
+ *
+ *  @discussion
+ *  Use this method to quickly identify if the user has allowed alerts, badge and sounds
+ *  @return A Boolean indicating if the user has allowed alerts, badge and sounds
+ */
+-(BOOL)allowedUIEnabled;
 /*!
  *  @abstract The device
  *

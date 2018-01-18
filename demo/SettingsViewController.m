@@ -94,6 +94,47 @@
     }
     
     
+    if ([[NotificarePushLib shared] allowedUIEnabled]) {
+        
+        [[NotificarePushLib shared] fetchDoNotDisturb:^(id  _Nullable response, NSError * _Nullable error) {
+            if (!error) {
+                
+                NotificareDeviceDnD * dnd = (NotificareDeviceDnD*)response;
+                
+                if([dnd start] && [dnd end]){
+                    
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    [dateFormatter setDateFormat:@"HH:mm"];
+                    NSString *startTime = [dateFormatter stringFromDate:[dnd start]];
+                    NSString *endTime = [dateFormatter stringFromDate:[dnd end]];
+                    
+                    
+                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"true"}];
+                    
+                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_start"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_start_description"), @"value":startTime}];
+                    
+                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_end"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_end_description"), @"value":endTime}];
+                    
+                } else {
+                    [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
+                }
+                
+                
+                
+                [[self navSections] addObject:section1];
+                
+                
+                [self handleTags];
+                
+            }
+        }];
+        
+    } else {
+        [[self navSections] addObject:section1];
+        [self handleTags];
+    }
+    
+    /*
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10")) {
         
         
@@ -199,6 +240,7 @@
         
         
     }
+     */
     
     
 }
@@ -291,11 +333,10 @@
             [notificationSwitch addTarget:self action:@selector(toggleNotifications:) forControlEvents:UIControlEventValueChanged];
             
             
-            if ([[[UIApplication sharedApplication] currentUserNotificationSettings] types] == UIUserNotificationTypeNone) {
-                
-                [notificationSwitch setOn:NO];
-            } else {
+            if ([[NotificarePushLib shared] allowedUIEnabled]) {
                 [notificationSwitch setOn:YES];
+            } else {
+                [notificationSwitch setOn:NO];
             }
             
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -562,7 +603,7 @@
         [dnd setEnd:endTime];
         
         [[NotificarePushLib shared] updateDoNotDisturb:dnd completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
-            
+            [self refreshView];
         }];
         
     } else {

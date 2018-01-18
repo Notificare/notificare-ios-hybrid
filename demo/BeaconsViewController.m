@@ -152,7 +152,7 @@
     UIImageView * signalImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
     
     if([[item beacon] proximity] == CLProximityImmediate){
-        [signalImage setImage:[UIImage imageNamed:@"mmediate"]];
+        [signalImage setImage:[UIImage imageNamed:@"immediate"]];
     } else if ([[item beacon] proximity] == CLProximityNear) {
         [signalImage setImage:[UIImage imageNamed:@"near"]];
     } else if ([[item beacon] proximity] == CLProximityFar) {

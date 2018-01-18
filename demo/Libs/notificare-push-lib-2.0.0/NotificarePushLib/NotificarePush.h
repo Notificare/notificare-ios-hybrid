@@ -79,6 +79,7 @@ typedef void (^ErrorReplyBlock)(NSError * error);
 -(void)registerForNotifications;
 -(void)unregisterForNotifications;
 -(BOOL)remoteNotificationsEnabled;
+-(BOOL)allowedUIEnabled;
 - (void)handleOptions:(NSDictionary *)options;
 -(void)handleNotification:(NSDictionary*)userInfo completionHandler:(SuccessNotificationBlock)successBlock errorHandler:(ErrorNotificationBlock)errorBlock;
 -(void)handleAction:(NSString *)action forNotification:(NSDictionary *)notification withData:(NSDictionary *)data completionHandler:(SuccessActionBlock)successBlock errorHandler:(ErrorNotificationBlock)errorBlock;
