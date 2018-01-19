@@ -77,5 +77,13 @@ typedef void (^NotificareInboxCompletionBlock)(id _Nullable response , NSError *
  */
 - (void)clearInbox:(NotificareInboxCompletionBlock)completionBlock;
 
+/*!
+ *  @abstract Helper method to force a badge refresh
+ *
+ *  @discussion
+ *  Force a badge refresh
+ */
+-(void)refreshBadge:(NotificareInboxCompletionBlock)completionBlock;
+
 @end
 NS_ASSUME_NONNULL_END

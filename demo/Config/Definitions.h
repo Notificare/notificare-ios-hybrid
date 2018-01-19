@@ -101,6 +101,8 @@
 
 #define CLCOORDINATES_EQUALS( coord1, coord2 ) (coord1.latitude == coord2.latitude && coord1.longitude == coord2.longitude)
 
+#define OS_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:(v) options:NSNumericSearch] != NSOrderedAscending)
+
 /**
  * LOC STRINGS
  */

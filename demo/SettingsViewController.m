@@ -565,9 +565,16 @@
 
 -(void)toggleNotifications:(id)sender{
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success) {
-        //
-    }];
+    if (OS_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10")) {
+        //It is is should open in safari
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success) {
+            //
+        }];
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }
+    
+    
 }
 
 -(void)toggleLocationServices:(id)sender{

@@ -215,7 +215,7 @@
     
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
     
-    if (![controller isKindOfClass:[UIAlertController class]]) {
+    if (controller != nil && ![controller isKindOfClass:[UIAlertController class]]) {
         [navController setNavigationBarHidden:NO];
     }
     
@@ -636,9 +636,10 @@
             
             UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
             
-            if (![response isKindOfClass:[UIAlertController class]]) {
+            if (response != nil && ![response isKindOfClass:[UIAlertController class]]) {
                 [navController setNavigationBarHidden:NO];
             }
+
             [[NotificarePushLib shared] presentScannable:scannable inNavigationController:navController withController:response];
             
         }
