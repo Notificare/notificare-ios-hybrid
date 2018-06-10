@@ -86,7 +86,11 @@
     NSMutableArray * regions = [NSMutableArray array];
     
 
-    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/region" URLParams:@{} bodyJSON:nil successHandler:^(NSDictionary * _Nonnull info) {
+    [[NotificarePushLib shared] doCloudHostOperation:@"GET"
+                                                path:@"/region"
+                                           URLParams:@{@"skip": @"0",@"limit": @"250"}
+                                            bodyJSON:nil
+                                      successHandler:^(NSDictionary * _Nonnull info) {
         //
         if (info && [info objectForKey:@"regions"] && [[info objectForKey:@"regions"] count] > 0) {
         
