@@ -86,7 +86,7 @@
     NSMutableArray * regions = [NSMutableArray array];
     
 
-    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/region" URLParams:@{} customHeaders:nil bodyJSON:nil completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+    [[NotificarePushLib shared] doCloudHostOperation:@"GET" path:@"/region" URLParams:@{@"skip":@"0",@"limit":@"250"} customHeaders:nil bodyJSON:nil completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
         if (!error) {
             if (response && [response objectForKey:@"regions"] && [[response objectForKey:@"regions"] count] > 0) {
                 

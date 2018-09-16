@@ -710,7 +710,7 @@
         [[NotificarePushLib shared] addTags:@[@"tag_newsletter"] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
             
         }];
-        
+
     } else {
         
         [[NotificarePushLib shared] removeTag:@"tag_newsletter" completionHandler:^(id  _Nullable response, NSError * _Nullable error) {

@@ -38,6 +38,8 @@
 
 "empty_inbox_text" = "You've got no messages!";
 "empty_beacons_text" = "No beacons found";
+"edit_button" = "Edit";
+"done_button" = "Done";
 "clear_all" = "Clear All";
 
 "storage_intro_text" = "Use the search option above to search for asset groups created in the dashboard.";

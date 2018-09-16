@@ -290,18 +290,31 @@
 
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if ( !error )
-                               {
-                                   UIImage *image = [[UIImage alloc] initWithData:data];
-                                   completionBlock(YES,image);
-                               } else{
-                                   completionBlock(NO,nil);
-                               }
-                           }];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithURL:url
+            completionHandler:^(NSData *imageData,
+                                NSURLResponse *response,
+                                NSError *fileError) {
+
+                                if ( !fileError ){
+                                    
+                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                        //useless optimization as it seems to be decoded while UIImageView is displayed
+                                        UIImage *image = [UIImage imageWithData:imageData];
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            if (image) {
+                                                completionBlock(YES,image);
+                                            }
+                                        });
+                                    });
+
+                                } else{
+                                    completionBlock(NO,nil);
+                                }
+                
+            }] resume];
+    
 }
 
 -(void)openHighlightView:(UIImage *)theImage{

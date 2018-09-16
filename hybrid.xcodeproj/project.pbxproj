@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4002DFDC2021098700B04B3E /* locations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4002DFDB2021098700B04B3E /* locations.gpx */; };
 		40346AD2200844CB0053931E /* DefaultTheme.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 40346A71200844CB0053931E /* DefaultTheme.bundle */; };
 		40346AD3200844CB0053931E /* Notificare.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40346ACF200844CB0053931E /* Notificare.plist */; };
 		40346AD4200844CB0053931E /* NotificareManagedModels.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 40346AD0200844CB0053931E /* NotificareManagedModels.bundle */; };
 		40346AD5200844CB0053931E /* libNotificarePushLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40346AD1200844CB0053931E /* libNotificarePushLib.a */; };
 		40346AD62008452A0053931E /* libNotificarePushLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40346AD1200844CB0053931E /* libNotificarePushLib.a */; };
+		40C71DE5203394C400DB4C22 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 40C71DE4203394C400DB4C22 /* Localizable.stringsdict */; };
+		40F2F10120DC29590090F406 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40F2F10020DC29580090F406 /* Contacts.framework */; };
 		5D1042B01F1409B2000A65A1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D1042AF1F1409B2000A65A1 /* WebKit.framework */; };
 		5D58D4911E3E21B1000334E3 /* RegionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D4901E3E21B1000334E3 /* RegionsViewController.m */; };
 		5D58D4941E3E2240000334E3 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D58D4931E3E2240000334E3 /* ResetPasswordViewController.m */; };
@@ -114,6 +117,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4002DFDB2021098700B04B3E /* locations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = locations.gpx; path = demo/locations.gpx; sourceTree = "<group>"; };
 		401A8C5E20101AF500858B7C /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		40346A71200844CB0053931E /* DefaultTheme.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DefaultTheme.bundle; sourceTree = "<group>"; };
 		40346A73200844CB0053931E /* NotificareMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareMap.h; sourceTree = "<group>"; };
@@ -211,6 +215,10 @@
 		40346ACF200844CB0053931E /* Notificare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Notificare.plist; sourceTree = "<group>"; };
 		40346AD0200844CB0053931E /* NotificareManagedModels.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NotificareManagedModels.bundle; sourceTree = "<group>"; };
 		40346AD1200844CB0053931E /* libNotificarePushLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNotificarePushLib.a; sourceTree = "<group>"; };
+		40969C97206F0E0B00F426E4 /* NotificareLoyalty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareLoyalty.h; sourceTree = "<group>"; };
+		40C71DE4203394C400DB4C22 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		40D1B9E52061F43000C0CE9C /* NotificareSystemNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareSystemNotification.h; sourceTree = "<group>"; };
+		40F2F10020DC29580090F406 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		5D1042AF1F1409B2000A65A1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5D58D48F1E3E21B1000334E3 /* RegionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionsViewController.h; sourceTree = "<group>"; };
 		5D58D4901E3E21B1000334E3 /* RegionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionsViewController.m; sourceTree = "<group>"; };
@@ -327,6 +335,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40F2F10120DC29590090F406 /* Contacts.framework in Frameworks */,
 				5D81EB881F705C99005C2CE9 /* AVFoundation.framework in Frameworks */,
 				5D81EB861F705C93005C2CE9 /* CoreNFC.framework in Frameworks */,
 				5D1042B01F1409B2000A65A1 /* WebKit.framework in Frameworks */,
@@ -369,6 +378,8 @@
 		40346A72200844CB0053931E /* NotificarePushLib */ = {
 			isa = PBXGroup;
 			children = (
+				40969C97206F0E0B00F426E4 /* NotificareLoyalty.h */,
+				40D1B9E52061F43000C0CE9C /* NotificareSystemNotification.h */,
 				401A8C5E20101AF500858B7C /* UIColor+Hex.h */,
 				40346A73200844CB0053931E /* NotificareMap.h */,
 				40346A74200844CB0053931E /* NSData+Hex.h */,
@@ -581,6 +592,7 @@
 		5D7C2D391E06EC0400BCEA41 = {
 			isa = PBXGroup;
 			children = (
+				4002DFDB2021098700B04B3E /* locations.gpx */,
 				5D7C2D441E06EC0400BCEA41 /* hybrid */,
 				5D58D5311E3EBA75000334E3 /* notification */,
 				5D7C2D431E06EC0400BCEA41 /* Products */,
@@ -625,6 +637,7 @@
 				5D7C2D461E06EC0400BCEA41 /* main.m */,
 				5D7C2E321E097FD100BCEA41 /* Localizable.strings */,
 				5D7C2E341E09819A00BCEA41 /* InfoPlist.strings */,
+				40C71DE4203394C400DB4C22 /* Localizable.stringsdict */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -673,6 +686,7 @@
 		5D7C2DF71E07307600BCEA41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				40F2F10020DC29580090F406 /* Contacts.framework */,
 				5D81EB871F705C99005C2CE9 /* AVFoundation.framework */,
 				5D81EB851F705C93005C2CE9 /* CoreNFC.framework */,
 				5D1042AF1F1409B2000A65A1 /* WebKit.framework */,
@@ -753,7 +767,7 @@
 		5D7C2D3A1E06EC0400BCEA41 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Notificare;
 				TargetAttributes = {
 					5D58D52F1E3EBA75000334E3 = {
@@ -827,8 +841,10 @@
 				5D7C2DEE1E06EE1E00BCEA41 /* Arvo.ttf in Resources */,
 				5D7C2DF11E06EE1E00BCEA41 /* Lato-Regular.ttf in Resources */,
 				40346AD3200844CB0053931E /* Notificare.plist in Resources */,
+				40C71DE5203394C400DB4C22 /* Localizable.stringsdict in Resources */,
 				40346AD4200844CB0053931E /* NotificareManagedModels.bundle in Resources */,
 				5D7C2E331E097FD100BCEA41 /* Localizable.strings in Resources */,
+				4002DFDC2021098700B04B3E /* locations.gpx in Resources */,
 				40346AD2200844CB0053931E /* DefaultTheme.bundle in Resources */,
 				5D7C2D501E06EC0400BCEA41 /* Main.storyboard in Resources */,
 				5D7C2DF51E06EE1E00BCEA41 /* OleoScript.ttf in Resources */,
@@ -949,6 +965,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -956,6 +973,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1003,6 +1021,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1010,6 +1029,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1046,7 +1066,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Y47BY73NFN;
 				INFOPLIST_FILE = demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1066,7 +1086,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Y47BY73NFN;
 				INFOPLIST_FILE = demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

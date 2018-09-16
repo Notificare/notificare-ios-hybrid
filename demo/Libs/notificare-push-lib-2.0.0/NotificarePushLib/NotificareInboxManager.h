@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "NotificareManagedDeviceInbox.h"
 #import "NotificareDeviceInbox.h"
+#import "NotificareNotification.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,9 +34,18 @@ typedef void (^NotificareInboxCompletionBlock)(id _Nullable response , NSError *
 
 +(NotificareInboxManager*)shared;
 - (void)launch;
-- (void)updateInbox;
+- (void)reloadInbox;
+- (void)updateInboxItem:(NotificareNotification*)notification;
+- (void)addInboxItem:(NSDictionary*)userInfo completionHandler:(NotificareInboxCompletionBlock)completionBlock;
 - (int)myBadge;
 
+/*!
+ *  @abstract Refresh inbox items
+ *
+ *  @discussion
+ *  Use this method to sync inbox items on-demand. Useful when remote notifications are not implemented.
+ */
+- (void)refresh;
 /*!
  *  @abstract Fetch the inbox items
  *

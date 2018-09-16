@@ -33,6 +33,7 @@
 #import "NotificareLocation.h"
 #import "NotificareVisit.h"
 #import "NotificareHeading.h"
+#import "NotificareSystemNotification.h"
 
 
 /* Main Classes */
@@ -52,6 +53,7 @@
 #import "NotificareAuth.h"
 #import "NotificareGeo.h"
 #import "NotificareScannables.h"
+#import "NotificareLoyalty.h"
 
 /* Libraries */
 #import "NotificareNXOAuth2.h"
@@ -87,10 +89,21 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  */
 - (void)notificarePushLib:(NotificarePushLib *)library didRegisterDevice:(NotificareDevice *)device;
 
+/*!
+ * @brief Optional. This delegate method will be triggered when a device could not register for notifications with APNS in response to the registerForNotifications method.
+ * @param error A NSError object containing the error
+ */
+- (void)notificarePushLib:(NotificarePushLib *)library didFailToRegisterForNotificationsWithError:(NSError *)error;
+
 /*
  * Push Delegates
  */
 
+/*!
+ * @brief Optional. This delegate method will be triggered when a launch URL key is detected.
+ * @param launchURL A NSURL object containing the url received on launch
+ */
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveLaunchURL:(NSURL *)launchURL;
 /*!
  * @brief Optional. This delegate method will be triggered when a remote notification is received in the background.
  * @param notification A NotificareNotification object containing the notification received
@@ -106,13 +119,20 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @brief Optional. This delegate method will be triggered when a system (silent) remote notification is received in the background.
  * @param notification A NotificareNotification object containing the notification received
  */
-- (void)notificarePushLib:(NotificarePushLib *)library didReceiveSystemPushInBackground:(NotificareNotification *)notification;
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveSystemNotificationInBackground:(NotificareSystemNotification *)notification;
 
 /*!
  * @brief Optional. This delegate method will be triggered when a system (silent) remote notification is received in the foreground.
  * @param notification A NotificareNotification object containing the notification received
  */
-- (void)notificarePushLib:(NotificarePushLib *)library didReceiveSystemPushInForeground:(NotificareNotification *)notification;
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveSystemNotificationInForeground:(NotificareSystemNotification *)notification;
+
+/*!
+ * @brief Optional. This delegate method will be triggered when a remote notification is received from an unrecognizable source.
+ * @param notification A NSDictionary object containing the notification received
+ */
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveUnknownNotification:(NSDictionary *)notification;
+
 /*!
  * @brief Optional. This delegate method will be triggered just before the notification opens.
  * @param notification A NotificareNotification object that represents the notification
@@ -173,7 +193,14 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @param pass A NotificarePass object that should be handled by the PKAddPassesViewController
  */
 - (void)notificarePushLib:(NotificarePushLib *)library didReceivePass:(NSURL *)pass inNotification:(NotificareNotification*)notification;
-
+/*!
+ * @brief Optional. This delegate method will be triggered when the user clicks from Instant Tuning and Notification Settings and it should take users to the in-app settings screen.
+ * @param notification A NotificareNotification object
+ * @code -(void)notificarePushLib:(NotificarePushLib *)library shouldOpenSettings:(NotificareNotification * _Nullable)notification{
+    //Handle deep link to settings view
+ }
+ */
+- (void)notificarePushLib:(NotificarePushLib *)library shouldOpenSettings:(NotificareNotification* _Nullable)notification;
 /*
  * Inbox Delegates
  */
@@ -203,7 +230,7 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @brief Optional. This delegate method will be triggered as response to a start location updates.
  * @param status A NSDictionary object that contains information about the location services' status
  */
-- (void)notificarePushLib:(NotificarePushLib *)library didReceiveLocationServiceAuthorizationStatus:(NSDictionary *)status;
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveLocationServiceAuthorizationStatus:(NotificareGeoAuthorizationStatus)status;
 /*!
  * @brief Optional. This delegate method will be triggered every time a new location update is received.
  * @param locations A NSArray that contains a list of NotificareLocation objects
@@ -267,12 +294,12 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @brief Optional. This delegate method will be triggered every time a user authenticates. Use it to update UI.
  * @param info A NSDictionary containing the user data
  */
-- (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountNotification:(NSDictionary *)info;
+- (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountState:(NSDictionary *)info;
 /*!
  * @brief Optional. This delegate method will be triggered every time user logs out. Use it to update UI.
  * @param error A NSError object
  */
-- (void)notificarePushLib:(NotificarePushLib *)library didFailToRequestAccessNotification:(NSError * _Nullable)error;
+- (void)notificarePushLib:(NotificarePushLib *)library didFailToRenewAccountSessionWithError:(NSError * _Nullable)error;
 /*!
  * @brief Optional. This delegate method will be triggered in response to a user click in the activation email link.
  * @param token A NSString containing the token for this operation
@@ -389,13 +416,31 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
 @property (nonatomic, assign) id <NotificarePushLibDelegate> delegate;
 
 /*!
+ *  @abstract Authorization Options for iOS 10 and higher
+ *  @discussion
+ *  A UNAuthorizationOptions holds constants indicating which authorization options should be used. Possible values are: UNAuthorizationOptionAlert, UNAuthorizationOptionSound, UNAuthorizationOptionBadge, UNAuthorizationOptionCarPlay, UNAuthorizationOptionProvisional, UNAuthorizationOptionProvidesAppNotificationSettings and UNAuthorizationOptionCriticalAlert. If none is provided it will default to UNAuthorizationOptionAlert, UNAuthorizationOptionSound, UNAuthorizationOptionBadge.
+ *  @property presentationOptions
+ *
+ */
+@property (nonatomic,assign) UNAuthorizationOptions authorizationOptions NS_AVAILABLE_IOS(10.0);
+
+/*!
  *  @abstract Presentation Options for iOS 10 and higher
  *  @discussion
  *  A UNNotificationPresentationOptions holds constants indicating how to handle notifications when app is active. Possible values are: UNNotificationPresentationOptionAlert, UNNotificationPresentationOptionBadge, UNNotificationPresentationOptionSound or UNNotificationPresentationOptionNone. If none is provided it will default to UNNotificationPresentationOptionNone.
- *  @property notificationPresentationOptions
+ *  @property presentationOptions
  *
  */
 @property (nonatomic,assign) UNNotificationPresentationOptions presentationOptions NS_AVAILABLE_IOS(10.0);
+
+/*!
+ *  @abstract Category Options for iOS 10 and higher
+ *  @discussion
+ *  A UNNotificationCategoryOptions holds constants indicating how to handle notifications' categories should behave. Possible values are: UNNotificationCategoryOptionCustomDismissAction, UNNotificationCategoryOptionHiddenPreviewsShowTitle, UNNotificationCategoryOptionHiddenPreviewsShowSubtitle, UNNotificationCategoryOptionAllowInCarPlay and UNNotificationCategoryOptionNone. If none is provided it will default to UNNotificationCategoryOptionCustomDismissAction + UNNotificationCategoryOptionHiddenPreviewsShowTitle in iOS 11 and UNNotificationCategoryOptionCustomDismissAction in iOS 10.
+ *  @property categoryOptions
+ *
+ */
+@property (nonatomic,assign) UNNotificationCategoryOptions categoryOptions NS_AVAILABLE_IOS(10.0);
 /*!
  *  @abstract User Notification Center for iOS 10 and higher
  *  @discussion
@@ -404,6 +449,7 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  *
  */
 @property (nonatomic,assign) UNUserNotificationCenter *userNotificationCenter NS_AVAILABLE_IOS(10.0);
+
 /*!
  *  @abstract The shared singleton implementation
  *
@@ -414,31 +460,21 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
 +(NotificarePushLib*)shared;
 
 /*!
+ *  @abstract Initializer
+ *  @property key The App key
+ *  @property secret The App secret
+ 
+ *  @discussion
+ *  Initializes the NotificarePushLib, should be the first method to be invoked in your App Delegate. In this method you can override the app keys defined in Notificare.plist.
+ */
+-(void)initializeWithKey:(NSString * _Nullable)key andSecret:(NSString * _Nullable)secret;
+/*!
  *  @abstract Initial setup
  *
  *  @discussion
- *  Initializes the NotificarePushLib, should be the first method to be invoked in your App Delegate
+ *  Launches the NotificarePushLib with the initialized coniguration. This method should be invoked whenever you want to start using the library. In response to this method the onReady delegate will be triggered.
  */
 - (void)launch;
-
-/*!
- *  @abstract the App key
- *  @property appKey
- *
- *  @discussion
- *    A NSString representing the Application Key
- *
- */
-@property (strong, nonatomic) NSString * appKey;
-/*!
- *  @abstract The App Secret
- *  @property appSecret
- *
- *  @discussion
- *  A NSString representing the Application Secret
- *
- */
-@property (strong, nonatomic) NSString * appSecret;
 
 /*!
  *  @abstract The App
@@ -469,7 +505,6 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  *
  */
 @property (strong, nonatomic) NotificareAuth * authManager;
-
 
 /*!
  *  @abstract Handle URL Schemes
@@ -515,6 +550,14 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  */
 -(BOOL)allowedUIEnabled;
 /*!
+ *  @abstract Check if Remote Notification is from Notificare
+ *
+ *  @discussion
+ *  Use this method to quickly identify if the a notification is from Notificare
+ *  @return A Boolean indicating if the a notification is from Notificare
+ */
+-(BOOL)isNotificationFromNotificare:(NSDictionary*)userInfo;
+/*!
  *  @abstract The device
  *
  *  @discussion
@@ -528,6 +571,25 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @param username A NSString representing the username.
  */
 - (void)registerDevice:(NSString * _Nullable)userID withUsername:(NSString * _Nullable)username completionHandler:(NotificareCompletionBlock)completionBlock;
+
+/*!
+ * @abstract Preferred Language
+ *
+ * @discussion
+ * Use this method to retrieve the current preferred language. If none was set before this completion block will return nil.
+*  @return A NSString or nil indicating if a preferred langauge has been set
+ */
+- (NSString* _Nullable)preferredLanguage;
+
+/*!
+ * @abstract Update Preferred Language
+ *
+ * @discussion
+ *  This method should be used to override the system language for this device. Make sure you only invoke this method after the didRegisterDevice delegate. If never invoked, the [NSLocale preferredLanguages] will be used.
+ * @param language A NSString representing the language (ISO 639-1) and region (ISO 3166-2) (e.g. en-US).
+ */
+- (void)updatePreferredLanguage:(NSString * _Nullable)language completionHandler:(NotificareCompletionBlock)completionBlock;
+
 /*!
  *  @abstract Get all tags
  *
@@ -689,13 +751,22 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
 -(void)fetchAssets:(NSString*)group completionHandler:(NotificareCompletionBlock)completionBlock;
 
 /*!
- *  @abstract Fetch a Pass
+ *  @abstract Fetch a Pass with Serial
  *
  *  @discussion
- *  Retrieves a Pass object
- *  @param serial A NSString that indentifies the pass (a.k.a. serial)
+ *  Retrieves a Pass object using the auto-generated serial
+ *  @param serial A NSString that indentifies the pass serial
  */
--(void)fetchPass:(NSString*)serial completionHandler:(NotificareCompletionBlock)completionBlock;
+-(void)fetchPassWithSerial:(NSString*)serial completionHandler:(NotificareCompletionBlock)completionBlock;
+
+/*!
+ *  @abstract Fetch a Pass with Barcode
+ *
+ *  @discussion
+ *  Retrieves a Pass object using the custom barcode
+ *  @param barcode A NSString that indentifies the pass barcode
+ */
+-(void)fetchPassWithBarcode:(NSString*)barcode completionHandler:(NotificareCompletionBlock)completionBlock;
 
 /*!
  *  @abstract Get all Products
@@ -840,6 +911,15 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  */
 - (void)fetchAttachment:(NSDictionary *)notification completionHandler:(NotificareCompletionBlock)completionBlock;
 
+/*!
+ *  @abstract Log an event
+ *
+ *  @discussion
+ *  Helper method to log a Notificare event
+ *  @param event A NSString representing the event type (please check all macro definition starting with kNotificareEvent)
+ *  @param data A NSDictionary object containing extraneous data for an event (optional)
+ */
+- (void)logEvent:(NSString *)event withData:(NSDictionary* _Nullable)data completionHandler:(NotificareCompletionBlock)completionBlock;
 
 /*!
  *  @abstract Log a custom event
@@ -875,6 +955,55 @@ typedef void (^NotificareCompletionBlock)(id _Nullable response , NSError * _Nul
  * @param bodyJSON The JSON payload for the request's body
  */
 - (void)doCloudHostOperation:(NSString *)HTTPMethod path:(NSString *)path URLParams:(NSDictionary<NSString *, NSString *> * _Nullable)URLParams customHeaders:(NSDictionary<NSString *, NSString *> * _Nullable)customHeaders bodyJSON:(id _Nullable)bodyJSON completionHandler:(NotificareCompletionBlock)completionBlock;
+
+
+/**
+ * Non-Managed Methods
+ * To be implemented in case you need to disable App Delegate Proxy. This is done by setting the property (boolean) DISABLE_APP_DELEGATE_PROXY to YES in the Notificare.plist under OPTIONS.
+ */
+
+/*!
+ * @abstract Handle Launch Options
+ *
+ * @discussion
+ * When the App Delegate Proxy is disabled this method must be implemented in order to handle launch options. Implement this method after launching the library in the application:didFinishLaunchingWithOptions.
+ * @param launchOptions The NSDictionary object provided by the application launch
+ */
+- (void)didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+/*!
+ * @abstract Handle Device registration
+ *
+ * @discussion
+ * When the App Delegate Proxy is disabled this method must be implemented in order to handle device registration. Must be used in the delegate method application:didRegisterForRemoteNotificationsWithDeviceToken.
+ * @param deviceToken The NSData object provided by the app delegate method application:didRegisterForRemoteNotificationsWithDeviceToken
+ */
+- (void)didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken;
+/*!
+ * @abstract Handle Remote Notifications
+ *
+ * @discussion
+ * When the App Delegate Proxy is disabled this method must be implemented in order to handle remote notifications. Must be used in the delegate method application:didReceiveRemoteNotification.
+ * @param userInfo The NSDictionary object provided by the app delegate method application:didReceiveRemoteNotification
+ */
+- (void)didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo completionHandler:(NotificareCompletionBlock)completionBlock;
+/*!
+ * @abstract Handle User Notification Settings (iOS 9 and below)
+ *
+ * @discussion
+ * When the App Delegate Proxy is disabled this method must be implemented in order to handle user notification settings. Must be used in the delegate method application:didRegisterUserNotificationSettings.
+ * @param notificationSettings The UIUserNotificationSettings object provided by the app delegate method application:didRegisterUserNotificationSettings
+ */
+- (void)didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings NS_CLASS_DEPRECATED_IOS(8_0, 10_0, "Use UserNotifications Framework's UNNotificationSettings");
+/*!
+ * @abstract Handle Actions Settings (iOS 9 and below)
+ *
+ * @discussion
+ * When the App Delegate Proxy is disabled this method must be implemented in order to handle actions. Must be used in the delegate method application:handleActionWithIdentifier:forRemoteNotification: or application:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:.
+ * @param identifier The NSString object provided by the app delegate method
+ * @param userInfo The NSDictionary object provided by the app delegate method
+ * @param responseInfo The NSDictionary object provided by the app delegate method
+ */
+- (void)handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(nonnull NSDictionary *)userInfo withResponseInfo:(nullable NSDictionary *)responseInfo completionHandler:(NotificareCompletionBlock)completionBlock;
 
 @end
 

@@ -45,15 +45,17 @@ typedef void (^ErrorDeviceDnDBlock)(NSError * response);
 
 -(void)registerTemporaryDevice:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
 
--(void)registerDevice:(NSData *)deviceToken completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
--(void)registerDevice:(NSData *)deviceToken withUserID:(NSString*)userID completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
--(void)registerDevice:(NSData *)deviceToken withUserID:(NSString*)userID andUserName:(NSString*)userName completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
+-(void)registerDevice:(NSData *)deviceToken asTemp:(BOOL)temp completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
+-(void)registerDevice:(NSData *)deviceToken asTemp:(BOOL)temp withUserID:(NSString*)userID completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
+-(void)registerDevice:(NSData *)deviceToken asTemp:(BOOL)temp withUserID:(NSString*)userID andUserName:(NSString*)userName completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
 
 -(void)updateDeviceNotificationSettings:(BOOL)allowedUI completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
 -(void)updateDeviceLocation:(NotificareLocation*)location completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
 -(void)clearDeviceLocation:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
 -(void)updateDeviceTimezone:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
 -(void)updateDeviceLanguage:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
+-(void)updateDeviceBackgroundAppRefresh:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
+-(void)updateDeviceBluetoothState:(BOOL)state completionHandler:(SuccessDeviceBlock)successBlock errorHandler:(ErrorDeviceBlock)errorBlock;
 
 -(void)fetchTags:(SuccessTagsBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;
 -(void)addTags:(NSArray *)tags completionHandler:(SuccessTagBlock)successBlock errorHandler:(ErrorTagBlock)errorBlock;

@@ -14,6 +14,10 @@
 @property (strong, nonatomic, nonnull) NSString * applicationId;
 @property (strong, nonatomic, nonnull) NSString * deviceID;
 @property (strong, nonatomic, nullable) NSDictionary * data;
+@property (strong, nonatomic, nullable) NSString * title;
+@property (strong, nonatomic, nullable) NSString * subtitle;
+@property (strong, nonatomic, nullable) NSDictionary * attachment;
+@property (strong, nonatomic, nullable) NSDictionary * extra;
 @property (strong, nonatomic, nonnull) NSString * message;
 @property (strong, nonatomic, nonnull) NSString * notification;
 @property (strong, nonatomic, nonnull) NSString * time;

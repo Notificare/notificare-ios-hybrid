@@ -7,7 +7,7 @@
 //
 
 #import "RegionsMarker.h"
-#import <AddressBook/AddressBook.h>
+#import <Contacts/Contacts.h>
 
 @interface RegionsMarker ()
 @property (nonatomic, copy) NSString *name;
@@ -43,7 +43,7 @@
 }
 
 - (MKMapItem*)mapItem {
-    NSDictionary *addressDict = @{(NSString*)kABPersonAddressStreetKey : _address};
+    NSDictionary *addressDict = @{(NSString*)CNPostalAddressStreetKey : self.address};
     
     MKPlacemark *placemark = [[MKPlacemark alloc]
                               initWithCoordinate:self.coordinate

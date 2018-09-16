@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NotificareDefaultCategory</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@notification@</string>
+		<key>notification</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>%u notification</string>
+			<key>two</key>
+			<string></string>
+			<key>few</key>
+			<string></string>
+			<key>many</key>
+			<string></string>
+			<key>other</key>
+			<string>%u notifications</string>
+		</dict>
+	</dict>
+	<key>QUICK_QUESTION</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@question@</string>
+		<key>question</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>%u message awaits your answer</string>
+			<key>two</key>
+			<string></string>
+			<key>few</key>
+			<string></string>
+			<key>many</key>
+			<string></string>
+			<key>other</key>
+			<string>%u messages awaits your answer</string>
+		</dict>
+	</dict>
+	<key>QUICK_RESPONSE</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@response@</string>
+		<key>response</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>%u message awaits your input</string>
+			<key>two</key>
+			<string></string>
+			<key>few</key>
+			<string></string>
+			<key>many</key>
+			<string></string>
+			<key>other</key>
+			<string>%u messages awaits your input</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

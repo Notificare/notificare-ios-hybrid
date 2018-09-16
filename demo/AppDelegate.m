@@ -19,17 +19,31 @@
 @implementation AppDelegate
 
 
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions{
+    
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:MAIN_COLOR];
+    //[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:MAIN_COLOR];
+    [[UIProgressView appearance] setTrackTintColor:WILD_SAND_COLOR];
+    [[UIProgressView appearance] setProgressTintColor:MAIN_COLOR];
+    
+    return YES;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
+    [[NotificarePushLib shared] initializeWithKey:nil andSecret:nil];
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
     
     if (@available(iOS 10.0, *)) {
         [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
+        [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction];
     }
     
-    
+    if (@available(iOS 11.0, *)) {
+        [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction + UNNotificationCategoryOptionHiddenPreviewsShowTitle];
+    }
+
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
     [self updateInterfaceWithReachability:[self hostReachability]];
@@ -84,12 +98,6 @@
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(nonnull id)annotation{
-    [[NotificarePushLib shared]  handleOpenURL:url withOptions:nil];
-    [self handleDeepLinks:url];
-    
-    return YES;
-}
 
 #pragma Deep Links
 -(void)handleDeepLinks:(NSURL *)url{
@@ -178,7 +186,7 @@
 }
 
 
-- (void)notificarePushLib:(NotificarePushLib *)library onReady:(NSDictionary *)info{
+- (void)notificarePushLib:(NotificarePushLib *)library onReady:(nonnull NotificareApplication *)application {
     
     [self initalConfig];
     
@@ -187,8 +195,17 @@
     if([settings boolForKey:@"OnBoardingFinished"]){
         
         [[NotificarePushLib shared] registerForNotifications];
+        
     }
+    
+}
 
+- (void)notificarePushLib:(NotificarePushLib *)library shouldOpenSettings:(NotificareNotification * _Nullable)notification{
+    
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    UIStoryboard *storyboard = self.window.rootViewController.storyboard;
+    [navController pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"/settings"] animated:YES];
+    
 }
 
 
@@ -198,11 +215,15 @@
     
     if([settings boolForKey:@"OnBoardingFinished"]){
         
-        [[NotificarePushLib shared] startLocationUpdates];
+        if ([[NotificarePushLib shared] locationServicesEnabled]) {
+            [[NotificarePushLib shared] startLocationUpdates];
+        }
     }
     
-   
+}
 
+-(void)notificarePushLib:(NotificarePushLib *)library didFailToRegisterForNotificationsWithError:(nonnull NSError *)error{
+    
 }
 
 -(void)notificarePushLib:(NotificarePushLib *)library didReceiveRemoteNotificationInForeground:(nonnull NotificareNotification *)notification withController:(id _Nullable)controller {
@@ -215,11 +236,22 @@
     
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
     
+    if ([controller isKindOfClass:[UIViewController class]]) {
+        UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        [leftButton setTintColor:MAIN_COLOR];
+        [[controller navigationItem] setLeftBarButtonItem:leftButton];
+    }
+    
     if (controller != nil && ![controller isKindOfClass:[UIAlertController class]]) {
         [navController setNavigationBarHidden:NO];
     }
     
     [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
+}
+
+-(void)back{
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    [navController popViewControllerAnimated:YES];
 }
 
 -(void)notificarePushLib:(NotificarePushLib *)library didLoadInbox:(nonnull NSArray<NotificareDeviceInbox *> *)items{
@@ -228,6 +260,14 @@
     
 }
 
+
+-(void)notificarePushLib:(NotificarePushLib *)library didReceiveSystemPushInForeground:(nonnull NotificareSystemNotification *)notification{
+    NSLog(@"%@", notification);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didReceiveSystemPushInBackground:(nonnull NotificareSystemNotification *)notification{
+    NSLog(@"%@", notification);
+}
 
 -(void)notificarePushLib:(NotificarePushLib *)library didReceivePass:(nonnull NSURL *)pass inNotification:(nonnull NotificareNotification *)notification{
     
@@ -245,6 +285,7 @@
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
         [[NotificarePushLib shared] presentWalletPass:notification inNavigationController:navController withController:vc];
+        
     }
 }
 
@@ -254,12 +295,40 @@
     NSLog(@"didFailToStartLocationServiceWithError: %@", error);
 }
 
-- (void)notificarePushLib:(NotificarePushLib *)library didReceiveLocationServiceAuthorizationStatus:(NSDictionary *)status {
-    NSLog(@"didReceiveLocationServiceAuthorizationStatus: %@", status);
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveLocationServiceAuthorizationStatus:(NotificareGeoAuthorizationStatus)status {
+    
+    switch (status) {
+        case NotificareGeoAuthorizationStatusAuthorizedWhenInUse:
+            
+            NSLog(@"didReceiveLocationServiceAuthorizationStatus: NotificareGeoAuthorizationStatusAuthorizedWhenInUse");
+            break;
+        case NotificareGeoAuthorizationStatusAuthorizedAlways:
+            
+            NSLog(@"didReceiveLocationServiceAuthorizationStatus: NotificareGeoAuthorizationStatusAuthorizedAlways");
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateLocations:(NSArray<NotificareLocation*> *)locations {
     NSLog(@"didUpdateLocations: %@", locations);
+    
+    /*
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+    content.title = @"TEST";
+    content.body = [NSString stringWithFormat:@"Did update with %lu locations", [locations count]];
+    content.sound = [UNNotificationSound defaultSound];
+    NSString *identifier = [NSString stringWithFormat:@"%@", [NSDate new]];
+    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:3 repeats:NO];
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+    
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        
+    }];
+     */
+    
 }
 - (void)notificarePushLib:(NotificarePushLib *)library monitoringDidFailForRegion:(id)region withError:(NSError *)error {
     NSLog(@"monitoringDidFailForRegion: %@ - %@", region, error);
@@ -270,7 +339,43 @@
 }
 
 - (void)notificarePushLib:(NotificarePushLib *)library didDetermineState:(NotificareRegionState)state forRegion:(id)region {
-    NSLog(@"didDetermineState: %@ - %lii", region,(long) (long)state);
+    //NSLog(@"didDetermineState: %@ - %lii", region,(long) (long)state);
+    
+    /*
+    if ([region isKindOfClass:[NotificareRegion class]]) {
+        
+        if (state == NotificareRegionStateInside) {
+            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+            UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+            content.title = @"TEST";
+            content.body = [NSString stringWithFormat:@"Is Inside %@", [region regionName]];
+            content.sound = [UNNotificationSound defaultSound];
+            NSString *identifier = [NSString stringWithFormat:@"%@", [region regionId]];
+            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:3 repeats:NO];
+            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+            
+            [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                
+            }];
+        }
+        
+        if (state == NotificareRegionStateOutside) {
+            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+            UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+            content.title = @"TEST";
+            content.body = [NSString stringWithFormat:@"Is Outside %@", [region regionName]];
+            content.sound = [UNNotificationSound defaultSound];
+            NSString *identifier = [NSString stringWithFormat:@"%@", [region regionId]];
+            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:3 repeats:NO];
+            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+            
+            [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                
+            }];
+        }
+    }
+    */
+    
 }
 - (void)notificarePushLib:(NotificarePushLib *)library didEnterRegion:(id)region {
     NSLog(@"didEnterRegion: %@", region);
@@ -299,7 +404,7 @@
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateBadge:(int)badge{
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"badgeUpdate" object:nil];
     
 }
 
@@ -590,13 +695,13 @@
 
 #pragma Notificare OAuth2 delegates
 
-- (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountNotification:(NSDictionary *)info{
+- (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountState:(NSDictionary *)info{
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeAccountNotification" object:nil];
 
 }
 
-- (void)notificarePushLib:(NotificarePushLib *)library didFailToRequestAccessNotification:(NSError *)error{
+- (void)notificarePushLib:(NotificarePushLib *)library didFailToRenewAccountSessionWithError:(NSError * _Nullable)error {
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didFailToRequestAccessNotification" object:nil];
     
@@ -790,5 +895,33 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+//Non-Manage Implementation
+/*
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
+    [[NotificarePushLib shared] didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
+    [[NotificarePushLib shared] didReceiveRemoteNotification:userInfo completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            completionHandler(UIBackgroundFetchResultNewData);
+        } else {
+            completionHandler(UIBackgroundFetchResultNoData);
+        }
+    }];
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(nonnull NSDictionary *)userInfo withResponseInfo:(nonnull NSDictionary *)responseInfo completionHandler:(nonnull void (^)())completionHandler{
+    [[NotificarePushLib shared] handleActionWithIdentifier:identifier forRemoteNotification:userInfo withResponseInfo:responseInfo completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        completionHandler();
+    }];
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(nonnull NSDictionary *)userInfo completionHandler:(nonnull void (^)())completionHandler{
+    [[NotificarePushLib shared] handleActionWithIdentifier:identifier forRemoteNotification:userInfo withResponseInfo:nil completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        completionHandler();
+    }];
+}
+*/
 
 @end

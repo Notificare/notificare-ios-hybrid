@@ -32,13 +32,13 @@ typedef void (^ErrorReplyBlock)(NSError * error);
 @optional
 
 
+- (void)notificarePush:(NotificarePush *)notificarePush didReceiveLaunchURL:(NSURL *)launchURL;
+
 - (void)notificarePush:(NotificarePush *)notificarePush didReceiveRemoteNotificationInBackground:(NotificareNotification *)notification withController:(id _Nullable)controller;
 
 - (void)notificarePush:(NotificarePush *)notificarePush didReceiveRemoteNotificationInForeground:(NotificareNotification *)notification withController:(id _Nullable)controller;
 
-- (void)notificarePush:(NotificarePush *)notificarePush didReceiveSystemPushInBackground:(NotificareNotification *)notification;
-
-- (void)notificarePush:(NotificarePush *)notificarePush didReceiveSystemPushInForeground:(NotificareNotification *)notification;
+- (void)notificarePush:(NotificarePush *)notificarePush didReceiveUnknownNotification:(NSDictionary *)notification;
 
 - (void)notificarePush:(NotificarePush *)notificarePush willOpenNotification:(NotificareNotification *)notification;
 
@@ -60,6 +60,8 @@ typedef void (^ErrorReplyBlock)(NSError * error);
 
 - (void)notificarePush:(NotificarePush *)notificarePush didFailToExecuteAction:(NotificareAction *)action withError:(NSError *)error;
 
+- (void)notificarePush:(NotificarePush *)notificarePush shouldOpenSettings:(NotificareNotification * _Nullable)notification;
+
 
 @end
 
@@ -68,6 +70,7 @@ typedef void (^ErrorReplyBlock)(NSError * error);
 
 @property (nonatomic, assign) id<NotificarePushDelegate> notificarePushDelegate;
 @property (strong, nonatomic) UNUserNotificationCenter * notificationCenter NS_AVAILABLE_IOS(10.0);
+@property (nonatomic,assign) UNAuthorizationOptions authorizationOptions NS_AVAILABLE_IOS(10.0);
 @property (nonatomic,assign) UNNotificationCategoryOptions notificationCategoryOptions NS_AVAILABLE_IOS(10.0);
 @property (nonatomic,assign) UNNotificationPresentationOptions notificationPresentationOptions NS_AVAILABLE_IOS(10.0);
 @property (strong, nonatomic) Notificare * notificare;
@@ -80,7 +83,8 @@ typedef void (^ErrorReplyBlock)(NSError * error);
 -(void)unregisterForNotifications;
 -(BOOL)remoteNotificationsEnabled;
 -(BOOL)allowedUIEnabled;
-- (void)handleOptions:(NSDictionary *)options;
+-(void)reloadActionCategories;
+-(void)handleOptions:(NSDictionary *)options;
 -(void)handleNotification:(NSDictionary*)userInfo completionHandler:(SuccessNotificationBlock)successBlock errorHandler:(ErrorNotificationBlock)errorBlock;
 -(void)handleAction:(NSString *)action forNotification:(NSDictionary *)notification withData:(NSDictionary *)data completionHandler:(SuccessActionBlock)successBlock errorHandler:(ErrorNotificationBlock)errorBlock;
 -(void)fetchNotification:(id)notification completionHandler:(SuccessNotificationBlock)successBlock errorHandler:(ErrorNotificationBlock)errorBlock;

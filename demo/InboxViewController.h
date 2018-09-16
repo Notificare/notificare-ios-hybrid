@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InboxViewController : UIViewController 
+@interface InboxViewController : UIViewController <UIScrollViewDelegate>
 
 @end

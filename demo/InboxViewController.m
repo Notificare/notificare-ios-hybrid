@@ -39,7 +39,7 @@
     [[self navigationItem] setLeftBarButtonItem:leftButton];
 
     [self reloadData];
-    
+
 }
 
 
@@ -53,6 +53,9 @@
         [leftButton setTintColor:MAIN_COLOR];
         [[self navigationItem] setLeftBarButtonItem:leftButton];
         
+        [[self editButtonItem] setTintColor:MAIN_COLOR];
+        [[self editButtonItem] setTitleTextAttributes:@{NSFontAttributeName:LATO_FONT(14)} forState:UIControlStateNormal];
+        [[self editButtonItem] setTitle:LS(@"edit_button")];
         [[self navigationItem] setRightBarButtonItem:self.editButtonItem];
         
     } else {
@@ -82,7 +85,7 @@
                 [[self navSections] addObject:response];
                 [[self loadingView] removeFromSuperview];
             }
-            
+
             [[self tableView] reloadData];
             [self setupNavigationBar];
         } else {
@@ -109,7 +112,7 @@
     [[self emptyMessage] setFont:LATO_HAIRLINE_FONT(14)];
     [[self emptyMessage] setTextAlignment:NSTextAlignmentCenter];
     [[self emptyMessage] setNumberOfLines:2];
-    [[self emptyMessage] setHidden:YES];
+    [[self emptyMessage] setHidden:NO];
     
     [[self loadingView] setBackgroundColor:[UIColor whiteColor]];
     [[self loadingView] addSubview:[self emptyMessage]];
@@ -154,53 +157,129 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    static NSString *cellIdentifier = @"InboxCell";
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"InboxCell"];
+    UILabel *title, *subtitle, *date;
+    UIImageView *img;
+    UITextView * message;
     
     if (cell == nil) {
         
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"InboxCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+
+        img = [[UIImageView alloc] initWithFrame:CGRectMake(5, ((INBOX_CELLHEIGHT / 2) / 2), (INBOX_CELLHEIGHT / 2) , (INBOX_CELLHEIGHT / 2) )];
+        [img setContentMode:UIViewContentModeScaleAspectFill];
+        [img setClipsToBounds:YES];
+        [img setTag:102];
         
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        title = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 5, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 20)];
+        [title setFont:LATO_FONT(14)];
+        [title setTag:100];
         
+        subtitle = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 25, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 20)];
+        [subtitle setFont:LATO_FONT(14)];
+        [subtitle setTag:101];
+        
+        message = [[UITextView alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 35, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 80)];
+        [message setFont:LATO_LIGHT_FONT(14)];
+        [message setBackgroundColor:[UIColor clearColor]];
+        message.textContainer.lineFragmentPadding = 0;
+        [message setScrollEnabled:NO];
+        [message setUserInteractionEnabled:NO];
+        [message setTag:103];
+        
+        [[cell contentView] addSubview:title];
+        [[cell contentView] addSubview:subtitle];
+        [[cell contentView] addSubview:message];
+        [[cell contentView] addSubview:img];
+        
+        date = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+        [date setTag:104];
+        [date setTextAlignment:NSTextAlignmentRight];
+        [date setFont:LATO_LIGHT_FONT(11)];
+        [cell setAccessoryView:date];
+        
+    } else {
+        title = (UILabel *)[cell.contentView viewWithTag:100];
+        subtitle = (UILabel *)[cell.contentView viewWithTag:101];
+        img = (UIImageView *)[cell.contentView viewWithTag:102];
+        message = (UITextView *)[cell.contentView viewWithTag:103];
+        date = (UILabel *)[cell.accessoryView viewWithTag:104];
     }
     
     NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
-    
-    
-    cell.textLabel.text = [item message];
-    cell.textLabel.numberOfLines = 4;
-    cell.textLabel.font = LATO_FONT(14);
-    
-    NSArray* arrayDate = [[item time] componentsSeparatedByString: @"."];
-    NSString* dateString = [arrayDate objectAtIndex: 0];
-    
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-    [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-    
-    NSDate * time = [dateFormat dateFromString:dateString];
-    
-    UILabel * date = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    [date setText:[time timeAgo]];
-    [date setTextAlignment:NSTextAlignmentRight];
-    [date setFont:LATO_LIGHT_FONT(11)];
-    [cell setAccessoryView:date];
-    
-    if([item opened]){
-        cell.textLabel.textColor = [UIColor grayColor];
-        //[label setTextColor:[UIColor grayColor]];
-        [date setTextColor:[UIColor grayColor]];
+
+    if ([item title]) {
+        [title setText:[item title]];
     } else {
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.textLabel.font = LATO_FONT(14);
-        [date setTextColor:[UIColor blackColor]];
+        [title setText:@""];
     }
     
+    if ([item subtitle]) {
+        [subtitle setText:[item subtitle]];
+    } else {
+        [subtitle setText:@""];
+    }
     
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [message setText:[item message]];
+    
+    [img setImage:[UIImage imageNamed:@"noAttachment"]];
+    
+    if ([item attachment] && [[item attachment] objectForKey:@"uri"]) {
+        
+        if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
+            NSURL *imageURL = [NSURL URLWithString:[[item attachment] objectForKey:@"uri"]];
+            
+            NotificareNetworkHost *notificareNetworkHost = [[NotificareNetworkHost alloc] initWithHostName:[imageURL host]
+                                                                                                  isSecure:[[imageURL scheme] isEqualToString:@"https"]];
+            [notificareNetworkHost setDefaultCachePolicy:NSURLRequestUseProtocolCachePolicy];
+            
+            NotificareNetworkOperation *imageOperation = [notificareNetworkHost operationWithHTTPMethod:@"GET" withPath:[imageURL path]];
+            
+            [imageOperation setSuccessHandler:^(NotificareNetworkOperation *operation) {
+                [img setImage:[operation responseDataToImage]];
+                [cell setNeedsLayout];
+            }];
+            
+            [imageOperation setErrorHandler:^(NotificareNetworkOperation *operation, NSError *error) {
+                NSLog(@"Notificare Loading Image: %@",error);
+            }];
+            
+            [imageOperation buildRequest];
+            
+            [notificareNetworkHost startOperation:imageOperation];
+        }
+
+    }
+
+
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"];
+    [dateFormat setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+
+    NSDate * time = [dateFormat dateFromString:[item time]];
+    [date setText:[time timeAgo]];
+    
+    
+    if([item opened]){
+        [title setTextColor:[UIColor grayColor]];
+        [subtitle setTextColor:[UIColor grayColor]];
+        [message setTextColor:[UIColor grayColor]];
+        [date setTextColor:[UIColor grayColor]];
+        [img setAlpha:.5];
+    } else {
+        [title setTextColor:[UIColor blackColor]];
+        [subtitle setTextColor:[UIColor blackColor]];
+        [message setTextColor:[UIColor blackColor]];
+        [date setTextColor:[UIColor blackColor]];
+        [img setAlpha:1];
+    }
+    
+    [cell setNeedsLayout];
+    
     return cell;
+    
 }
 
 
@@ -229,8 +308,17 @@
     
     NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     
+    [item setOpened:YES];
+    [[self tableView] reloadData];
+    
     [[[NotificarePushLib shared] inboxManager] openInboxItem:item completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
         if (!error) {
+            
+            if ([response isKindOfClass:[UIViewController class]]) {
+                UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+                [leftButton setTintColor:MAIN_COLOR];
+                [[response navigationItem] setLeftBarButtonItem:leftButton];
+            }
             
             [[NotificarePushLib shared] presentInboxItem:item inNavigationController:[self navigationController] withController:response];
             
@@ -247,6 +335,7 @@
             [[self navSections] removeAllObjects];
             [[self navSections] addObject:@[]];
             [[self tableView] reloadData];
+            [self showEmptyView];
         }
     }];
     
@@ -259,7 +348,11 @@
     
     if(editing){
         UIBarButtonItem * clearButton = [[UIBarButtonItem alloc] initWithTitle:LS(@"clear_all") style:UIBarButtonItemStylePlain target:self action:@selector(clearInbox)];
+        [clearButton setTintColor:MAIN_COLOR];
+        [clearButton setTitleTextAttributes:@{NSFontAttributeName:LATO_FONT(14)} forState:UIControlStateNormal];
+        [[self editButtonItem] setTitle:LS(@"done_button")];
         [[self navigationItem] setLeftBarButtonItem:clearButton];
+        
     } else {
         [self setupNavigationBar];
     }
@@ -277,16 +370,85 @@
                 [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
                 [[[self navSections] objectAtIndex:0] removeObject:item];
                 [tableView endUpdates];
+                
+                if ([[[self navSections] objectAtIndex:0] count] == 0) {
+                    [self showEmptyView];
+                }
             }
         }];
-        
     }
+}
+
+-(void)startDownloadInboxItemImage:(NSIndexPath*)indexPath{
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    UIImageView * img = (UIImageView *)[cell.contentView viewWithTag:102];
+    
+    NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+    
+    if ([item attachment] && [[item attachment] objectForKey:@"uri"]) {
+        NSURL *imageURL = [NSURL URLWithString:[[item attachment] objectForKey:@"uri"]];
+        
+        NotificareNetworkHost *notificareNetworkHost = [[NotificareNetworkHost alloc] initWithHostName:[imageURL host]
+                                                                                              isSecure:[[imageURL scheme] isEqualToString:@"https"]];
+        [notificareNetworkHost setDefaultCachePolicy:NSURLRequestUseProtocolCachePolicy];
+        
+        NotificareNetworkOperation *imageOperation = [notificareNetworkHost operationWithHTTPMethod:@"GET" withPath:[imageURL path]];
+        
+        [imageOperation setSuccessHandler:^(NotificareNetworkOperation *operation) {
+            [img setImage:[operation responseDataToImage]];
+        }];
+        
+        [imageOperation setErrorHandler:^(NotificareNetworkOperation *operation, NSError *error) {
+            NSLog(@"Notificare Loading Image: %@",error);
+        }];
+        
+        [imageOperation buildRequest];
+        
+        [notificareNetworkHost startOperation:imageOperation];
+    }
+}
+
+- (void)loadImagesForOnscreenRows{
+    
+    if (self.navSections.count > 0)
+    {
+        NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
+        for (NSIndexPath *indexPath in visiblePaths)
+        {
+            [self startDownloadInboxItemImage:indexPath];
+        }
+    }
+}
+
+
+#pragma mark - UIScrollViewDelegate
+
+// -------------------------------------------------------------------------------
+//    scrollViewDidEndDragging:willDecelerate:
+//  Load images for all onscreen rows when scrolling is finished.
+// -------------------------------------------------------------------------------
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+    {
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+// -------------------------------------------------------------------------------
+//    scrollViewDidEndDecelerating:scrollView
+//  When scrolling stops, proceed to load the app icons that are on screen.
+// -------------------------------------------------------------------------------
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
 }
 
 
 -(void)back{
     
-    [[self navigationController] popToRootViewControllerAnimated:YES];
+    [[self navigationController] popViewControllerAnimated:YES];
     
 }
 

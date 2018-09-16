@@ -20,17 +20,25 @@
 @property (strong, nonatomic, nonnull) NSString * appVersion;
 @property (strong, nonatomic, nonnull) NSString * deviceModel;
 @property (strong, nonatomic, nullable) NSString * country;
+@property (strong, nonatomic, nullable) NSString * countryCode;
 @property (strong, nonatomic, nonnull) NSString * language;
+@property (strong, nonatomic, nonnull) NSString * region;
+@property (strong, nonatomic, nonnull) NSString * transport;
 @property (strong, nonatomic, nullable) NSDictionary * dnd;
 @property (strong, nonatomic, nullable) NSDictionary * userData;
 @property (strong, nonatomic, nullable) NSNumber * latitude;
 @property (strong, nonatomic, nullable) NSNumber * longitude;
+@property (strong, nonatomic, nullable) NSNumber * altitude;
 @property (strong, nonatomic, nullable) NSNumber * floor;
+@property (strong, nonatomic, nullable) NSNumber * speed;
+@property (strong, nonatomic, nullable) NSNumber * course;
 @property (strong, nonatomic, nonnull) NSDate * lastRegistered;
+@property (strong, nonatomic, nonnull) NSString * locationServicesAuthStatus;
 @property (assign, nonatomic) BOOL registeredForNotifications;
 @property (assign, nonatomic) BOOL allowedLocationServices;
 @property (assign, nonatomic) BOOL allowedUI;
-
+@property (assign, nonatomic) BOOL backgroundAppRefresh;
+@property (assign, nonatomic) BOOL bluetoothON;
 
 
 @end
