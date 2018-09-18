@@ -10,6 +10,7 @@
 #import "NotificareAsset.h"
 #import "GravatarHelper.h"
 #import "ResetPasswordViewController.h"
+#import "NSData+Hex.h"
 
 
 @interface AppDelegate ()
@@ -34,6 +35,10 @@
     [[NotificarePushLib shared] initializeWithKey:nil andSecret:nil];
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
+    
+    if (@available(iOS 12.0, *)) {
+        [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings];
+    }
     
     if (@available(iOS 10.0, *)) {
         [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
