@@ -12,6 +12,7 @@
 #import "ResetPasswordViewController.h"
 #import <SafariServices/SafariServices.h>
 
+
 @interface ViewController ()
 
 @property (nonatomic, strong) WKWebView * webView;
@@ -105,9 +106,6 @@
     [[self view] addSubview:statusBar];
     
     [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44) configuration:[WKWebViewConfiguration new]]];
-
-    
-    
     [[[self webView] scrollView] setBounces:NO];
     [[self webView] setNavigationDelegate:self];
     [[self view] addSubview:[self webView]];

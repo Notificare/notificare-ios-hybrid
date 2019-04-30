@@ -49,6 +49,7 @@
         [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction + UNNotificationCategoryOptionHiddenPreviewsShowTitle];
     }
 
+
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
     [self updateInterfaceWithReachability:[self hostReachability]];
@@ -231,10 +232,19 @@
     
 }
 
+-(void)notificarePushLib:(NotificarePushLib *)library didChangeNotificationSettings:(BOOL)granted{
+    if (granted) {
+        NSLog(@"didChangeNotificationSettings GRANTED");
+    } else {
+        NSLog(@"didChangeNotificationSettings NOT GRANTED");
+    }
+}
+
 -(void)notificarePushLib:(NotificarePushLib *)library didReceiveRemoteNotificationInForeground:(nonnull NotificareNotification *)notification withController:(id _Nullable)controller {
     
         [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotification" object:nil];
 }
+
 
 -(void)notificarePushLib:(NotificarePushLib *)library didReceiveRemoteNotificationInBackground:(nonnull NotificareNotification *)notification withController:(id _Nullable)controller{
     NSLog(@"didReceiveRemoteNotificationInBackground %@", [notification notificationMessage]);
@@ -782,6 +792,7 @@
 
 
 -(void)startScannableSession{
+    
     if (@available(iOS 11.0, *)) {
         if ([NFCNDEFReaderSession readingAvailable]) {
             NFCNDEFReaderSession * session = [[NFCNDEFReaderSession alloc] initWithDelegate:self queue:nil invalidateAfterFirstRead:YES];
@@ -789,12 +800,14 @@
         } else {
             // Fallback for devices with no hardware support with QRCode
             UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-            [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:YES];
+            [navController setNavigationBarHidden:NO];
+            [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:NO];
         }
     } else {
         // Fallback on earlier versions with QRCode
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:YES];
+        [navController setNavigationBarHidden:NO];
+        [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:NO];
     }
 }
 

@@ -50,15 +50,6 @@
     [leftButton setTintColor:MAIN_COLOR];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBecameActive) name:UIApplicationWillEnterForegroundNotification object:nil];
-    
-}
-
--(void)viewBecameActive{
-    
-    //[self performSelector:@selector(refreshView) withObject:nil afterDelay:.5];
-    [self refreshView];
 }
 
 
@@ -66,16 +57,8 @@
     [super viewDidAppear:animated];
     
     [[self navigationController] setNavigationBarHidden:NO];
-    
-    [self refreshView];
+
 }
-
-
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-}
-
-
 
 -(void)refreshView{
     
@@ -133,115 +116,6 @@
         [[self navSections] addObject:section1];
         [self handleTags];
     }
-    
-    /*
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10")) {
-        
-        
-        [[[NotificarePushLib shared] userNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
-            //
-            
-            if ([settings authorizationStatus] == UNNotificationSettingEnabled) {
-                
-                
-                [[NotificarePushLib shared] fetchDoNotDisturb:^(id  _Nullable response, NSError * _Nullable error) {
-                    if (!error) {
-                        
-                        NotificareDeviceDnD * dnd = (NotificareDeviceDnD*)response;
-                        
-                        if([dnd start] && [dnd end]){
-                            
-                            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                            [dateFormatter setDateFormat:@"HH:mm"];
-                            NSString *startTime = [dateFormatter stringFromDate:[dnd start]];
-                            NSString *endTime = [dateFormatter stringFromDate:[dnd end]];
-                            
-                            
-                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"true"}];
-                            
-                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_start"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_start_description"), @"value":startTime}];
-                            
-                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_end"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_end_description"), @"value":endTime}];
-                            
-                        } else {
-                            [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
-                        }
-                        
-                        
-                        
-                        [[self navSections] addObject:section1];
-                        
-                        
-                        [self handleTags];
-                        
-                    }
-                }];
-                
-            } else {
-                
-                
-                [[self navSections] addObject:section1];
-                
-                [self handleTags];
-                
-            }
-            
-            
-        }];
-        
-        
-        
-    } else {
-        
-        
-        if ([[[UIApplication sharedApplication] currentUserNotificationSettings] types] == UIUserNotificationTypeNone) {
-            
-            [[self navSections] addObject:section1];
-            
-           [self handleTags];
-            
-        } else {
-            
-            
-            [[NotificarePushLib shared] fetchDoNotDisturb:^(id  _Nullable response, NSError * _Nullable error) {
-                if (!error) {
-                    
-                    NotificareDeviceDnD * dnd = (NotificareDeviceDnD*)response;
-                    
-                    if([dnd start] && [dnd end]){
-                        
-                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                        [dateFormatter setDateFormat:@"HH:mm"];
-                        NSString *startTime = [dateFormatter stringFromDate:[dnd start]];
-                        NSString *endTime = [dateFormatter stringFromDate:[dnd end]];
-                        
-                        
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"true"}];
-                        
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_start"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_start_description"), @"value":startTime}];
-                        
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times_end"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_end_description"), @"value":endTime}];
-                        
-                    } else {
-                        [section1 addObject:@{@"label":LS(@"settings_notifications_quiet_times"), @"segue":@"", @"description":LS(@"settings_notifications_quiet_times_description"), @"value":@"false"}];
-                    }
-                    
-                    
-                    
-                    [[self navSections] addObject:section1];
-                    
-                    
-                    [self handleTags];
-                    
-                }
-            }];
-            
-        }
-        
-        
-    }
-     */
-    
     
 }
 
@@ -565,27 +439,20 @@
 
 -(void)toggleNotifications:(id)sender{
     
-    if (OS_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10")) {
-        //It is is should open in safari
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success) {
-            //
-        }];
+    if ([(UISwitch *)sender isOn]) {
+        [[NotificarePushLib shared] registerForNotifications];
     } else {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        [[NotificarePushLib shared] unregisterForNotifications];
     }
-    
     
 }
 
 -(void)toggleLocationServices:(id)sender{
     
-    if ([[NotificarePushLib shared] locationServicesEnabled]) {
-        
-        [[NotificarePushLib shared] stopLocationUpdates];
-        
-    } else {
-        
+    if ([(UISwitch *)sender isOn]) {
         [[NotificarePushLib shared] startLocationUpdates];
+    } else {
+        [[NotificarePushLib shared] stopLocationUpdates];
     }
 }
 
