@@ -57,6 +57,8 @@
     [super viewDidAppear:animated];
     
     [[self navigationController] setNavigationBarHidden:NO];
+    
+    [self refreshView];
 
 }
 
