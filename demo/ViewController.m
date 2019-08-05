@@ -60,6 +60,12 @@
 }
 
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [self onInitialConfig];
+}
+
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     
