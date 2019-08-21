@@ -63,7 +63,14 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self onInitialConfig];
+    if (![self targetUrl]) {
+        [self onInitialConfig];
+    } else {
+        [[self activityIndicatorView]  stopAnimating];
+        [[self activityIndicatorView] removeFromSuperview];
+        [self setIsLoading:NO];
+        [[self launchingView] removeFromSuperview];
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

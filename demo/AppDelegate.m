@@ -262,6 +262,7 @@
     }
     
     [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
+    
 }
 
 -(void)back{
