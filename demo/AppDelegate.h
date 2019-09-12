@@ -26,6 +26,7 @@
 @property (assign, nonatomic) BOOL isInitialLoadingDone;
 @property (strong, nonatomic) NSDictionary *passTemplate;
 @property (strong, nonatomic) NSArray *beacons;
+@property (strong, nonatomic) NSMutableArray *launchEvents;
 
 typedef void (^PassSuccess)(NSDictionary * info);
 typedef void (^PassError)(NSError * error);

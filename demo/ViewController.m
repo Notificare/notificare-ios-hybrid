@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) WKWebView * webView;
 @property (nonatomic, strong) UIActivityIndicatorView * activityIndicatorView;
+@property (nonatomic, strong) UIImageView * logo;
 @property (nonatomic, strong) UIView * launchingView;
 @property (nonatomic, strong) NSURL * targetUrl;
 @property (nonatomic, strong) NSString * token;
@@ -26,80 +27,88 @@
 
 @implementation ViewController
 
+
 - (AppDelegate *)appDelegate {
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+
+    if([settings boolForKey:@"OnBoardingFinished"]){
+        
+        if (![self targetUrl]) {
+            [self goToUrl];
+        } else {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [self setIsLoading:NO];
+                [[self launchingView] removeFromSuperview];
+            });
+        }
+        
+    }
+
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    
+
+
     [self evaluateJS];
-    
+
     [[self navigationController] setNavigationBarHidden:YES];
-    
-    
+
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openMemberCard) name:@"openMemberCard" object:nil];
-    
+
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCustomEvents) name:@"openCustomEvents" object:nil];
-    
-    
+
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadURL:) name:@"reloadURL" object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onInitialConfig) name:@"initialConfig" object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewNotification) name:@"newNotification" object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewNotification) name:@"badgeUpdate" object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlertWithMessage:) name:@"showAlertWithMessage" object:nil];
 
 
 }
 
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    if (![self targetUrl]) {
-        [self onInitialConfig];
-    } else {
-        [[self activityIndicatorView]  stopAnimating];
-        [[self activityIndicatorView] removeFromSuperview];
-        [self setIsLoading:NO];
-        [[self launchingView] removeFromSuperview];
-    }
-}
-
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    
-    
+
+
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openMemberCard"
                                                   object:nil];
-    
+
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"openCustomEvents"
                                                   object:nil];
-    
+
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"reloadURL"
                                                   object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"initialConfig"
                                                   object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"newNotification"
                                                   object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"showAlertWithMessage"
                                                   object:nil];
@@ -107,28 +116,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    if (@available(iOS 13.0, *)) {
+        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    }
 
     [self setActivityIndicatorView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
-    [[self activityIndicatorView] setHidden:YES];
+    [[self activityIndicatorView] setHidden:NO];
+    [[self activityIndicatorView] startAnimating];
     [[self activityIndicatorView]  setCenter:CGPointMake( self.view.frame.size.width/2 + 10, self.view.frame.size.height /2 + 10)];
     [[self activityIndicatorView]  setContentMode:UIViewContentModeCenter];
-    
+
     UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     [statusBar setBackgroundColor:[UIColor whiteColor]];
     [[self view] addSubview:statusBar];
-    
+
     [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44) configuration:[WKWebViewConfiguration new]]];
     [[[self webView] scrollView] setBounces:NO];
     [[self webView] setNavigationDelegate:self];
     [[self view] addSubview:[self webView]];
 
     [self setLaunchingView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)]];
-    UIImageView * logo = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [logo setImage:[UIImage imageNamed:@"logo"]];
-    [logo setContentMode:UIViewContentModeCenter];
-    
-    [[self launchingView] addSubview:logo];
+    [[self launchingView] setBackgroundColor:[UIColor whiteColor]];
+    [self setLogo:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)]];
+    [[self logo] setImage:[UIImage imageNamed:@"logo"]];
+    [[self logo] setContentMode:UIViewContentModeCenter];
+
+    //[[self launchingView] addSubview:[self activityIndicatorView]];
+    [[self launchingView] addSubview:[self logo]];
     [[self view] addSubview:[self launchingView]];
 
     NSSet *websiteDataTypes = [NSSet setWithArray:@[
@@ -149,23 +164,26 @@
     [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
         // Done
     }];
-    
+
     [[self view]  setBackgroundColor:[UIColor whiteColor]];
 
 }
 
 -(void)onInitialConfig{
     //Is it first time?
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
+      NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+
+      if(![settings boolForKey:@"OnBoardingFinished"]){
+          
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [[self navigationController] performSegueWithIdentifier:@"OnBoarding" sender:self];
+          });
+          
+      }
+      
+      [self goToUrl];
     
-    if(![settings boolForKey:@"OnBoardingFinished"]){
-        
-        [[self navigationController] performSegueWithIdentifier:@"OnBoarding" sender:self];
-        
-    }
-    
-    [self goToUrl];
 }
 
 
@@ -177,6 +195,8 @@
     
     NSURLRequest *nsRequest=[NSURLRequest requestWithURL:[self targetUrl]];
     dispatch_async(dispatch_get_main_queue(), ^{
+        [[self view] addSubview:[self launchingView]];
+        [self setIsLoading:YES];
         [[self webView] loadRequest:nsRequest];
     });
 
@@ -216,17 +236,19 @@
 
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
-    
-    
-    [[self activityIndicatorView]  stopAnimating];
-    [[self activityIndicatorView] removeFromSuperview];
-    
-    [self setIsLoading:NO];
-    
-    [[self launchingView] removeFromSuperview];
-    
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self setIsLoading:NO];
+        [[self launchingView] removeFromSuperview];
+    });
     
     [self performSelector:@selector(evaluateJS) withObject:nil afterDelay:1.0];
+    
+}
+
+
+-(void)back{
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 -(void)evaluateJS{

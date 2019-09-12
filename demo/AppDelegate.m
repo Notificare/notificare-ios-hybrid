@@ -31,7 +31,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    [self setLaunchEvents:[NSMutableArray new]];
+    [self setIsInitialLoadingDone:NO];
     [[NotificarePushLib shared] initializeWithKey:nil andSecret:nil];
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
@@ -103,7 +104,6 @@
     
     return YES;
 }
-
 
 #pragma Deep Links
 -(void)handleDeepLinks:(NSURL *)url{
@@ -250,18 +250,23 @@
     NSLog(@"didReceiveRemoteNotificationInBackground %@", [notification notificationMessage]);
     
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    
-    if ([controller isKindOfClass:[UIViewController class]]) {
-        UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-        [leftButton setTintColor:MAIN_COLOR];
-        [[controller navigationItem] setLeftBarButtonItem:leftButton];
-    }
-    
-    if (controller != nil && ![controller isKindOfClass:[UIAlertController class]]) {
-        [navController setNavigationBarHidden:NO];
-    }
-    
-    [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
+     
+     if ([controller isKindOfClass:[UIViewController class]]) {
+         UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+         [leftButton setTintColor:MAIN_COLOR];
+         [[controller navigationItem] setLeftBarButtonItem:leftButton];
+         
+         if (@available(iOS 13.0, *)) {
+             [controller setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+         }
+     }
+     
+     if (controller != nil && ![controller isKindOfClass:[UIAlertController class]]) {
+         [navController setNavigationBarHidden:NO];
+     }
+     
+     [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
+
     
 }
 
@@ -569,6 +574,7 @@
                                                                 [self fetchTemplate];
                                                                 
                                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"initialConfig" object:nil];
+                                                                
                                                             }
                                                             
                                                         } else {
@@ -769,6 +775,26 @@
 
 -(void)notificarePushLib:(NotificarePushLib *)library didInvalidateScannableSessionWithError:(nonnull NSError *)error{
     
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//            UIAlertController * alert = [UIAlertController
+//                                     alertControllerWithTitle:APP_NAME
+//                                     message:error.localizedDescription
+//                                     preferredStyle:UIAlertControllerStyleAlert];
+//
+//        UIAlertAction* cancel = [UIAlertAction
+//                                 actionWithTitle:LS(@"ok")
+//                                 style:UIAlertActionStyleDefault
+//                                 handler:^(UIAlertAction * action){
+//
+//                                 }];
+//        [alert addAction:cancel];
+//
+//        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+//
+//        [navController presentViewController:alert animated:YES completion:^{
+//
+//        }];
+//    });
     
     UIAlertController * alert = [UIAlertController
                                  alertControllerWithTitle:APP_NAME
@@ -865,23 +891,24 @@
 
 -(void)readerSession:(NFCNDEFReaderSession *)session didInvalidateWithError:(nonnull NSError *)error NS_AVAILABLE_IOS(11.0) {
     
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    
-    switch ([error code]) {
-        case NFCReaderSessionInvalidationErrorFirstNDEFTagRead:
-            ///Session is close after first read don't trigger the delegate
-            break;
-        case NFCReaderErrorUnsupportedFeature:
-            // Fallback for devices with no hardware support with QRCode
-            [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:YES];
-            break;
-        default:
-            
-            [self notificarePushLib:[NotificarePushLib shared] didInvalidateScannableSessionWithError:error];
-            
-            break;
-    }
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+       
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        
+        switch ([error code]) {
+            case NFCReaderSessionInvalidationErrorFirstNDEFTagRead:
+                ///Session is close after first read don't trigger the delegate
+                break;
+            case NFCReaderErrorUnsupportedFeature:
+                // Fallback for devices with no hardware support with QRCode
+                [[NotificarePushLib shared] startScannableSessionWithQRCode:navController asModal:YES];
+                break;
+            default:
+                [self notificarePushLib:[NotificarePushLib shared] didInvalidateScannableSessionWithError:error];
+                break;
+        }
+        
+    });
     
     
 }
@@ -913,6 +940,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 //Non-Manage Implementation
 /*

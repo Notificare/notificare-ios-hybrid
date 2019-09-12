@@ -28,12 +28,14 @@
     
     [self setTitle:LS(@"title_storage")];
     
-    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    [leftButton setTintColor:MAIN_COLOR];
-    [[self navigationItem] setLeftBarButtonItem:leftButton];
+//    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+//    [leftButton setTintColor:MAIN_COLOR];
+//    [[self navigationItem] setLeftBarButtonItem:leftButton];
     
-    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearchAlert)];
-    [rightButton setTintColor:MAIN_COLOR];
+    
+    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearchAlert)];
+//    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearchAlert)];
+//    [rightButton setTintColor:MAIN_COLOR];
     [[self navigationItem] setRightBarButtonItem:rightButton];
     
     [[self collectionView] setBackgroundColor:WILD_SAND_COLOR];

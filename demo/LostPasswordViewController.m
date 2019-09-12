@@ -27,6 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (@available(iOS 13.0, *)) {
+        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    }
+    
     [self setTitle:LS(@"title_lost_password")];
     
     [self setNavSections:[NSMutableArray array]];

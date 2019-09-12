@@ -27,6 +27,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (@available(iOS 13.0, *)) {
+        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    }
+    
     [self setTitle:LS(@"title_inbox")];
     
     [self setNavSections:[NSMutableArray array]];
@@ -167,6 +172,8 @@
     if (cell == nil) {
         
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
+        [cell setBackgroundColor:[UIColor whiteColor]];
 
         img = [[UIImageView alloc] initWithFrame:CGRectMake(5, ((INBOX_CELLHEIGHT / 2) / 2), (INBOX_CELLHEIGHT / 2) , (INBOX_CELLHEIGHT / 2) )];
         [img setContentMode:UIViewContentModeScaleAspectFill];

@@ -37,6 +37,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (@available(iOS 13.0, *)) {
+        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    }
+    
     [[self navigationController] setNavigationBarHidden:YES];
     
     [self setPageControlUsed:YES];
