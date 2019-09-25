@@ -40,6 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[self navigationController] setNavigationBarHidden:NO];
+       
     if (@available(iOS 13.0, *)) {
         [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
     }
@@ -52,7 +54,7 @@
     
     
     UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    [leftButton setTintColor:MAIN_COLOR];
+    [leftButton setTintColor:[UIColor whiteColor]];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
     
 }
@@ -60,8 +62,6 @@
 
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    [[self navigationController] setNavigationBarHidden:NO];
     
     [self refreshView];
 

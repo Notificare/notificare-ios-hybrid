@@ -27,6 +27,15 @@
     [[UIProgressView appearance] setTrackTintColor:WILD_SAND_COLOR];
     [[UIProgressView appearance] setProgressTintColor:MAIN_COLOR];
     
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor colorWithWhite:.0f alpha:.0f];
+    shadow.shadowOffset = CGSizeMake(0, -1);
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: LATO_FONT(18)}];
+    
+    [[UINavigationBar appearance] setBarTintColor:MAIN_COLOR];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
     return YES;
 }
 
@@ -253,7 +262,7 @@
      
      if ([controller isKindOfClass:[UIViewController class]]) {
          UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-         [leftButton setTintColor:MAIN_COLOR];
+         [leftButton setTintColor:[UIColor whiteColor]];
          [[controller navigationItem] setLeftBarButtonItem:leftButton];
          
          if (@available(iOS 13.0, *)) {

@@ -40,7 +40,7 @@
     
     
     UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    [leftButton setTintColor:MAIN_COLOR];
+    [leftButton setTintColor:[UIColor whiteColor]];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
 
     [self reloadData];
@@ -55,10 +55,10 @@
        [[[self navSections] objectAtIndex:0] count] > 0){
         
         UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-        [leftButton setTintColor:MAIN_COLOR];
+        [leftButton setTintColor:[UIColor whiteColor]];
         [[self navigationItem] setLeftBarButtonItem:leftButton];
         
-        [[self editButtonItem] setTintColor:MAIN_COLOR];
+        [[self editButtonItem] setTintColor:[UIColor whiteColor]];
         [[self editButtonItem] setTitleTextAttributes:@{NSFontAttributeName:LATO_FONT(14)} forState:UIControlStateNormal];
         [[self editButtonItem] setTitle:LS(@"edit_button")];
         [[self navigationItem] setRightBarButtonItem:self.editButtonItem];
@@ -66,7 +66,7 @@
     } else {
         
         UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-        [leftButton setTintColor:MAIN_COLOR];
+        [leftButton setTintColor:[UIColor whiteColor]];
         [[self navigationItem] setLeftBarButtonItem:leftButton];
         
         [[self navigationItem] setRightBarButtonItem:nil];
@@ -114,6 +114,7 @@
     self.spinnerView.center = CGPointMake(CGRectGetMidX([[UIScreen mainScreen] bounds]), CGRectGetMidY([[UIScreen mainScreen] bounds]));
     
     [[self emptyMessage] setText:LS(@"empty_inbox_text")];
+    [[self emptyMessage] setTextColor:MAIN_COLOR];
     [[self emptyMessage] setFont:LATO_HAIRLINE_FONT(14)];
     [[self emptyMessage] setTextAlignment:NSTextAlignmentCenter];
     [[self emptyMessage] setNumberOfLines:2];
@@ -323,7 +324,7 @@
             
             if ([response isKindOfClass:[UIViewController class]]) {
                 UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-                [leftButton setTintColor:MAIN_COLOR];
+                [leftButton setTintColor:[UIColor whiteColor]];
                 [[response navigationItem] setLeftBarButtonItem:leftButton];
             }
             
@@ -355,7 +356,7 @@
     
     if(editing){
         UIBarButtonItem * clearButton = [[UIBarButtonItem alloc] initWithTitle:LS(@"clear_all") style:UIBarButtonItemStylePlain target:self action:@selector(clearInbox)];
-        [clearButton setTintColor:MAIN_COLOR];
+        [clearButton setTintColor:[UIColor whiteColor]];
         [clearButton setTitleTextAttributes:@{NSFontAttributeName:LATO_FONT(14)} forState:UIControlStateNormal];
         [[self editButtonItem] setTitle:LS(@"done_button")];
         [[self navigationItem] setLeftBarButtonItem:clearButton];

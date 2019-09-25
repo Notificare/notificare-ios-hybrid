@@ -42,7 +42,7 @@
     
     
     UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    [leftButton setTintColor:MAIN_COLOR];
+    [leftButton setTintColor:[UIColor whiteColor]];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
     
     [self setLoadingView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)]];

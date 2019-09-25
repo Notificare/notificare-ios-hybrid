@@ -35,7 +35,7 @@
     
     UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearchAlert)];
 //    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearchAlert)];
-//    [rightButton setTintColor:MAIN_COLOR];
+    [rightButton setTintColor:[UIColor whiteColor]];
     [[self navigationItem] setRightBarButtonItem:rightButton];
     
     [[self collectionView] setBackgroundColor:WILD_SAND_COLOR];
@@ -77,6 +77,7 @@
     
     [self setIntroLabel:[[UILabel alloc] initWithFrame:CGRectMake(40, self.view.bounds.size.height / 2 - 30, self.view.bounds.size.width - 80, 60)]];
     [[self introLabel] setText:LS(@"storage_intro_text")];
+    [[self introLabel] setTextColor:MAIN_COLOR];
     [[self introLabel] setFont:LATO_LIGHT_FONT(16)];
     [[self introLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self introLabel] setNumberOfLines:3];

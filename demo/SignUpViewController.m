@@ -61,7 +61,7 @@
     [[self tableView] reloadData];
     
     UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    [leftButton setTintColor:MAIN_COLOR];
+    [leftButton setTintColor:[UIColor whiteColor]];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
     
     [[self tableView] setBackgroundColor:WILD_SAND_COLOR];
