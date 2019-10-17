@@ -46,19 +46,29 @@
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
     
-    if (@available(iOS 12.0, *)) {
-        [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings];
+    if (@available(iOS 13.0, *)) {
+        [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings + UNAuthorizationOptionAnnouncement];
+    } else {
+        if (@available(iOS 12.0, *)) {
+            [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings];
+        }
+    }
+    
+    if (@available(iOS 13.0, *)) {
+        [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction + UNNotificationCategoryOptionHiddenPreviewsShowTitle + UNNotificationCategoryOptionAllowAnnouncement];
+    } else {
+        if (@available(iOS 11.0, *)) {
+            [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction + UNNotificationCategoryOptionHiddenPreviewsShowTitle];
+        } else {
+            if (@available(iOS 10.0, *)) {
+                [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction];
+            }
+        }
     }
     
     if (@available(iOS 10.0, *)) {
         [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
-        [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction];
     }
-    
-    if (@available(iOS 11.0, *)) {
-        [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction + UNNotificationCategoryOptionHiddenPreviewsShowTitle];
-    }
-
 
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
@@ -225,7 +235,7 @@
 
 
 -(void)notificarePushLib:(NotificarePushLib *)library didRegisterDevice:(NotificareDevice *)device {
-    
+    NSLog(@"didRegisterDevice %@", [device deviceID]);
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     
     if([settings boolForKey:@"OnBoardingFinished"]){
