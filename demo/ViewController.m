@@ -134,6 +134,7 @@
     [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44) configuration:[WKWebViewConfiguration new]]];
     [[[self webView] scrollView] setBounces:NO];
     [[self webView] setNavigationDelegate:self];
+    [[self webView] setUIDelegate:self];
     [[self view] addSubview:[self webView]];
 
     [self setLaunchingView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)]];
@@ -270,6 +271,7 @@
         [[self webView] evaluateJavaScript:[NSString stringWithFormat:[settings objectForKey:@"customJSFile"], badge] completionHandler:^(id result, NSError * _Nullable error) {
             //
         }];
+
     }
     
     /*
@@ -298,7 +300,6 @@
 -(void)onNewNotification {
     [self evaluateJS];
 }
-
 
 
 -(void)openSignUp{

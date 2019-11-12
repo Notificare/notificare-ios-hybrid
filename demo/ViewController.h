@@ -12,7 +12,7 @@
 #import <WebKit/WKWebsiteDataStore.h>
 
 
-@interface ViewController : UIViewController <WKNavigationDelegate, PKAddPassesViewControllerDelegate>
+@interface ViewController : UIViewController <WKNavigationDelegate, PKAddPassesViewControllerDelegate, WKUIDelegate>
 
 
 

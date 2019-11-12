@@ -286,7 +286,48 @@
      
      [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
 
-    
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library willOpenNotification:(nonnull NotificareNotification *)notification{
+    NSLog(@"willOpenNotification %@", [notification notificationMessage]);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didOpenNotification:(nonnull NotificareNotification *)notification{
+    NSLog(@"didOpenNotification %@", [notification notificationMessage]);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didClickURL:(nonnull NSURL *)url inNotification:(nonnull NotificareNotification *)notification{
+    NSLog(@"didClickURL %@", [notification notificationMessage]);
+    [self handleDeepLinks:url];
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didFailToOpenNotification:(nonnull NotificareNotification *)notification{
+    NSLog(@"didFailToOpenNotification %@", [notification notificationMessage]);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didCloseNotification:(nonnull NotificareNotification *)notification{
+    NSLog(@"didCloseNotification %@", [notification notificationMessage]);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library willExecuteAction:(nonnull NotificareAction *)action{
+    NSLog(@"willExecuteAction %@", [action actionLabel]);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didExecuteAction:(nonnull NotificareAction *)action{
+    NSLog(@"didExecuteAction %@", [action actionLabel]);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library shouldPerformSelectorWithURL:(nonnull NSURL *)url inAction:(nonnull NotificareAction *)action{
+    NSLog(@"shouldPerformSelectorWithURL %@", [action actionLabel]);
+    [self handleDeepLinks:url];
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didNotExecuteAction:(nonnull NotificareAction *)action{
+    NSLog(@"didNotExecuteAction %@", [action actionLabel]);
+}
+
+-(void)notificarePushLib:(NotificarePushLib *)library didFailToExecuteAction:(nonnull NotificareAction *)action withError:(nonnull NSError *)error{
+    NSLog(@"didFailToExecuteAction %@", [action actionTarget]);
 }
 
 -(void)back{
@@ -445,14 +486,6 @@
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateBadge:(int)badge{
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"badgeUpdate" object:nil];
-    
-}
-
-
--(void)notificarePushLib:(NotificarePushLib *)library didClickURL:(nonnull NSURL *)url inNotification:(nonnull NotificareNotification *)notification{
-
-    [self handleDeepLinks:url];
-    //[self performSelector:@selector(handleDeepLinks:) withObject:url afterDelay:1.0];
     
 }
 
