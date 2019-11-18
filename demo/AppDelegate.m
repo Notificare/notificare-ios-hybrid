@@ -274,15 +274,16 @@
          UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
          [leftButton setTintColor:[UIColor whiteColor]];
          [[controller navigationItem] setLeftBarButtonItem:leftButton];
-         
-         if (@available(iOS 13.0, *)) {
-             [controller setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
-         }
      }
-     
-     if (controller != nil && ![controller isKindOfClass:[UIAlertController class]]) {
-         [navController setNavigationBarHidden:NO];
-     }
+    
+    //Types that need the nav bar to be visible
+    if ([[notification notificationType] isEqualToString:@"re.notifica.notification.WebView"] ||
+        [[notification notificationType] isEqualToString:@"re.notifica.notification.URL"] ||
+        [[notification notificationType] isEqualToString:@"re.notifica.notification.Map"] ||
+        [[notification notificationType] isEqualToString:@"re.notifica.notification.Video"] ||
+        [[notification notificationType] isEqualToString:@"re.notifica.notification.Image"]) {
+        [navController setNavigationBarHidden:NO];
+    }
      
      [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
 
