@@ -266,7 +266,7 @@
 
 
 -(void)notificarePushLib:(NotificarePushLib *)library didReceiveRemoteNotificationInBackground:(nonnull NotificareNotification *)notification withController:(id _Nullable)controller{
-    NSLog(@"didReceiveRemoteNotificationInBackground %@", [notification notificationMessage]);
+    NSLog(@"didReceiveRemoteNotificationInBackground %@", [notification notificationExtra]);
     
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
      
@@ -352,22 +352,22 @@
 }
 
 -(void)notificarePushLib:(NotificarePushLib *)library didReceivePass:(nonnull NSURL *)pass inNotification:(nonnull NotificareNotification *)notification{
-    
+
     NSData *data = [[NSData alloc] initWithContentsOfURL:pass];
     NSError *error;
-    
+
     //init a pass object with the data
     PKPass * pkPass = [[PKPass alloc] initWithData:data error:&error];
-    
+
     if(!error){
         //present view controller to add the pass to the library
         PKAddPassesViewController * vc = [[PKAddPassesViewController alloc] initWithPass:pkPass];
         [vc setDelegate:self];
-        
+
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        
+
         [[NotificarePushLib shared] presentWalletPass:notification inNavigationController:navController withController:vc];
-        
+
     }
 }
 
