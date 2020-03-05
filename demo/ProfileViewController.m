@@ -67,12 +67,11 @@
     
     [self showLoadingView];
     
-    
     [[NotificarePushLib shared] fetchUserData:^(id  _Nullable response, NSError * _Nullable error) {
         if (!error) {
             if (response && [response count] > 0) {
                 UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"] style:UIBarButtonItemStylePlain target:self action:@selector(updateUser)];
-                [rightButton setTintColor:MAIN_COLOR];
+                [rightButton setTintColor:[UIColor whiteColor]];
                 [[self navigationItem] setRightBarButtonItem:rightButton];
             }
         } else{
