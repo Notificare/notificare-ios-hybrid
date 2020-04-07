@@ -451,6 +451,8 @@
             
             [self openMailClient];
             
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://notificare.com/contact"]];
         }
         
     }
@@ -558,7 +560,7 @@
             
             break;
         case MFMailComposeResultFailed:
-            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://notificare.com/contact"]];
             break;
         default:
             
