@@ -51,7 +51,7 @@
     [self setEmptyMessage:[[UILabel alloc] initWithFrame:CGRectMake(20, 0, [[UIScreen mainScreen] bounds].size.width - 40, [[UIScreen mainScreen] bounds].size.height)]];
     
     [[self emptyMessage] setText:LS(@"empty_beacons_text")];
-    [[self emptyMessage] setFont:LATO_LIGHT_FONT(14)];
+    [[self emptyMessage] setFont:PROXIMA_NOVA_THIN_FONT(14)];
     [[self emptyMessage] setTextAlignment:NSTextAlignmentCenter];
     [[self emptyMessage] setNumberOfLines:2];
     [[self emptyMessage] setTextColor:MAIN_COLOR];
@@ -148,11 +148,11 @@
     NotificareBeacon * item = (NotificareBeacon *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
     
     cell.textLabel.text = [item beaconName];
-    cell.textLabel.font = LATO_FONT(14);
+    cell.textLabel.font = PROXIMA_NOVA_REGULAR_FONT(14);
     
     //cell.detailTextLabel.text = [[item bea] objectForKey:@"message"];
     //cell.detailTextLabel.numberOfLines = 4;
-    //cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+    //cell.detailTextLabel.font = PROXIMA_NOVA_THIN_FONT(12);
     
     UIImageView * signalImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
     

@@ -57,6 +57,17 @@
     [leftButton setTintColor:[UIColor whiteColor]];
     [[self navigationItem] setLeftBarButtonItem:leftButton];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSettingsWithDelay) name:@"registeredDevice" object:nil];
+}
+
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"registeredDevice"
+                                                  object:nil];
+    
 }
 
 
@@ -67,8 +78,11 @@
 
 }
 
+-(void)reloadSettingsWithDelay{
+    [self performSelector:@selector(refreshView) withObject:nil afterDelay:1.0];
+}
+
 -(void)refreshView{
-    
     
     [[self navSections] removeAllObjects];
     [[self sectionTitles] removeAllObjects];
@@ -82,7 +96,6 @@
         [section1 addObject:@{@"label":LS(@"settings_notifications_location_services"), @"segue":@"", @"description":LS(@"settings_notifications_location_services_description")}];
         
     }
-    
     
     if ([[NotificarePushLib shared] allowedUIEnabled]) {
         
@@ -203,10 +216,10 @@
             
             
             cell.textLabel.text = [item objectForKey:@"label"];
-            cell.textLabel.font = LATO_FONT(16);
+            cell.textLabel.font = PROXIMA_NOVA_REGULAR_FONT(16);
             
             cell.detailTextLabel.text = [item objectForKey:@"description"];
-            cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+            cell.detailTextLabel.font = PROXIMA_NOVA_THIN_FONT(12);
             cell.detailTextLabel.numberOfLines = 2;
             
             UISwitch * notificationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -231,10 +244,10 @@
             
             
             cell.textLabel.text = [item objectForKey:@"label"];
-            cell.textLabel.font = LATO_FONT(16);
+            cell.textLabel.font = PROXIMA_NOVA_REGULAR_FONT(16);
             
             cell.detailTextLabel.text = [item objectForKey:@"description"];
-            cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+            cell.detailTextLabel.font = PROXIMA_NOVA_THIN_FONT(12);
             cell.detailTextLabel.numberOfLines = 2;
             
             UISwitch * notificationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -259,10 +272,10 @@
             
             
             cell.textLabel.text = [item objectForKey:@"label"];
-            cell.textLabel.font = LATO_FONT(16);
+            cell.textLabel.font = PROXIMA_NOVA_REGULAR_FONT(16);
             
             cell.detailTextLabel.text = [item objectForKey:@"description"];
-            cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+            cell.detailTextLabel.font = PROXIMA_NOVA_THIN_FONT(12);
             cell.detailTextLabel.numberOfLines = 2;
             
             UISwitch * notificationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -287,11 +300,11 @@
             
             
             cell.textLabel.text = [item objectForKey:@"label"];
-            cell.textLabel.font = LATO_FONT(16);
+            cell.textLabel.font = PROXIMA_NOVA_REGULAR_FONT(16);
             
             
             cell.detailTextLabel.text = [item objectForKey:@"description"];
-            cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+            cell.detailTextLabel.font = PROXIMA_NOVA_THIN_FONT(12);
             
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             [dateFormat setDateFormat:@"HH:mm"];
@@ -328,10 +341,10 @@
         NSDictionary * item = (NSDictionary *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         
         cell.textLabel.text = [item objectForKey:@"label"];
-        cell.textLabel.font = LATO_FONT(16);
+        cell.textLabel.font = PROXIMA_NOVA_REGULAR_FONT(16);
         
         cell.detailTextLabel.text = [item objectForKey:@"description"];
-        cell.detailTextLabel.font = LATO_LIGHT_FONT(12);
+        cell.detailTextLabel.font = PROXIMA_NOVA_THIN_FONT(12);
         cell.detailTextLabel.numberOfLines = 2;
         
         UISwitch * notificationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -364,13 +377,13 @@
         
         UILabel * label = (UILabel *)[cell viewWithTag:100];
         [label setText:[item objectForKey:@"label"]];
-        [label setFont:LATO_FONT(16)];
+        [label setFont:PROXIMA_NOVA_REGULAR_FONT(16)];
         
         if ( [[item objectForKey:@"label"] isEqualToString:LS(@"settings_app_version")] ) {
             
             UILabel * accessoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
             accessoryLabel.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-            accessoryLabel.font = LATO_LIGHT_FONT(14);
+            accessoryLabel.font = PROXIMA_NOVA_THIN_FONT(14);
             accessoryLabel.textAlignment = NSTextAlignmentRight;
             [cell setAccessoryView:accessoryLabel];
             
@@ -416,7 +429,7 @@
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5,tableView.frame.size.width,HEADER_CELLHEIGHT)];
     
     headerLabel.text = [item uppercaseString];
-    headerLabel.font = LATO_FONT(14);
+    headerLabel.font = PROXIMA_NOVA_REGULAR_FONT(14);
     headerLabel.backgroundColor = [UIColor clearColor];
     
     

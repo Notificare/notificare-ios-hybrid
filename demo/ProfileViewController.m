@@ -255,7 +255,7 @@
         NSDictionary * item = (NSDictionary *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         
         [[cell textLabel] setText:[item objectForKey:@"label"]];
-        [[cell textLabel] setFont:LATO_FONT(14)];
+        [[cell textLabel] setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
         
         if ([[item objectForKey:@"value"] isKindOfClass:[NSNull class]]) {
             
@@ -266,7 +266,7 @@
             if ([[item objectForKey:@"type"] isEqual:@"editable"]) {
                 
                 UITextField * field = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width /2, 40)];
-                [field setFont:LATO_LIGHT_FONT(14)];
+                [field setFont:PROXIMA_NOVA_THIN_FONT(14)];
                 [field setTextAlignment:NSTextAlignmentRight];
                 [field setTag:[[item objectForKey:@"tag"] intValue]];
                 [field setPlaceholder:LS(@"type_something")];
@@ -283,7 +283,7 @@
                 UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width  /2, 40)];
                 [label setText:[item objectForKey:@"value"]];
                 [label setTextAlignment:NSTextAlignmentRight];
-                [label setFont:LATO_LIGHT_FONT(14)];
+                [label setFont:PROXIMA_NOVA_THIN_FONT(14)];
                 [cell setAccessoryView:label];
                 
             }
@@ -308,13 +308,13 @@
         
         NotificareUserPreference * item = (NotificareUserPreference *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         [[cell textLabel] setText:[item preferenceLabel]];
-        [[cell textLabel] setFont:LATO_FONT(14)];
+        [[cell textLabel] setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
         
         
         if([[item preferenceType] isEqualToString:@"single"]){
             NotificareSegment * seg = (NotificareSegment *)[[item preferenceOptions] firstObject];
             [[cell detailTextLabel] setText:[seg segmentLabel]];
-            [[cell detailTextLabel] setFont:LATO_FONT(14)];
+            [[cell detailTextLabel] setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
             UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
             [cell setAccessoryView:mySwitch];
             [mySwitch setTag:(([indexPath section] * 100) + [indexPath row])];
@@ -337,7 +337,7 @@
                     [label setText:[seg segmentLabel]];
                     [label setTextAlignment:NSTextAlignmentRight];
                     [label setTextColor:[UIColor grayColor]];
-                    [label setFont:LATO_LIGHT_FONT(14)];
+                    [label setFont:PROXIMA_NOVA_THIN_FONT(14)];
                     [cell setAccessoryView:label];
                 }
             }
@@ -543,7 +543,7 @@
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width - 10, SEGMENT_HEADER_HEIGHT)];
         [label setText:[[self sectionTitles] objectAtIndex:section]];
         [label setTextColor:[UIColor grayColor]];
-        [label setFont:LATO_FONT(14)];
+        [label setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
         [label setBackgroundColor:[UIColor clearColor]];
         label.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         

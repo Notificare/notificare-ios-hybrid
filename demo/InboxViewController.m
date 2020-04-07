@@ -59,7 +59,7 @@
         [[self navigationItem] setLeftBarButtonItem:leftButton];
         
         [[self editButtonItem] setTintColor:[UIColor whiteColor]];
-        [[self editButtonItem] setTitleTextAttributes:@{NSFontAttributeName:LATO_FONT(14)} forState:UIControlStateNormal];
+        [[self editButtonItem] setTitleTextAttributes:@{NSFontAttributeName:PROXIMA_NOVA_REGULAR_FONT(14)} forState:UIControlStateNormal];
         [[self editButtonItem] setTitle:LS(@"edit_button")];
         [[self navigationItem] setRightBarButtonItem:self.editButtonItem];
         
@@ -90,6 +90,10 @@
                 [[self navSections] addObject:response];
                 [[self loadingView] removeFromSuperview];
             }
+            
+            for (NotificareDeviceInbox * item in response) {
+                NSLog(@"%@ - %@", [item inboxId], [item extra]);
+            }
 
             [[self tableView] reloadData];
             [self setupNavigationBar];
@@ -100,6 +104,13 @@
             [self setupNavigationBar];
         }
     }];
+    
+    [[[NotificarePushLib shared] userNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> * _Nonnull notifications) {
+        for (UNNotification * item in notifications) {
+            NSLog(@"%@ - %@", [[item request] identifier], [[[item request] content] userInfo]);
+        }
+    }];
+    
     
 }
 
@@ -115,7 +126,7 @@
     
     [[self emptyMessage] setText:LS(@"empty_inbox_text")];
     [[self emptyMessage] setTextColor:MAIN_COLOR];
-    [[self emptyMessage] setFont:LATO_HAIRLINE_FONT(14)];
+    [[self emptyMessage] setFont:PROXIMA_NOVA_THIN_FONT(14)];
     [[self emptyMessage] setTextAlignment:NSTextAlignmentCenter];
     [[self emptyMessage] setNumberOfLines:2];
     [[self emptyMessage] setHidden:NO];
@@ -182,15 +193,15 @@
         [img setTag:102];
         
         title = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 5, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 20)];
-        [title setFont:LATO_FONT(14)];
+        [title setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
         [title setTag:100];
         
         subtitle = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 25, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 20)];
-        [subtitle setFont:LATO_FONT(14)];
+        [subtitle setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
         [subtitle setTag:101];
         
         message = [[UITextView alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 35, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 80)];
-        [message setFont:LATO_LIGHT_FONT(14)];
+        [message setFont:PROXIMA_NOVA_THIN_FONT(14)];
         [message setBackgroundColor:[UIColor clearColor]];
         message.textContainer.lineFragmentPadding = 0;
         [message setScrollEnabled:NO];
@@ -205,7 +216,7 @@
         date = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
         [date setTag:104];
         [date setTextAlignment:NSTextAlignmentRight];
-        [date setFont:LATO_LIGHT_FONT(11)];
+        [date setFont:PROXIMA_NOVA_THIN_FONT(11)];
         [cell setAccessoryView:date];
         
     } else {
@@ -357,7 +368,7 @@
     if(editing){
         UIBarButtonItem * clearButton = [[UIBarButtonItem alloc] initWithTitle:LS(@"clear_all") style:UIBarButtonItemStylePlain target:self action:@selector(clearInbox)];
         [clearButton setTintColor:[UIColor whiteColor]];
-        [clearButton setTitleTextAttributes:@{NSFontAttributeName:LATO_FONT(14)} forState:UIControlStateNormal];
+        [clearButton setTitleTextAttributes:@{NSFontAttributeName:PROXIMA_NOVA_REGULAR_FONT(14)} forState:UIControlStateNormal];
         [[self editButtonItem] setTitle:LS(@"done_button")];
         [[self navigationItem] setLeftBarButtonItem:clearButton];
         

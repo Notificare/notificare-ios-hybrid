@@ -78,7 +78,7 @@
     [self setIntroLabel:[[UILabel alloc] initWithFrame:CGRectMake(40, self.view.bounds.size.height / 2 - 30, self.view.bounds.size.width - 80, 60)]];
     [[self introLabel] setText:LS(@"storage_intro_text")];
     [[self introLabel] setTextColor:MAIN_COLOR];
-    [[self introLabel] setFont:LATO_LIGHT_FONT(16)];
+    [[self introLabel] setFont:PROXIMA_NOVA_THIN_FONT(16)];
     [[self introLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self introLabel] setNumberOfLines:3];
     

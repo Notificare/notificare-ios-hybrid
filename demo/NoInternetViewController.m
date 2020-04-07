@@ -21,7 +21,7 @@
     [self setNoNetworkText:[[UILabel alloc] initWithFrame:CGRectMake(20, self.view.frame.size.height - 80, self.view.frame.size.width - 40, 80)]];
     [[self noNetworkText] setText:LS(@"no_network_text")];
     [[self noNetworkText] setTextAlignment:NSTextAlignmentCenter];
-    [[self noNetworkText] setFont:LATO_FONT(14)];
+    [[self noNetworkText] setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
     [[self noNetworkText] setNumberOfLines:2];
     
     [[self view] addSubview:[self noNetworkText]];

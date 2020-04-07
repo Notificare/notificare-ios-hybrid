@@ -113,13 +113,13 @@
     
     
     [[cell textLabel] setText:[item objectForKey:@"label"]];
-    [[cell textLabel] setFont:LATO_FONT(14)];
+    [[cell textLabel] setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
     
     if ([[item objectForKey:@"label"] isEqual:LS(@"password_label")]) {
         [self setPasswordField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self passwordField] setDelegate:self];
         [[self passwordField] setTextAlignment:NSTextAlignmentRight];
-        [[self passwordField] setFont:LATO_LIGHT_FONT(14)];
+        [[self passwordField] setFont:PROXIMA_NOVA_THIN_FONT(14)];
         [[self passwordField] setPlaceholder:[item objectForKey:@"placeholder"]];
         [[self passwordField] setTag:[indexPath row] + 100];
         [[self passwordField] setSecureTextEntry:YES];
@@ -128,7 +128,7 @@
         [self setConfirmPasswordField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self confirmPasswordField] setDelegate:self];
         [[self confirmPasswordField] setTextAlignment:NSTextAlignmentRight];
-        [[self confirmPasswordField] setFont:LATO_LIGHT_FONT(14)];
+        [[self confirmPasswordField] setFont:PROXIMA_NOVA_THIN_FONT(14)];
         [[self confirmPasswordField] setPlaceholder:[item objectForKey:@"placeholder"]];
         [[self confirmPasswordField] setTag:[indexPath row] + 100];
         [[self confirmPasswordField] setSecureTextEntry:YES];
@@ -137,7 +137,7 @@
         [self setNameField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self nameField] setDelegate:self];
         [[self nameField] setTextAlignment:NSTextAlignmentRight];
-        [[self nameField] setFont:LATO_LIGHT_FONT(14)];
+        [[self nameField] setFont:PROXIMA_NOVA_THIN_FONT(14)];
         [[self nameField] setPlaceholder:[item objectForKey:@"placeholder"]];
         [[self nameField] setTag:[indexPath row] + 100];
         [[self nameField] setKeyboardType:UIKeyboardTypeDefault];
@@ -146,7 +146,7 @@
         [self setEmailField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
         [[self emailField] setDelegate:self];
         [[self emailField] setTextAlignment:NSTextAlignmentRight];
-        [[self emailField] setFont:LATO_LIGHT_FONT(14)];
+        [[self emailField] setFont:PROXIMA_NOVA_THIN_FONT(14)];
         [[self emailField] setPlaceholder:[item objectForKey:@"placeholder"]];
         [[self emailField] setTag:[indexPath row] + 100];
         [[self emailField] setKeyboardType:UIKeyboardTypeEmailAddress];

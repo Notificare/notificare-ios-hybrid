@@ -178,7 +178,7 @@
     [imageview setBackgroundColor:[UIColor whiteColor]];
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width - 40, 120)];
-    [label setFont:LATO_LIGHT_FONT(20)];
+    [label setFont:PROXIMA_NOVA_THIN_FONT(20)];
     [label setTextColor:[UIColor blackColor]];
     [label setNumberOfLines:0];
     [label setTextAlignment:NSTextAlignmentCenter];
@@ -186,7 +186,7 @@
 
     NSDictionary * buttonObj = [[[self images] objectAtIndex:page] objectForKey:@"assetButton"];
     UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width - 40, 48)];
-    [button.titleLabel setFont:LATO_FONT(20)];
+    [button.titleLabel setFont:PROXIMA_NOVA_REGULAR_FONT(20)];
     [button.titleLabel setTextColor:[UIColor whiteColor]];
     [button setBackgroundColor:MAIN_COLOR];
     [button.titleLabel setTextAlignment:NSTextAlignmentCenter];

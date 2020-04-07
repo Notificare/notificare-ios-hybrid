@@ -100,7 +100,7 @@
     
     
     [[cell textLabel] setText:[item segmentLabel]];
-    [[cell textLabel] setFont:LATO_LIGHT_FONT(14)];
+    [[cell textLabel] setFont:PROXIMA_NOVA_THIN_FONT(14)];
     
     if([[[self preference] preferenceType] isEqualToString:@"choice"]){
         

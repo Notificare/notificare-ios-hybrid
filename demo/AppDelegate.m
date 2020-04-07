@@ -31,7 +31,7 @@
     shadow.shadowColor = [UIColor colorWithWhite:.0f alpha:.0f];
     shadow.shadowOffset = CGSizeMake(0, -1);
     
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: LATO_FONT(18)}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(18)}];
     
     [[UINavigationBar appearance] setBarTintColor:MAIN_COLOR];
     [[UINavigationBar appearance] setTranslucent:NO];
@@ -69,6 +69,13 @@
     if (@available(iOS 10.0, *)) {
         [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
     }
+    
+//    for (NSString *family in [UIFont familyNames]) {
+//        NSLog(@"===== %@ =====", family);
+//        for (NSString *font in [UIFont fontNamesForFamilyName:family]) {
+//            NSLog(@"%@", font);
+//        }
+//    }
 
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
@@ -235,6 +242,7 @@
 
 
 -(void)notificarePushLib:(NotificarePushLib *)library didRegisterDevice:(NotificareDevice *)device {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"registeredDevice" object:nil];
     NSLog(@"didRegisterDevice %@", [device deviceID]);
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     

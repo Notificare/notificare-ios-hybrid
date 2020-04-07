@@ -98,12 +98,12 @@
     
     
     [[cell textLabel] setText:[item objectForKey:@"label"]];
-    [[cell textLabel] setFont:LATO_FONT(14)];
+    [[cell textLabel] setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
     
     [self setEmailField:[[UITextField alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width / 2, 40)]];
     [[self emailField] setDelegate:self];
     [[self emailField] setTextAlignment:NSTextAlignmentRight];
-    [[self emailField] setFont:LATO_LIGHT_FONT(14)];
+    [[self emailField] setFont:PROXIMA_NOVA_THIN_FONT(14)];
     [[self emailField] setPlaceholder:[item objectForKey:@"placeholder"]];
     [[self emailField] setTag:[indexPath row] + 100];
     [[self emailField] setKeyboardType:UIKeyboardTypeEmailAddress];

@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		4002DFDC2021098700B04B3E /* locations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4002DFDB2021098700B04B3E /* locations.gpx */; };
 		40C71DE5203394C400DB4C22 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 40C71DE4203394C400DB4C22 /* Localizable.stringsdict */; };
+		40EC512A243CB2170023FBF5 /* ProximaNovaBlack.otf in Resources */ = {isa = PBXBuildFile; fileRef = 40EC5129243CA1AA0023FBF5 /* ProximaNovaBlack.otf */; };
+		40EC512B243CB21C0023FBF5 /* ProximaNovaBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 40EC5126243CA1AA0023FBF5 /* ProximaNovaBold.otf */; };
+		40EC512C243CB21F0023FBF5 /* ProximaNovaExtrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 40EC5128243CA1AA0023FBF5 /* ProximaNovaExtrabold.otf */; };
+		40EC512D243CB2230023FBF5 /* ProximaNovaRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 40EC5125243CA1AA0023FBF5 /* ProximaNovaRegular.otf */; };
+		40EC512E243CB2270023FBF5 /* ProximaNovaThin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 40EC5127243CA1AA0023FBF5 /* ProximaNovaThin.otf */; };
 		40F2F10120DC29590090F406 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40F2F10020DC29580090F406 /* Contacts.framework */; };
 		40F8FCD723FDE42C00921523 /* DefaultTheme.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 40F8FC7223FDE42C00921523 /* DefaultTheme.bundle */; };
 		40F8FCD923FDE42C00921523 /* Notificare.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40F8FCD423FDE42C00921523 /* Notificare.plist */; };
@@ -118,6 +123,11 @@
 /* Begin PBXFileReference section */
 		4002DFDB2021098700B04B3E /* locations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = locations.gpx; path = demo/locations.gpx; sourceTree = "<group>"; };
 		40C71DE4203394C400DB4C22 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		40EC5125243CA1AA0023FBF5 /* ProximaNovaRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaRegular.otf; sourceTree = "<group>"; };
+		40EC5126243CA1AA0023FBF5 /* ProximaNovaBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaBold.otf; sourceTree = "<group>"; };
+		40EC5127243CA1AA0023FBF5 /* ProximaNovaThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaThin.otf; sourceTree = "<group>"; };
+		40EC5128243CA1AA0023FBF5 /* ProximaNovaExtrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaExtrabold.otf; sourceTree = "<group>"; };
+		40EC5129243CA1AA0023FBF5 /* ProximaNovaBlack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaBlack.otf; sourceTree = "<group>"; };
 		40F2F10020DC29580090F406 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		40F8FC7223FDE42C00921523 /* DefaultTheme.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DefaultTheme.bundle; sourceTree = "<group>"; };
 		40F8FC7423FDE42C00921523 /* NotificareMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificareMap.h; sourceTree = "<group>"; };
@@ -668,6 +678,11 @@
 		5D7C2DE51E06EE1E00BCEA41 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				40EC5129243CA1AA0023FBF5 /* ProximaNovaBlack.otf */,
+				40EC5126243CA1AA0023FBF5 /* ProximaNovaBold.otf */,
+				40EC5128243CA1AA0023FBF5 /* ProximaNovaExtrabold.otf */,
+				40EC5125243CA1AA0023FBF5 /* ProximaNovaRegular.otf */,
+				40EC5127243CA1AA0023FBF5 /* ProximaNovaThin.otf */,
 				5D7C2DE61E06EE1E00BCEA41 /* Arvo.ttf */,
 				5D7C2DE71E06EE1E00BCEA41 /* Lato-Hairline.ttf */,
 				5D7C2DE81E06EE1E00BCEA41 /* Lato-Light.ttf */,
@@ -826,15 +841,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D7C2DEF1E06EE1E00BCEA41 /* Lato-Hairline.ttf in Resources */,
+				40EC512E243CB2270023FBF5 /* ProximaNovaThin.otf in Resources */,
 				5D7C2DF31E06EE1E00BCEA41 /* Montserrat-Regular.ttf in Resources */,
 				5D7C2DF01E06EE1E00BCEA41 /* Lato-Light.ttf in Resources */,
 				40F8FCD723FDE42C00921523 /* DefaultTheme.bundle in Resources */,
 				5D7C2D551E06EC0400BCEA41 /* LaunchScreen.storyboard in Resources */,
+				40EC512D243CB2230023FBF5 /* ProximaNovaRegular.otf in Resources */,
 				5D7C2DF21E06EE1E00BCEA41 /* Montserrat-Bold.ttf in Resources */,
 				5D7C2E351E09819A00BCEA41 /* InfoPlist.strings in Resources */,
 				5D7C2DF41E06EE1E00BCEA41 /* Museo.otf in Resources */,
 				5D7C2D521E06EC0400BCEA41 /* Assets.xcassets in Resources */,
 				40F8FCDA23FDE42C00921523 /* NotificareManagedModels.bundle in Resources */,
+				40EC512C243CB21F0023FBF5 /* ProximaNovaExtrabold.otf in Resources */,
 				40F8FCD923FDE42C00921523 /* Notificare.plist in Resources */,
 				5D7C2DEE1E06EE1E00BCEA41 /* Arvo.ttf in Resources */,
 				5D7C2DF11E06EE1E00BCEA41 /* Lato-Regular.ttf in Resources */,
@@ -842,7 +860,9 @@
 				5D7C2E331E097FD100BCEA41 /* Localizable.strings in Resources */,
 				4002DFDC2021098700B04B3E /* locations.gpx in Resources */,
 				5D7C2D501E06EC0400BCEA41 /* Main.storyboard in Resources */,
+				40EC512A243CB2170023FBF5 /* ProximaNovaBlack.otf in Resources */,
 				5D7C2DF51E06EE1E00BCEA41 /* OleoScript.ttf in Resources */,
+				40EC512B243CB21C0023FBF5 /* ProximaNovaBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
