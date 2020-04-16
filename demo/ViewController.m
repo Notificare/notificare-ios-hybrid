@@ -117,9 +117,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    if (@available(iOS 13.0, *)) {
-        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
-    }
+//    if (@available(iOS 13.0, *)) {
+//        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+//    }
 
     [self setActivityIndicatorView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
     [[self activityIndicatorView] setHidden:NO];
@@ -128,7 +128,7 @@
     [[self activityIndicatorView]  setContentMode:UIViewContentModeCenter];
 
     UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    [statusBar setBackgroundColor:[UIColor whiteColor]];
+    [statusBar setBackgroundColor:MAIN_COLOR];
     [[self view] addSubview:statusBar];
 
     [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44) configuration:[WKWebViewConfiguration new]]];

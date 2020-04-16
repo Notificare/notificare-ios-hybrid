@@ -28,9 +28,9 @@
     
     [self setTitle:LS(@"title_storage")];
     
-//    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-//    [leftButton setTintColor:MAIN_COLOR];
-//    [[self navigationItem] setLeftBarButtonItem:leftButton];
+    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    [leftButton setTintColor:[UIColor whiteColor]];
+    [[self navigationItem] setLeftBarButtonItem:leftButton];
     
     
     UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearchAlert)];

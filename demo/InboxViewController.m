@@ -105,11 +105,11 @@
         }
     }];
     
-    [[[NotificarePushLib shared] userNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> * _Nonnull notifications) {
-        for (UNNotification * item in notifications) {
-            NSLog(@"%@ - %@", [[item request] identifier], [[[item request] content] userInfo]);
-        }
-    }];
+//    [[[NotificarePushLib shared] userNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> * _Nonnull notifications) {
+//        for (UNNotification * item in notifications) {
+//            NSLog(@"%@ - %@", [[item request] identifier], [[[item request] content] userInfo]);
+//        }
+//    }];
     
     
 }
