@@ -1,10 +1,10 @@
 Notificare's iOS Demo App in Objective-C
 ===================
 
-Example project in how to implement Notificare SDK for iOS using Objective-C
+Example project on how to implement Notificare SDK for iOS using Objective-C
 
-Register a new account:
-https://notifica.re/signup
+Register for a trial:
+https://notificare.com/signup
 
 Sign in to the dashboard:
 https://dashboard.notifica.re
