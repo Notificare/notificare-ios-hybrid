@@ -90,10 +90,6 @@
                 [[self navSections] addObject:response];
                 [[self loadingView] removeFromSuperview];
             }
-            
-            for (NotificareDeviceInbox * item in response) {
-                NSLog(@"%@ - %@", [item inboxId], [item extra]);
-            }
 
             [[self tableView] reloadData];
             [self setupNavigationBar];
@@ -104,13 +100,6 @@
             [self setupNavigationBar];
         }
     }];
-    
-//    [[[NotificarePushLib shared] userNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> * _Nonnull notifications) {
-//        for (UNNotification * item in notifications) {
-//            NSLog(@"%@ - %@", [[item request] identifier], [[[item request] content] userInfo]);
-//        }
-//    }];
-    
     
 }
 
@@ -384,16 +373,16 @@
         NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
         
         [[[NotificarePushLib shared] inboxManager] removeFromInbox:item completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
-            if (!error) {
-                [tableView beginUpdates];
-                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                [[[self navSections] objectAtIndex:0] removeObject:item];
-                [tableView endUpdates];
-                
-                if ([[[self navSections] objectAtIndex:0] count] == 0) {
-                    [self showEmptyView];
-                }
-            }
+//            if (!error) {
+//                [tableView beginUpdates];
+//                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//                [[[self navSections] objectAtIndex:0] removeObject:item];
+//                [tableView endUpdates];
+//
+//                if ([[[self navSections] objectAtIndex:0] count] == 0) {
+//                    [self showEmptyView];
+//                }
+//            }
         }];
     }
 }

@@ -72,7 +72,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onInitialConfig) name:@"initialConfig" object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewNotification) name:@"newNotification" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewNotification) name:@"newNotification" object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewNotification) name:@"badgeUpdate" object:nil];
 

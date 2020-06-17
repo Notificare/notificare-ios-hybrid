@@ -703,9 +703,10 @@
                              style:UIAlertActionStyleDestructive
                              handler:^(UIAlertAction * action){
                                  
-                                 [[[NotificarePushLib shared] authManager] logoutAccount];
-                                 [self back];
-                                 
+                                [[[NotificarePushLib shared] authManager] logoutAccount:^(id  _Nullable response, NSError * _Nullable error) {
+                                    [self back];
+                                }];
+
                              }];
     [alert addAction:ok];
     

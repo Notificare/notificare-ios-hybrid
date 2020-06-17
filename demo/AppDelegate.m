@@ -33,6 +33,10 @@
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(18)}];
     
+    if (@available(iOS 11.0, *)) {
+        [[UINavigationBar appearance] setLargeTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(32)}];
+    }
+    
     [[UINavigationBar appearance] setBarTintColor:MAIN_COLOR];
     [[UINavigationBar appearance] setTranslucent:NO];
     
@@ -778,17 +782,17 @@
 
 #pragma Notificare OAuth2 delegates
 
-- (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountState:(NSDictionary *)info{
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeAccountNotification" object:nil];
-
-}
-
-- (void)notificarePushLib:(NotificarePushLib *)library didFailToRenewAccountSessionWithError:(NSError * _Nullable)error {
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didFailToRequestAccessNotification" object:nil];
-    
-}
+//- (void)notificarePushLib:(NotificarePushLib *)library didChangeAccountState:(NSDictionary *)info{
+//
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"didChangeAccountNotification" object:nil];
+//
+//}
+//
+//- (void)notificarePushLib:(NotificarePushLib *)library didFailToRenewAccountSessionWithError:(NSError * _Nullable)error {
+//
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"didFailToRequestAccessNotification" object:nil];
+//
+//}
 
 
 - (void)notificarePushLib:(NotificarePushLib *)library didReceiveActivationToken:(NSString *)token{
@@ -823,11 +827,17 @@
         if (!error) {
             
             UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-            
+                
+            if ([response isKindOfClass:[UIViewController class]]) {
+                UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+                [leftButton setTintColor:[UIColor whiteColor]];
+                [[response navigationItem] setLeftBarButtonItem:leftButton];
+            }
+               
             if (response != nil && ![response isKindOfClass:[UIAlertController class]]) {
                 [navController setNavigationBarHidden:NO];
             }
-
+ 
             [[NotificarePushLib shared] presentScannable:scannable inNavigationController:navController withController:response];
             
         }
@@ -836,45 +846,26 @@
 
 -(void)notificarePushLib:(NotificarePushLib *)library didInvalidateScannableSessionWithError:(nonnull NSError *)error{
     
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//            UIAlertController * alert = [UIAlertController
-//                                     alertControllerWithTitle:APP_NAME
-//                                     message:error.localizedDescription
-//                                     preferredStyle:UIAlertControllerStyleAlert];
-//
-//        UIAlertAction* cancel = [UIAlertAction
-//                                 actionWithTitle:LS(@"ok")
-//                                 style:UIAlertActionStyleDefault
-//                                 handler:^(UIAlertAction * action){
-//
-//                                 }];
-//        [alert addAction:cancel];
-//
-//        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-//
-//        [navController presentViewController:alert animated:YES completion:^{
-//
-//        }];
-//    });
-    
-    UIAlertController * alert = [UIAlertController
-                                 alertControllerWithTitle:APP_NAME
-                                 message:error.localizedDescription
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* cancel = [UIAlertAction
-                             actionWithTitle:LS(@"ok")
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action){
-                                 
-                             }];
-    [alert addAction:cancel];
-    
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    
-    [navController presentViewController:alert animated:YES completion:^{
-        
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertController * alert = [UIAlertController
+                                     alertControllerWithTitle:APP_NAME
+                                     message:error.localizedDescription
+                                     preferredStyle:UIAlertControllerStyleAlert];
+
+        UIAlertAction* cancel = [UIAlertAction
+                                 actionWithTitle:LS(@"ok")
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action){
+
+                                 }];
+        [alert addAction:cancel];
+
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+
+        [navController presentViewController:alert animated:YES completion:^{
+
+        }];
+    });
     
 }
 
