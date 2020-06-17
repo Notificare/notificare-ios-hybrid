@@ -27,7 +27,6 @@
 		<key>URL_SCHEMES</key>
 		<array>
 			<string>mytest</string>
-			<string>re.notifica.demo</string>
 		</array>
 		<key>IMAGES_SHARING</key>
 		<true/>
