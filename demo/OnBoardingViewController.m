@@ -255,6 +255,7 @@
         
         NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
         [settings setBool:YES forKey:@"OnBoardingFinished"];
+        [settings setBool:YES forKey:@"InitialLocationServicesPrompted"];
         [settings synchronize];
         
     }];

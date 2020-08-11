@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSURL * targetUrl;
 @property (nonatomic, strong) NSString * token;
 @property (nonatomic, assign) BOOL isLoading;
+@property (nonatomic, strong) NotificareDevice * device;
 
 @end
 
@@ -45,6 +46,8 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 [self setIsLoading:NO];
                 [[self launchingView] removeFromSuperview];
+                
+                [self showLocationServicesWarning];
             });
         }
         
@@ -78,6 +81,8 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlertWithMessage:) name:@"showAlertWithMessage" object:nil];
 
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLocationServicesWarning) name:@"authorizationStatus" object:nil];
 
 }
 
@@ -404,6 +409,51 @@
 -(void)showAlertWithMessage:(NSNotification *)notification
 {
     [self presentAlertViewForForm:[[notification userInfo] valueForKey:@"message"]];
+}
+
+
+-(void)showLocationServicesWarning
+{
+    //[self setDevice:[[NotificarePushLib shared] myDevice]];
+    //NSLog(@"%@", [self device]);
+    
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+
+    if(![settings boolForKey:@"InitialLocationServicesPrompted"]){
+        
+        if (![[[[NotificarePushLib shared] myDevice] locationServicesAuthStatus] isEqualToString:@"always"] ||
+            ![[[[NotificarePushLib shared] myDevice] locationServicesAccuracyAuth] isEqualToString:@"full"]) {
+            
+            UIAlertController * alert=   [UIAlertController
+                                          alertControllerWithTitle: APP_NAME
+                                          message:@"In order for geo-fencing and beacons to work, we need ALWAYS and precise accuracy access to your location. You can change this in your device's settings."
+                                          preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* cancel = [UIAlertAction
+                                     actionWithTitle:LS(@"cancel")
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * action){}];
+            [alert addAction:cancel];
+            
+            UIAlertAction* change = [UIAlertAction
+                                     actionWithTitle:LS(@"change")
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * action){
+                
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            }];
+            [alert addAction:change];
+            
+            [self presentViewController:alert animated:YES completion:^{
+                
+            }];
+        }
+    } else {
+        [[NotificarePushLib shared] requestAlwaysAuthorizationForLocationUpdates];
+        [settings setBool:NO forKey:@"InitialLocationServicesPrompted"];
+        [settings synchronize];
+    }
+    
 }
 
 -(void)presentAlertViewForForm:(NSString *)message{

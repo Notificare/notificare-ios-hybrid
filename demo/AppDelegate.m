@@ -403,6 +403,20 @@
         default:
             break;
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"authorizationStatus" object:nil];
+}
+
+- (void)notificarePushLib:(NotificarePushLib *)library didReceiveLocationServiceAccuracyAuthorization:(NotificareGeoAccuracyAuthorization)accuracy {
+    
+    switch (accuracy) {
+        case NotificareGeoAccuracyAuthorizationReduced:
+            NSLog(@"didReceiveLocationServiceAccuracyAuthorization: NotificareGeoAccuracyAuthorizationReduced");
+            break;
+        default:
+            NSLog(@"didReceiveLocationServiceAccuracyAuthorization: NotificareGeoAccuracyAuthorizationFull");
+            break;
+    }
 }
 
 - (void)notificarePushLib:(NotificarePushLib *)library didUpdateLocations:(NSArray<NotificareLocation*> *)locations {
