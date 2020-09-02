@@ -231,7 +231,6 @@
     if([settings boolForKey:@"OnBoardingFinished"]){
         
         [[NotificarePushLib shared] registerForNotifications];
-        
     }
     
 }

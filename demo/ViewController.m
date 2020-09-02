@@ -46,7 +46,6 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 [self setIsLoading:NO];
                 [[self launchingView] removeFromSuperview];
-                
                 [self showLocationServicesWarning];
             });
         }
@@ -116,6 +115,10 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"showAlertWithMessage"
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"authorizationStatus"
                                                   object:nil];
 }
 
@@ -414,29 +417,35 @@
 
 -(void)showLocationServicesWarning
 {
-    //[self setDevice:[[NotificarePushLib shared] myDevice]];
-    //NSLog(@"%@", [self device]);
-    
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
 
-    if(![settings boolForKey:@"InitialLocationServicesPrompted"]){
+//    [self setDevice:[[NotificarePushLib shared] myDevice]];
+//    NSLog(@"locationServicesAuthStatus: %@", [[[NotificarePushLib shared] myDevice] locationServicesAuthStatus]);
+//    NSLog(@"locationServicesAccuracyAuth: %@", [[[NotificarePushLib shared] myDevice] locationServicesAccuracyAuth]);
+//    if(![settings boolForKey:@"InitialLocationServicesPrompted"]){
+//        NSLog(@"Not InitialLocationServicesPrompted");
+//    } else{
+//        NSLog(@"InitialLocationServicesPrompted");
+//    }
+    
+    if([settings boolForKey:@"RequestAlwaysLocationServicesPrompted"]){
         
         if (![[[[NotificarePushLib shared] myDevice] locationServicesAuthStatus] isEqualToString:@"always"] ||
             ![[[[NotificarePushLib shared] myDevice] locationServicesAccuracyAuth] isEqualToString:@"full"]) {
             
             UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle: APP_NAME
-                                          message:@"In order for geo-fencing and beacons to work, we need ALWAYS and precise accuracy access to your location. You can change this in your device's settings."
+                                          alertControllerWithTitle: LS(@"location_warning_title")
+                                          message:LS(@"location_warning_text")
                                           preferredStyle:UIAlertControllerStyleAlert];
             
             UIAlertAction* cancel = [UIAlertAction
-                                     actionWithTitle:LS(@"cancel")
+                                     actionWithTitle:LS(@"location_warning_cancel_button")
                                      style:UIAlertActionStyleDefault
                                      handler:^(UIAlertAction * action){}];
             [alert addAction:cancel];
             
             UIAlertAction* change = [UIAlertAction
-                                     actionWithTitle:LS(@"change")
+                                     actionWithTitle:LS(@"location_warning_change_button")
                                      style:UIAlertActionStyleDefault
                                      handler:^(UIAlertAction * action){
                 
@@ -450,8 +459,7 @@
         }
     } else {
         [[NotificarePushLib shared] requestAlwaysAuthorizationForLocationUpdates];
-        [settings setBool:NO forKey:@"InitialLocationServicesPrompted"];
-        [settings synchronize];
+        [settings setBool:YES forKey:@"RequestAlwaysLocationServicesPrompted"];
     }
     
 }

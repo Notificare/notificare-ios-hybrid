@@ -145,3 +145,8 @@
 "error_no_template_selected" = "Could not find a pass template. Please check app configurations.";
 
 "no_network_text" = "No internet connection found. This app requires an internet connection to work.";
+
+"location_warning_title" = "Warning";
+"location_warning_text" = "In order for geo-fencing and beacons to work, we need always access to your location and precise accuracy. You can change this in your device's settings.";
+"location_warning_cancel_button" = "Cancel";
+"location_warning_change_button" = "Change";

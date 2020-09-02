@@ -248,15 +248,14 @@
 }
 
 -(void)goToApp{
-
-    [[NotificarePushLib shared] startLocationUpdates];
-    
     [self dismissViewControllerAnimated:YES completion:^{
         
         NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
         [settings setBool:YES forKey:@"OnBoardingFinished"];
-        [settings setBool:YES forKey:@"InitialLocationServicesPrompted"];
-        [settings synchronize];
+        if ([settings synchronize]){
+            [[NotificarePushLib shared] startLocationUpdates];
+            
+        }
         
     }];
 }

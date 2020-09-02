@@ -163,10 +163,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+    
     static NSString *cellIdentifier = @"InboxCell";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    UILabel *title, *subtitle, *date;
+    UILabel *title, *date;
     UIImageView *img;
     UITextView * message;
     
@@ -174,22 +176,21 @@
         
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         
-        [cell setBackgroundColor:[UIColor whiteColor]];
-
-        img = [[UIImageView alloc] initWithFrame:CGRectMake(5, ((INBOX_CELLHEIGHT / 2) / 2), (INBOX_CELLHEIGHT / 2) , (INBOX_CELLHEIGHT / 2) )];
+        img = [[UIImageView alloc] initWithFrame:CGRectMake(10, ((INBOX_CELLHEIGHT / 2) / 2), (INBOX_CELLHEIGHT / 2) , (INBOX_CELLHEIGHT / 2) )];
         [img setContentMode:UIViewContentModeScaleAspectFill];
         [img setClipsToBounds:YES];
+        [img setImage:[UIImage imageNamed:@"noAttachment"]];
         [img setTag:102];
         
-        title = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 5, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 20)];
-        [title setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
-        [title setTag:100];
+        date = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 8, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 20)];
+        [date setFont:PROXIMA_NOVA_THIN_FONT(12)];
+        [date setTag:100];
         
-        subtitle = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 25, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 20)];
-        [subtitle setFont:PROXIMA_NOVA_REGULAR_FONT(14)];
-        [subtitle setTag:101];
+        title = [[UILabel alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 25, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 20)];
+        [title setFont:PROXIMA_NOVA_BOLD_FONT(14)];
+        [title setTag:101];
         
-        message = [[UITextView alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 35, self.view.frame.size.width - (((INBOX_CELLHEIGHT / 2) + 20) + 100), 80)];
+        message = [[UITextView alloc] initWithFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 37, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 80)];
         [message setFont:PROXIMA_NOVA_THIN_FONT(14)];
         [message setBackgroundColor:[UIColor clearColor]];
         message.textContainer.lineFragmentPadding = 0;
@@ -198,36 +199,22 @@
         [message setTag:103];
         
         [[cell contentView] addSubview:title];
-        [[cell contentView] addSubview:subtitle];
+        [[cell contentView] addSubview:date];
         [[cell contentView] addSubview:message];
         [[cell contentView] addSubview:img];
         
-        date = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-        [date setTag:104];
-        [date setTextAlignment:NSTextAlignmentRight];
-        [date setFont:PROXIMA_NOVA_THIN_FONT(11)];
-        [cell setAccessoryView:date];
-        
-    } else {
-        title = (UILabel *)[cell.contentView viewWithTag:100];
-        subtitle = (UILabel *)[cell.contentView viewWithTag:101];
-        img = (UIImageView *)[cell.contentView viewWithTag:102];
-        message = (UITextView *)[cell.contentView viewWithTag:103];
-        date = (UILabel *)[cell.accessoryView viewWithTag:104];
     }
     
-    NotificareDeviceInbox * item = (NotificareDeviceInbox *)[[[self navSections] objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+    title = (UILabel *)[cell.contentView viewWithTag:101];
+    img = (UIImageView *)[cell.contentView viewWithTag:102];
+    message = (UITextView *)[cell.contentView viewWithTag:103];
+    date = (UILabel *)[cell.contentView viewWithTag:100];
 
-    if ([item title]) {
+    
+    if ([item title] && [[item title] length] > 0) {
         [title setText:[item title]];
     } else {
         [title setText:@""];
-    }
-    
-    if ([item subtitle]) {
-        [subtitle setText:[item subtitle]];
-    } else {
-        [subtitle setText:@""];
     }
     
     [message setText:[item message]];
@@ -235,6 +222,16 @@
     [img setImage:[UIImage imageNamed:@"noAttachment"]];
     
     if ([item attachment] && [[item attachment] objectForKey:@"uri"]) {
+        
+        [img setHidden:NO];
+        
+        [date setFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 8, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 20)];
+         [title setFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 25, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 20)];
+         if ([item title]) {
+            [message setFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 37, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 80)];
+        } else {
+            [message setFrame:CGRectMake((INBOX_CELLHEIGHT / 2) + 20, 17, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 80)];
+        }
         
         if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
             NSURL *imageURL = [NSURL URLWithString:[[item attachment] objectForKey:@"uri"]];
@@ -258,33 +255,47 @@
             
             [notificareNetworkHost startOperation:imageOperation];
         }
-
+        
+    } else {
+        [img setHidden:YES];
+        
+        [date setFrame:CGRectMake(10, 8, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 20)];
+        [title setFrame:CGRectMake(10, 25, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 20)];
+        if ([item title] && [[item title] length] > 0) {
+           [message setFrame:CGRectMake(10, 37, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 80)];
+        } else {
+           [message setFrame:CGRectMake(10, 17, self.view.frame.size.width - ((INBOX_CELLHEIGHT / 2) + 30), 80)];
+        }
     }
-
 
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"];
     [dateFormat setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-
-    NSDate * time = [dateFormat dateFromString:[item time]];
-    [date setText:[time timeAgo]];
+    
+    NSDate * utcDate = [dateFormat dateFromString:[item time]];
+    
+    //Make it Europe/Amsterdam
+    [dateFormat setDateFormat:@"MMM dd, yyyy"];
+    [dateFormat setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Amsterdam"]];
+    
+    [date setText:[NSString stringWithFormat:@"%@",[dateFormat stringFromDate:utcDate]]];
     
     
     if([item opened]){
         [title setTextColor:[UIColor grayColor]];
-        [subtitle setTextColor:[UIColor grayColor]];
         [message setTextColor:[UIColor grayColor]];
         [date setTextColor:[UIColor grayColor]];
         [img setAlpha:.5];
     } else {
         [title setTextColor:[UIColor blackColor]];
-        [subtitle setTextColor:[UIColor blackColor]];
         [message setTextColor:[UIColor blackColor]];
         [date setTextColor:[UIColor blackColor]];
         [img setAlpha:1];
     }
     
     [cell setNeedsLayout];
+    
+    [cell setBackgroundColor:[UIColor whiteColor]];
     
     return cell;
     
