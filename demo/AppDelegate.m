@@ -46,6 +46,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self setLaunchEvents:[NSMutableArray new]];
     [self setIsInitialLoadingDone:NO];
+    
+    
     [[NotificarePushLib shared] initializeWithKey:nil andSecret:nil];
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
@@ -107,6 +109,7 @@
 }
 
 
+
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler{
     [self handleShortCutItem:shortcutItem];
 }
@@ -131,7 +134,6 @@
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
     [[NotificarePushLib shared]  handleOpenURL:url withOptions:options];
     [self handleDeepLinks:url];
-    
     return YES;
 }
 
