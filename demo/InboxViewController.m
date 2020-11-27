@@ -83,12 +83,11 @@
         if (!error) {
             if([response count] == 0){
                 [[self navSections] addObject:@[]];
-                [[self spinnerView] removeFromSuperview];
-                [[self emptyMessage] setHidden:NO];
+                [[self loadingView] setHidden:NO];
             } else {
                 [[self navSections] removeAllObjects];
                 [[self navSections] addObject:response];
-                [[self loadingView] removeFromSuperview];
+                [[self loadingView] setHidden:YES];
             }
 
             [[self tableView] reloadData];

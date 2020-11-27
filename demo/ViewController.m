@@ -135,15 +135,15 @@
     [[self activityIndicatorView]  setCenter:CGPointMake( self.view.frame.size.width/2 + 10, self.view.frame.size.height /2 + 10)];
     [[self activityIndicatorView]  setContentMode:UIViewContentModeCenter];
 
-    UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 48)];
     [statusBar setBackgroundColor:MAIN_COLOR];
-    [[self view] addSubview:statusBar];
 
-    [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44) configuration:[WKWebViewConfiguration new]]];
+    [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-44) configuration:[WKWebViewConfiguration new]]];
     [[[self webView] scrollView] setBounces:NO];
     [[self webView] setNavigationDelegate:self];
     [[self webView] setUIDelegate:self];
     [[self view] addSubview:[self webView]];
+    [[self view] addSubview:statusBar];
 
     [self setLaunchingView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)]];
     [[self launchingView] setBackgroundColor:[UIColor whiteColor]];
@@ -418,7 +418,6 @@
 -(void)showLocationServicesWarning
 {
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-
 //    [self setDevice:[[NotificarePushLib shared] myDevice]];
 //    NSLog(@"locationServicesAuthStatus: %@", [[[NotificarePushLib shared] myDevice] locationServicesAuthStatus]);
 //    NSLog(@"locationServicesAccuracyAuth: %@", [[[NotificarePushLib shared] myDevice] locationServicesAccuracyAuth]);
