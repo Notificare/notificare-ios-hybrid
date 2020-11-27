@@ -135,10 +135,10 @@
     [[self activityIndicatorView]  setCenter:CGPointMake( self.view.frame.size.width/2 + 10, self.view.frame.size.height /2 + 10)];
     [[self activityIndicatorView]  setContentMode:UIViewContentModeCenter];
 
-    UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 48)];
+    UIView * statusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, [[UIApplication sharedApplication] statusBarFrame].size.height)];
     [statusBar setBackgroundColor:MAIN_COLOR];
 
-    [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-44) configuration:[WKWebViewConfiguration new]]];
+    [self setWebView:[[WKWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) configuration:[WKWebViewConfiguration new]]];
     [[[self webView] scrollView] setBounces:NO];
     [[self webView] setNavigationDelegate:self];
     [[self webView] setUIDelegate:self];
