@@ -15,7 +15,7 @@
 #import "NoInternetViewController.h"
 #import "Definitions.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, NotificarePushLibDelegate, NFCNDEFReaderSessionDelegate, PKAddPassesViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NotificarePushLibDelegate, NFCNDEFReaderSessionDelegate, PKAddPassesViewControllerDelegate/*,UNUserNotificationCenterDelegate*/>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL hasInternet;

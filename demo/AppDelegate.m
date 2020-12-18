@@ -52,6 +52,9 @@
     [[NotificarePushLib shared] launch];
     [[NotificarePushLib shared] setDelegate:self];
     
+//    UNUserNotificationCenter * center = [UNUserNotificationCenter currentNotificationCenter];
+//    [center setDelegate:self];
+    
     if (@available(iOS 13.0, *)) {
         [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings + UNAuthorizationOptionAnnouncement];
     } else {
@@ -72,8 +75,12 @@
         }
     }
     
-    if (@available(iOS 10.0, *)) {
-        [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
+    if (@available(iOS 14.0, *)) {
+        [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionBanner];
+    } else {
+        if (@available(iOS 10.0, *)) {
+            [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
+        }
     }
     
 //    for (NSString *family in [UIFont familyNames]) {
@@ -107,7 +114,18 @@
     
     return YES;
 }
-
+//
+//- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+//    [[NotificarePushLib shared] willPresentNotification:notification withCompletionHandler:^(UNNotificationPresentationOptions options) {
+//        completionHandler(options);
+//    }];
+//}
+//
+//- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler{
+//    [[NotificarePushLib shared] didReceiveNotificationResponse:response withCompletionHandler:^{
+//        completionHandler();
+//    }];
+//}
 
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler{
@@ -312,7 +330,28 @@
 
 -(void)notificarePushLib:(NotificarePushLib *)library didClickURL:(nonnull NSURL *)url inNotification:(nonnull NotificareNotification *)notification{
     NSLog(@"didClickURL %@", [notification notificationMessage]);
-    [self handleDeepLinks:url];
+    //[self handleDeepLinks:url];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertController * alert = [UIAlertController
+                                     alertControllerWithTitle:APP_NAME
+                                     message:[url absoluteString]
+                                     preferredStyle:UIAlertControllerStyleAlert];
+
+        UIAlertAction* cancel = [UIAlertAction
+                                 actionWithTitle:LS(@"ok")
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action){
+
+                                 }];
+        [alert addAction:cancel];
+
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+
+        [navController presentViewController:alert animated:YES completion:^{
+
+        }];
+    });
 }
 
 -(void)notificarePushLib:(NotificarePushLib *)library didFailToOpenNotification:(nonnull NotificareNotification *)notification{
