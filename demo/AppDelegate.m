@@ -233,9 +233,8 @@
             NSURL * mainURL = [NSURL URLWithString:[[Configuration shared] getProperty:@"url"]];
             url  = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@?%@", [mainURL scheme],  [[Configuration shared] getProperty:@"host"], [url path], [url query]]];
             NSLog(@"Openning URL: %@", [url absoluteString]);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadURL" object:self userInfo:@{@"url":url}];
         }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadURL" object:self userInfo:@{@"url":url}];
         
     }
     
