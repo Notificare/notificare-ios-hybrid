@@ -22,11 +22,9 @@
     self.contentHandler = contentHandler;
     self.bestAttemptContent = [request.content mutableCopy];
     
-    
-    [[NotificarePushLib shared] fetchAttachment:request.content.userInfo completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+    [[NotificarePushLib shared] handleNotificationRequest:request.content.userInfo forContent:self.bestAttemptContent completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
         if (!error) {
-            self.bestAttemptContent.attachments = response;
-            self.contentHandler(self.bestAttemptContent);
+            self.contentHandler(response);
         } else {
             self.contentHandler(self.bestAttemptContent);
         }

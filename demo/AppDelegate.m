@@ -55,13 +55,12 @@
 //    UNUserNotificationCenter * center = [UNUserNotificationCenter currentNotificationCenter];
 //    [center setDelegate:self];
     
-    if (@available(iOS 13.0, *)) {
-        [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings + UNAuthorizationOptionAnnouncement];
-    } else {
-        if (@available(iOS 12.0, *)) {
-            [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings];
-        }
+
+
+    if (@available(iOS 12.0, *)) {
+        [[NotificarePushLib shared] setAuthorizationOptions:UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound + UNAuthorizationOptionProvidesAppNotificationSettings];
     }
+    
     
     if (@available(iOS 13.0, *)) {
         [[NotificarePushLib shared] setCategoryOptions:UNNotificationCategoryOptionCustomDismissAction + UNNotificationCategoryOptionHiddenPreviewsShowTitle + UNNotificationCategoryOptionAllowAnnouncement];
@@ -89,7 +88,13 @@
 //            NSLog(@"%@", font);
 //        }
 //    }
-
+    
+//    NSString * url = [@"re.notifica://advocate?id=google-oauth2|xxxxxxxxxxxxxxxxxxxxx" stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+//
+//    }];
+    
+    
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
     [self updateInterfaceWithReachability:[self hostReachability]];
