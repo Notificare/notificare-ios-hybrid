@@ -31,14 +31,24 @@
     shadow.shadowColor = [UIColor colorWithWhite:.0f alpha:.0f];
     shadow.shadowOffset = CGSizeMake(0, -1);
     
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(18)}];
     
     if (@available(iOS 11.0, *)) {
         [[UINavigationBar appearance] setLargeTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(32)}];
     }
     
+    [[UINavigationBar appearance] setBackgroundColor:MAIN_COLOR];
     [[UINavigationBar appearance] setBarTintColor:MAIN_COLOR];
+    [[UINavigationBar appearance] setTintColor:MAIN_COLOR];
     [[UINavigationBar appearance] setTranslucent:NO];
+    if (@available(iOS 13.0, *)) {
+        [[UINavigationBar appearance] setCompactAppearance:[[UINavigationBar appearance] compactAppearance]];
+        [[UINavigationBar appearance] setScrollEdgeAppearance:[[UINavigationBar appearance] scrollEdgeAppearance]];
+    }
+    if (@available(iOS 15.0, *)) {
+        [[UINavigationBar appearance] setCompactScrollEdgeAppearance:[[UINavigationBar appearance] compactScrollEdgeAppearance]];
+    }
     
     return YES;
 }
@@ -81,19 +91,8 @@
             [[NotificarePushLib shared] setPresentationOptions:UNNotificationPresentationOptionAlert];
         }
     }
-    
-//    for (NSString *family in [UIFont familyNames]) {
-//        NSLog(@"===== %@ =====", family);
-//        for (NSString *font in [UIFont fontNamesForFamilyName:family]) {
-//            NSLog(@"%@", font);
-//        }
-//    }
-    
-//    NSString * url = [@"re.notifica://advocate?id=google-oauth2|xxxxxxxxxxxxxxxxxxxxx" stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
-//
-//    }];
-    
+
+
     
     [self setHostReachability:[NotificareNetworkReachability reachabilityWithHostname:@"https://google.com"]];
     [[self hostReachability] startNotifier];
@@ -321,6 +320,10 @@
     }
      
      [[NotificarePushLib shared] presentNotification:notification inNavigationController:navController withController:controller];
+    
+    [[NotificarePushLib shared] logEvent:kNotificareEventNotificationOpen withData:@{} completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+        
+    }];
 
 }
 
@@ -541,6 +544,7 @@
 }
 
 - (void)notificarePushLib:(NotificarePushLib *)library didRangeBeacons:(NSArray<NotificareBeacon *> *)beacons inRegion:(NotificareBeacon *)region {
+    NSLog(@"didRangeBeacons: %@ - %@", beacons, region);
     [self setBeacons:beacons];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"beaconsReload" object:nil];
     

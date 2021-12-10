@@ -41,6 +41,7 @@
     [super viewDidLoad];
     
     [[self navigationController] setNavigationBarHidden:NO];
+    
        
     if (@available(iOS 13.0, *)) {
         [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
