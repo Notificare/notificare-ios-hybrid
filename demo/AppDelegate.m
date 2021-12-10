@@ -31,24 +31,34 @@
     shadow.shadowColor = [UIColor colorWithWhite:.0f alpha:.0f];
     shadow.shadowOffset = CGSizeMake(0, -1);
     
-    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(18)}];
+    
+    NSDictionary * textAttributesSmall = @{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(18)};
+    NSDictionary * textAttributesBig = @{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(32)};
+    
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:textAttributesSmall];
     
     if (@available(iOS 11.0, *)) {
-        [[UINavigationBar appearance] setLargeTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: shadow, NSFontAttributeName: PROXIMA_NOVA_BOLD_FONT(32)}];
+        [[UINavigationBar appearance] setLargeTitleTextAttributes:textAttributesBig];
     }
+    
     
     [[UINavigationBar appearance] setBackgroundColor:MAIN_COLOR];
     [[UINavigationBar appearance] setBarTintColor:MAIN_COLOR];
     [[UINavigationBar appearance] setTintColor:MAIN_COLOR];
     [[UINavigationBar appearance] setTranslucent:NO];
+    
+    
     if (@available(iOS 13.0, *)) {
-        [[UINavigationBar appearance] setCompactAppearance:[[UINavigationBar appearance] compactAppearance]];
-        [[UINavigationBar appearance] setScrollEdgeAppearance:[[UINavigationBar appearance] scrollEdgeAppearance]];
+        UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+        [appearance configureWithOpaqueBackground];
+        [appearance setBackgroundColor:MAIN_COLOR];
+        [appearance setTitleTextAttributes:textAttributesSmall];
+        [appearance setLargeTitleTextAttributes:textAttributesBig];
+        UINavigationBar.appearance.scrollEdgeAppearance = appearance;
+        UINavigationBar.appearance.standardAppearance = appearance;
     }
-    if (@available(iOS 15.0, *)) {
-        [[UINavigationBar appearance] setCompactScrollEdgeAppearance:[[UINavigationBar appearance] compactScrollEdgeAppearance]];
-    }
+    
     
     return YES;
 }
