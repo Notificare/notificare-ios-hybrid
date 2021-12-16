@@ -264,6 +264,7 @@
         
         
         [[[NotificarePushLib shared] authManager] loginWithUsername:[[self emailField] text] andPassword:[[self passwordField] text] completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
+            
             if (!error) {
                 
                 [[[NotificarePushLib shared] authManager] fetchAccountDetails:^(id  _Nullable response, NSError * _Nullable error) {

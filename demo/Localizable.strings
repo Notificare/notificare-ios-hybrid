@@ -50,6 +50,7 @@
 
 "new_password_label" = "type a new password";
 "confirm_new_password_label" = "confirm the new password";
+"reset_password_button_text" = "Save";
 
 "section_item_settings_notifications" = "Notification Settings";
 "section_item_settings_about" = "About this app";
